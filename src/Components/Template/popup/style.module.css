@@ -1,0 +1,10 @@
+.main{
+  background: #1C1A24;
+  width: 310px;
+  height: 344px;
+
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}

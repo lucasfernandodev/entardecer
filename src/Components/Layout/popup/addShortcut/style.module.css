@@ -1,0 +1,218 @@
+#form{
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  height: 100%;
+  padding: 16px 24px 24px 24px;
+}
+
+#form > *:not(.header){
+  animation: loading 250ms linear forwards;
+}
+
+@keyframes loading {
+  0%{
+    padding-left: 1000px;
+  }
+  100%{
+    padding-left: 0px;
+  }
+}
+
+.header{
+  display: flex;
+  gap: 8px;
+  height: 40px;
+  align-items: center;
+  border-bottom: 1px solid #2E2B3B;
+  padding-bottom: 16px;
+  position: relative;
+}
+
+.header h1{
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 20px;
+}
+
+.header button{
+  border: unset;
+  background: var(--bg-color);
+  border-radius: 4px;
+  width: 26px;
+  height: 26px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: calc(50% - 5px);
+  transform: translateY(-50%);
+  left: 0;
+  padding-bottom: 3px;
+  transition: 300ms linear;
+  border: 1px solid transparent;
+}
+
+.header button:hover{
+  border: 1px solid #676A87;
+}
+
+.sectionForm{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 16px;
+}
+
+.sectionForm .group{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.sectionForm .group .siteName{
+  width: calc(100% - 50px);
+}
+
+.sectionForm .group .icon{
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #27293B;
+}
+
+.sectionForm .group .icon img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.sectionForm input{
+  height: 32px;
+  background: transparent;
+  border: 1px solid #27293B;
+  border-radius: 3px;
+  padding-left: 8px;
+  color: rgb(206, 208, 208);
+  width: 100%;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.sectionForm label{
+  font-weight: bold;
+  font-size: 15px;
+  color: hsla(180, 2%, 81%, 100%);
+}
+
+.sectionForm input::placeholder{
+  color: hsla(180, 2%, 81%, 50%);
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.sectionForm input:focus{
+  outline: 1px solid #676A87;
+}
+
+.sectionForm .select span + div:not([aria-hidden="true"]):hover{
+  border: 1px solid #676A87;
+}
+
+.sectionForm .select span + div:is([aria-hidden="true"]):hover{
+  border: unset;
+}
+
+.sectionForm .select *::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+.sectionForm .select *::-webkit-scrollbar {
+  width: 6px;
+  background: transparent;
+}
+.sectionForm .select *::-webkit-scrollbar-thumb {
+  background: #2E2B3B;
+}
+
+
+.sectionForm .buttonToggle{
+  width: 39px;
+  height: 18px;
+  border-radius: 18px;
+  border: 1px solid #27293B;
+  position: relative;
+  background: transparent;
+  cursor: pointer;
+  transition: 300ms linear;
+}
+
+.sectionForm .buttonToggle .buttonToggleText{
+  display: none;
+}
+
+.sectionForm .buttonToggle::before{
+  content: "";
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #27293B;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 3px;
+
+}
+.sectionForm .buttonToggle:hover{
+  border: 1px solid #3E7BFA;
+}
+
+.sectionForm .buttonToggle[aria-pressed="true"]::before{
+  animation: moveRigth 350ms linear forwards;
+}
+.sectionForm .buttonToggle[aria-pressed="false"]::before{
+  animation: moveLeft 350ms linear forwards;
+}
+
+.sectionForm .buttonToggle[aria-pressed="true"]{
+  border-color: #3E7BFA;
+}
+
+@keyframes moveRigth{
+  0%{
+    right: unset;
+    left: 0px;
+  }
+  100%{
+    left: calc(100% - 17px);
+    background: #3E7BFA;
+  }
+}
+
+@keyframes moveLeft {
+  0%{
+    left: unset;
+    right: 0px;
+  }
+  100%{
+    right: calc(100% - 17px);
+  }
+}
+
+.sectionForm .formButtonSave{
+  background: #3E7BFA;
+  color: #fff;
+  border: unset;
+  width: 100%;
+  height: 36px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 32px;
+}

@@ -1,0 +1,31 @@
+*{
+  padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+:root{
+  --bg-color: #1C1A24;
+}
+
+/* Centraliza o conteudo quando em desenvolvimento */
+.dev{
+  background: #ccc;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+html,body,button,input{
+  font-size: 16px;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+img, svg{
+  max-width: 100%;
+  height: auto;
+}
+
+a{
+  text-decoration: unset;
+}

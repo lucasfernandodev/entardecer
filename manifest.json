@@ -7,14 +7,14 @@
     "128": "images/icon.png"
   },
   "action": {
-    "default_popup": "pages/popup/index.html"
+    "default_popup": "src/pages/popup/index.html"
   },
   "description": "Adicione atalhos ou personalize uma nova pagina inicial.",
   "chrome_url_overrides": {
-    "newtab": "pages/homepage/index.html"
+    "newtab": "src/pages/homepage/index.html"
   },
   "content_scripts": [{
-    "js": ["Services/chrome/content-script.tsx"],
+    "js": ["src/Services/chrome/content-script.tsx"],
     "matches": ["*://*/*"]
   }],
   "permissions": ["storage", "contextMenus", "tabs", "activeTab", "scripting"],

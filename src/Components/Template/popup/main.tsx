@@ -3,8 +3,9 @@ import AddShortcut from '../../../Components/Layout/popup/addShortcut';
 import Hero from '../../../Components/Layout/popup/hero';
 import { useState } from 'react';
 import { message } from '../../../types/messages';
+
 import scriptPath from '../../../Services/chrome/content-script?script'
-console.log(scriptPath)
+
 interface data {
   page_title: string;
   url: string;

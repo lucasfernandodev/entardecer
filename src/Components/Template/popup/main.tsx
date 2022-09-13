@@ -68,7 +68,7 @@ function Popup() {
       {dataShortcut === false ? (
         <Hero changeView={() => addShortcut('unset')} />
       ) : (
-        <AddShortcut changeView={navigationBack} data={data ? data : null} />
+        <>{data !== null&& <AddShortcut changeView={navigationBack} data={data} />}</>
       )}
     </main>
   );

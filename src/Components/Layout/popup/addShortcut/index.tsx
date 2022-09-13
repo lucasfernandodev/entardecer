@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Icon from '../../../utils/icon';
 import style from './style.module.css';
 import Select from 'react-select';
+import Favicon from '../../../Atoms/favicon';
 
 interface data {
   page_title: string,
@@ -9,7 +10,8 @@ interface data {
   icon: string,
   page_name: string
 }
-export default function AddShortcut({changeView, data}: {changeView: () => void, data: data | null}){
+export default function AddShortcut({changeView, data}: {changeView: () => void, data: data}){
+  
   const [pressed, isPressed] = useState(false);
 
   function toggleButton() {
@@ -113,7 +115,8 @@ export default function AddShortcut({changeView, data}: {changeView: () => void,
       <section className={style.sectionForm}>
         <div className={style.group}>
           <div className={style.icon}>
-            <img src={data?.icon} alt={data?.page_title} crossOrigin="anonymous" />
+            
+            <Favicon src={data.icon} alt={data.page_title} brightness={0} />
           </div>
           <input type="text" className={style.siteName} placeholder="Website name..." value={data?.page_title}/>
         </div>

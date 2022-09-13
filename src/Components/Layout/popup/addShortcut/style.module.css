@@ -80,20 +80,6 @@
   width: calc(100% - 50px);
 }
 
-.sectionForm .group .icon{
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  background: #27293B;
-}
-
-.sectionForm .group .icon img{
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-}
-
 .sectionForm input{
   height: 32px;
   background: transparent;

@@ -141,14 +141,14 @@ export default function AddShortcut({
             type='text'
             className={style.siteName}
             placeholder='Website name...'
-            value={data?.page_title}
+            defaultValue={data?.page_title}
           />
         </div>
         <input
           type='text'
           className={style.siteUrl}
           placeholder='Website url...'
-          value={data?.page_url}
+          defaultValue={data?.page_url}
         />
         <Select
           captureMenuScroll={false}

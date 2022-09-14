@@ -42,13 +42,13 @@ export default function AddShortcut({
     }),
 
     option: (provided: any, state: any) => {
-      const background = state.isFocused ? '#27293B' : 'var(--bg-color)';
-      return { ...provided, background };
+      const background = state.isFocused ? '#3E7BFA' : 'var(--bg-color)';
+      return { ...provided, background, cursor: "pointer" };
     },
 
     control: (provided: any, state: any) => {
       const border = state.isFocused
-        ? '1px solid #676A87'
+        ? '1px solid #3E7BFA'
         : '1px solid #27293B';
 
       return {
@@ -63,25 +63,35 @@ export default function AddShortcut({
       };
     },
 
-    indicatorSeparator: (provided: any, state: any) => ({
+    indicatorSeparator: (provided: any, state: any) => {
+      const backgroundColor = state.isFocused ? '#27293B' : '#27293B';
+      return {
       ...provided,
-      backgroundColor: '#27293B',
+      backgroundColor: backgroundColor,
       height: 'calc(100% - 8px)',
       marginTop: '3px',
-    }),
+    }},
 
-    indicatorsContainer: (provided: any, state: any) => ({
+    dropdownIndicator: (provided: any, state: any) => {
+      const color = state.isFocused ?'#3E7BFA' : '#27293B'
+      console.log(state)
+      return{
       ...provided,
       margin: 0,
       height: '32px',
       minHeight: '32px',
       border: 'unset',
-    }),
+      cursor: 'pointer',
+      padding: '0px 6px',
+      color
+    }},
 
     valueContainer: (provided: any, state: any) => ({
       ...provided,
       minHeight: '32px',
       paddingTop: 0,
+      paddingBottom: 0,
+      display: 'flex',
     }),
 
     input: (provided: any, state: any) => ({
@@ -90,16 +100,26 @@ export default function AddShortcut({
       margin: 0,
       paddingBottom: 0,
       color: 'hsla(180, 2%, 81%, 100%)',
+
+    }),
+
+    placeholder: (provided: any, state: any) => ({
+      ...provided,
+      color: 'hsla(180, 2%, 81%, 50%)',
+      fontSize: '12px',
+      fontWeight: 'bold',
     }),
 
     menu: (provided: any, state: any) => ({
       ...provided,
       width: '100%',
-      borderBottom: '1px solid #27293B',
+      border: '1px solid #27293B',
       color: 'hsla(180, 2%, 81%, 100%)',
       background: 'var(--bg-color)',
-      height: '115px',
+      height: '125px',
       overflowY: 'scroll',
+      fontSize: "12px",
+      
     }),
 
     singleValue: (provided: any, state: any) => {
@@ -111,6 +131,8 @@ export default function AddShortcut({
         opacity,
         transition,
         color: 'hsla(180, 2%, 81%, 100%)',
+        fontSize: '13px',
+        fontWeight: 'bold',
       };
     },
   };
@@ -159,11 +181,12 @@ export default function AddShortcut({
         />
 
         <div className={style.group}>
-          <label htmlFor=''>Habilitar autoload:</label>
+          <label htmlFor='toggleAutoload'>Habilitar autoload:</label>
           <button
             className={style.buttonToggle}
             aria-pressed={pressed}
             onClick={toggleButton}
+            id="toggleAutoload"
           >
             <span className={style.buttonToggleText}>Toggle func autoload</span>
           </button>

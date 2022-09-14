@@ -2,9 +2,9 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   height: 100%;
-  padding: 16px 24px 24px 24px;
+  padding: 8px 24px 16px 24px;
 }
 
 #form > *:not(.header){
@@ -23,19 +23,18 @@
 .header{
   display: flex;
   gap: 8px;
-  height: 40px;
   align-items: center;
   border-bottom: 1px solid #2E2B3B;
-  padding-bottom: 16px;
   position: relative;
+  height: 40px;
 }
 
 .header h1{
-  font-size: 18px;
+  font-size: 15px;
   display: flex;
   justify-content: center;
   width: 100%;
-  height: 20px;
+  height: 26px;
 }
 
 .header button{
@@ -49,7 +48,7 @@
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: calc(50% - 5px);
+  top: 50%;
   transform: translateY(-50%);
   left: 0;
   padding-bottom: 3px;
@@ -58,7 +57,7 @@
 }
 
 .header button:hover{
-  border: 1px solid #676A87;
+  background: #2E2B3B;
 }
 
 .sectionForm{
@@ -105,15 +104,25 @@
 }
 
 .sectionForm input:focus{
-  outline: 1px solid #676A87;
+  outline: 1px solid #3E7BFA;
+}
+
+
+.sectionForm .select svg:hover{
+  stroke: #3E7BFA !important;
+  fill: #3E7BFA !important;
 }
 
 .sectionForm .select span + div:not([aria-hidden="true"]):hover{
-  border: 1px solid #676A87;
+  border: 1px solid #3E7BFA;
 }
 
 .sectionForm .select span + div:is([aria-hidden="true"]):hover{
   border: unset;
+}
+
+.sectionForm .select span + div:is([aria-hidden="true"]):hover svg{
+  fill: #3E7BFA !important;
 }
 
 .sectionForm .select *::-webkit-scrollbar-track {
@@ -192,7 +201,7 @@
 }
 
 .sectionForm .formButtonSave{
-  background: #3E7BFA;
+  background: linear-gradient(to right,#3E7BFA, #1A49AD);
   color: #fff;
   border: unset;
   width: 100%;
@@ -201,4 +210,11 @@
   cursor: pointer;
   font-weight: bold;
   margin-top: 32px;
+  transition: background 550ms linear;
+}
+
+.sectionForm .formButtonSave:hover{
+  background: linear-gradient(to right, #3E7BFA, #598EFF, #1A49AD);
+  outline-offset: 3px;
+  outline: 1px solid #1A49AD;
 }

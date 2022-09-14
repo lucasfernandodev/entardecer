@@ -104,17 +104,17 @@
 }
 
 .sectionForm input:focus{
-  outline: 1px solid #3E7BFA;
+  outline: 1px solid var(--color-primary);
 }
 
 
 .sectionForm .select svg:hover{
-  stroke: #3E7BFA !important;
-  fill: #3E7BFA !important;
+  stroke: var(--color-primary) !important;
+  fill: var(--color-primary) !important;
 }
 
 .sectionForm .select span + div:not([aria-hidden="true"]):hover{
-  border: 1px solid #3E7BFA;
+  border: 1px solid var(--color-primary);
 }
 
 .sectionForm .select span + div:is([aria-hidden="true"]):hover{
@@ -122,7 +122,7 @@
 }
 
 .sectionForm .select span + div:is([aria-hidden="true"]):hover svg{
-  fill: #3E7BFA !important;
+  fill: var(--color-primary) !important;
 }
 
 .sectionForm .select *::-webkit-scrollbar-track {
@@ -165,7 +165,7 @@
 
 }
 .sectionForm .buttonToggle:hover{
-  border: 1px solid #3E7BFA;
+  border: 1px solid var(--color-primary);
 }
 
 .sectionForm .buttonToggle[aria-pressed="true"]::before{
@@ -176,7 +176,7 @@
 }
 
 .sectionForm .buttonToggle[aria-pressed="true"]{
-  border-color: #3E7BFA;
+  border-color: var(--color-primary);
 }
 
 @keyframes moveRigth{
@@ -186,7 +186,7 @@
   }
   100%{
     left: calc(100% - 17px);
-    background: #3E7BFA;
+    background: var(--color-primary);
   }
 }
 
@@ -201,7 +201,7 @@
 }
 
 .sectionForm .formButtonSave{
-  background: linear-gradient(to right,#3E7BFA, #1A49AD);
+  background: linear-gradient(to right,var(--color-primary), #1A49AD);
   color: #fff;
   border: unset;
   width: 100%;
@@ -214,7 +214,7 @@
 }
 
 .sectionForm .formButtonSave:hover{
-  background: linear-gradient(to right, #3E7BFA, #598EFF, #1A49AD);
+  background: linear-gradient(to right, var(--color-primary), #598EFF, #1A49AD);
   outline-offset: 3px;
   outline: 1px solid #1A49AD;
 }

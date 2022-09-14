@@ -9,13 +9,13 @@ export const selectCustomStyle = {
   }),
 
   option: (provided: any, state: any) => {
-    const background = state.isFocused ? '#3E7BFA' : 'var(--bg-color)';
+    const background = state.isFocused ? 'var(--color-primary)' : 'var(--bg-color)';
     return { ...provided, background, cursor: "pointer" };
   },
 
   control: (provided: any, state: any) => {
     const border = state.isFocused
-      ? '1px solid #3E7BFA'
+      ? '1px solid var(--color-primary)'
       : '1px solid #27293B';
 
     return {
@@ -40,7 +40,7 @@ export const selectCustomStyle = {
   }},
 
   dropdownIndicator: (provided: any, state: any) => {
-    const color = state.isFocused ?'#3E7BFA' : '#27293B'
+    const color = state.isFocused ?'var(--color-primary)' : '#27293B'
 
     return{
     ...provided,
@@ -66,8 +66,13 @@ export const selectCustomStyle = {
     paddingTop: 0,
     margin: 0,
     paddingBottom: 0,
+    position: 'absolute',
+    left: '8px',
+    top: '50%',
+    transform: 'translateY(-50%)',
     color: 'hsla(180, 2%, 81%, 100%)',
-
+      fontSize: '13px',
+      fontWeight: 'bold',
   }),
 
   placeholder: (provided: any, state: any) => ({

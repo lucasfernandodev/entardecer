@@ -3,7 +3,9 @@ import Icon from '../../../utils/icon';
 import style from './style.module.css';
 import Select from 'react-select';
 import Favicon from '../../../Atoms/favicon';
+import '../../../../styles/global.css';
 import { selectCustomStyle } from './selectCustomStyle';
+
 
 interface data {
   page_title: string;

@@ -5,13 +5,19 @@ import Select from 'react-select';
 import Favicon from '../../../Atoms/favicon';
 
 interface data {
-  page_title: string,
-  url: string,
-  icon: string,
-  page_name: string
+  page_title: string;
+  page_url: string;
+  page_url_icon: string | null;
+  page_name: string;
+  isDark?: boolean | null;
 }
-export default function AddShortcut({changeView, data}: {changeView: () => void, data: data}){
-  
+export default function AddShortcut({
+  changeView,
+  data,
+}: {
+  changeView: () => void;
+  data: data;
+}) {
   const [pressed, isPressed] = useState(false);
 
   function toggleButton() {
@@ -23,44 +29,45 @@ export default function AddShortcut({changeView, data}: {changeView: () => void,
     { value: 'Favoritos', label: 'Favoritos' },
     { value: 'Trabalho', label: 'Trabalho' },
     { value: 'Estudo', label: 'Estudo' },
-
   ];
-  
+
   const customStyles = {
-    container:(provided: any, state: any) => ({
+    container: (provided: any, state: any) => ({
       ...provided,
       color: 'hsla(180, 2%, 81%, 100%)',
       background: 'var(--bg-color)',
       height: '32px',
       minHeight: '32px',
-      outline: 'unset'
+      outline: 'unset',
     }),
 
     option: (provided: any, state: any) => {
-      const background =   state.isFocused ? '#27293B' : 'var(--bg-color)'
-      return {  ...provided,background}
+      const background = state.isFocused ? '#27293B' : 'var(--bg-color)';
+      return { ...provided, background };
     },
 
     control: (provided: any, state: any) => {
-      const border = state.isFocused ? '1px solid #676A87' : '1px solid #27293B';
+      const border = state.isFocused
+        ? '1px solid #676A87'
+        : '1px solid #27293B';
 
-      return{
-      ...provided,
-      background: 'var(--bg-color)',
-      margin: 0,
-      height: '32px',
-      minHeight: '32px',
-      border,
-      boxShadow: 'unset',
-      outline: 'unset'
-    }},
+      return {
+        ...provided,
+        background: 'var(--bg-color)',
+        margin: 0,
+        height: '32px',
+        minHeight: '32px',
+        border,
+        boxShadow: 'unset',
+        outline: 'unset',
+      };
+    },
 
-    
     indicatorSeparator: (provided: any, state: any) => ({
       ...provided,
       backgroundColor: '#27293B',
       height: 'calc(100% - 8px)',
-      marginTop: '3px'
+      marginTop: '3px',
     }),
 
     indicatorsContainer: (provided: any, state: any) => ({
@@ -68,10 +75,10 @@ export default function AddShortcut({changeView, data}: {changeView: () => void,
       margin: 0,
       height: '32px',
       minHeight: '32px',
-      border: 'unset'
+      border: 'unset',
     }),
 
-    valueContainer: (provided: any, state: any)=> ({
+    valueContainer: (provided: any, state: any) => ({
       ...provided,
       minHeight: '32px',
       paddingTop: 0,
@@ -95,17 +102,26 @@ export default function AddShortcut({changeView, data}: {changeView: () => void,
       overflowY: 'scroll',
     }),
 
-  
-    singleValue: (provided: any, state:any) => {
+    singleValue: (provided: any, state: any) => {
       const opacity = state.isDisabled ? 0.5 : 1;
       const transition = 'opacity 300ms';
-  
-      return { ...provided, opacity, transition ,       color: 'hsla(180, 2%, 81%, 100%)',};
-    }
-  }
+
+      return {
+        ...provided,
+        opacity,
+        transition,
+        color: 'hsla(180, 2%, 81%, 100%)',
+      };
+    },
+  };
 
   return (
-    <form onSubmit={(evt) => {evt.preventDefault()}} id={style.form}>
+    <form
+      onSubmit={(evt) => {
+        evt.preventDefault();
+      }}
+      id={style.form}
+    >
       <header className={style.header}>
         <button onClick={changeView}>
           <Icon name='arrow_left' />
@@ -115,26 +131,45 @@ export default function AddShortcut({changeView, data}: {changeView: () => void,
       <section className={style.sectionForm}>
         <div className={style.group}>
           <div className={style.icon}>
-            
-            <Favicon src={data.icon} alt={data.page_title} brightness={0} />
+            {data.page_url_icon && <Favicon
+              src={data.page_url_icon}
+              alt={data.page_title}
+              brightness={data.isDark === true ? 1 : 0}
+            />}
           </div>
-          <input type="text" className={style.siteName} placeholder="Website name..." value={data?.page_title}/>
+          <input
+            type='text'
+            className={style.siteName}
+            placeholder='Website name...'
+            value={data?.page_title}
+          />
         </div>
-        <input type="text" className={style.siteUrl} placeholder="Website url..." value={data?.url}/>
+        <input
+          type='text'
+          className={style.siteUrl}
+          placeholder='Website url...'
+          value={data?.page_url}
+        />
         <Select
           captureMenuScroll={false}
           options={options}
           styles={customStyles}
-          placeholder="Selecionar categoria"
+          placeholder='Selecionar categoria'
           className={style.select}
         />
 
         <div className={style.group}>
-          <label htmlFor="">Habilitar autoload:</label>
-          <button className={style.buttonToggle} aria-pressed={pressed} onClick={toggleButton}><span className={style.buttonToggleText}>Toggle func autoload</span></button>
+          <label htmlFor=''>Habilitar autoload:</label>
+          <button
+            className={style.buttonToggle}
+            aria-pressed={pressed}
+            onClick={toggleButton}
+          >
+            <span className={style.buttonToggleText}>Toggle func autoload</span>
+          </button>
         </div>
         <button className={style.formButtonSave}>Salvar</button>
       </section>
     </form>
-  )
+  );
 }

@@ -1,61 +1,84 @@
-import { message } from '../../types/messages';
-import { collectInfomationDom } from '../../utils/collectInfomationDom';
+import { requestMessage } from '../../types/requestMessage';
+import {
+  getBrightness,
+  getIcon,
+  getTitle,
+  getPageName,
+  getUrl,
+} from '../../utils/collectInfomationDom';
 
-chrome.runtime.onMessage.addListener(function (
-  request: message,
-  sender,
-  sendResponse
-) {
-  const messageHead = {
-    from: 'content-script',
-    subject: 'sendDomInformation',
-  };
+interface data {
+  page_title: string;
+  page_url: string;
+  page_url_icon: string | null;
+  page_name: string;
+  isDark?: boolean | null;
+}
 
-  const message: message = {
-    ...messageHead,
-    data: null,
-    error: null,
-  };
-
-  if (request.from === 'popup' && request.subject === 'getDomInformation') {
-    const page_title = document.title || 'Page title not found';
-    const url = window.location.href;
-    const icon = collectInfomationDom.getIcon();
-    const page_name = collectInfomationDom.getPageName();
-
-    if (url === null && typeof url === 'undefined') {
-      message.error = {
-        message: 'Error url is null',
+chrome.runtime.onMessage.addListener(
+  (request: requestMessage, sender, sendResponse) => {
+    if (request.from === 'popup' && request.subject === 'getDomInformation') {
+      // Message Response Model
+      const message: requestMessage = {
+        from: 'content-script',
+        subject: 'sendDomInformation',
+        data: null,
+        error: null,
       };
+
+      const data: data = {
+        page_title: getTitle(),
+        page_url: getUrl().url,
+        page_url_icon: getIcon(),
+        page_name: getPageName(),
+      };
+
+      if (
+        data.page_title === null ||
+        data.page_url === null ||
+        data.page_name === null ||
+        data.page_url_icon === null
+      ) {
+        message.error = {
+          message:
+            '[content-script]: Erro não foi possivel buscar todos os dados',
+        };
+
+        sendResponse(message);
+      }
+
+      getBrightness(data.page_url_icon)
+        .then((response) => {
+         
+          if(response?.error === null){
+            message.data = {
+              ...data,
+              isDark: response.isDark,
+            };
+          }else{
+            message.error = {
+              message: response?.error.message || 'Message Error not encontred'
+            }
+          }
+         
+          sendResponse(message);
+        })
+        .catch((err) => {
+          message.data = {
+            ...data,
+            isDark: null,
+          };
+          
+          message.error = {
+            message: err.msg
+          }
+
+          sendResponse(message);
+        });
     }
 
-    if (icon === null && typeof icon === 'undefined') {
-      message.error = {
-        message: 'Error icon is null',
-      };
-    }
-
-    if (page_title === null && typeof page_title === 'undefined') {
-      message.error = {
-        message: 'Error page_title is null',
-      };
-    }
-
-    if (page_name === null && typeof page_name === 'undefined') {
-      message.error = {
-        message: 'Error page_name is null',
-      };
-    }
-
-    message.data = {
-      page_title,
-      url,
-      icon,
-      page_name: page_name,
-    };
+    return true;
   }
+);
 
-  sendResponse(message);
-});
-
-export {}
+export {};

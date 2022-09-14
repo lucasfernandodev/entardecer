@@ -2,22 +2,23 @@ import style from './style.module.css';
 import AddShortcut from '../../../Components/Layout/popup/addShortcut';
 import Hero from '../../../Components/Layout/popup/hero';
 import { useState } from 'react';
-import { message } from '../../../types/messages';
+import { requestMessage } from '../../../types/requestMessage';
 
 import scriptPath from '../../../Services/chrome/content-script?script'
 
 interface data {
   page_title: string;
-  url: string;
-  icon: string;
+  page_url: string;
+  page_url_icon: string | null;
   page_name: string;
+  isDark?: boolean | null;
 }
 
 function Popup() {
   const [dataShortcut, isDataShortcut] = useState(false);
   const [data, setData] = useState<null | data>(null);
 
-  const messageHead: message = {
+  const messageHead: requestMessage = {
     from: 'popup',
     subject: 'getDomInformation',
   };
@@ -32,23 +33,22 @@ function Popup() {
       (tabs: chrome.tabs.Tab[]) => {
         const id = tabs[0].id || 0;
 
-        chrome.tabs.sendMessage(id, messageHead, function (response: message) {
+        chrome.tabs.sendMessage(id, messageHead, function (response: requestMessage) {
           if (!chrome.runtime.lastError) {
-            if (
-              typeof response.error !== 'undefined' &&
-              response.error === null
-            ) {
+            if (response.error === null || response.data !== null) {
               const data = response.data as data;
               setData(data);
               isDataShortcut(true);
-            } else {
-              console.log('erro', response);
-              console.log('Error ao busar informações do DOM');
+
+              response.error && console.log(response.error.message);
+            }else{
+              console.log(response.error?.message)
             }
           }else{
-            console.log(chrome.runtime.lastError)
-            console.log(`[ERRO]: Mensagem com informações do dom não recebida :)`);
 
+            console.log(`[POPUP]: Erro não foi possivel acessar o script-content`);
+
+            // try to add the content-script to the page again
             if(codeInjection === 'unset'){
        
               chrome.scripting.executeScript({

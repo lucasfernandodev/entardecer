@@ -1,95 +1,108 @@
-export const collectInfomationDom = {
-  getIcon: () => {
-    interface response {
-      icon: null | string;
-    }
+import isImageDark from './isImageDark';
 
-    const response: response = {
-      icon: null,
-    };
 
-    const properties = [
-      'rel="icon"',
-      'rel=icon',
-      'rel="shortcut icon"',
-      'rel="icon shortcut"',
-      'rel="apple-touch-icon"',
-    ];
+export const getIcon = () => {
+  let icon: string | null = null;
 
-    if (!document.querySelector('link[rel=icon]')) {
-      // Search favicons
-      for (const property of properties) {
-        try {
-          const icon = document.querySelectorAll(`link[${property}]`);
+  const properties = [
+    'icon',
+    '"shortcut icon"',
+    '"icon shortcut"',
+    '"apple-touch-icon"',
+  ];
 
-          if (icon.length !== 0) {
-            const currentIcon = icon[icon.length - 1] as HTMLLinkElement;
-            response.icon = currentIcon.href;
-            break;
-          }
-        } catch (error) {
-          // Icon not found
-        }
-      }
+  const isIcon = document.querySelector('link[rel=icon]') as HTMLLinkElement;
 
-      if (response.icon !== null) {
-        return response.icon;
-      } else {
-        // Search icon in <meta>
-        const icon = document.querySelector(
-          `meta[itemprop=image]`
-        ) as HTMLMetaElement;
-        if (icon !== null) {
-          response.icon = `${location.origin}/${icon.content}`; // Add link complet
-        }
-      }
-      return response.icon;
-    } else {
-      const icon = document.querySelector('link[rel=icon]') as HTMLLinkElement;
-      return icon.href;
-    }
-  },
+  if (isIcon) return isIcon.href;
 
-  getTitle: () => {
-    return document.title || null;
-  },
-
-  getUrl: () => {
-    return {
-      origin: window.location.origin || null,
-      url: window.location.href || null,
-      pathname: window.location.pathname || null,
-    };
-  },
-
-  getPageName: () => {
-    const properties: any = [];
-
+  // Search favicons
+  for (const property of properties) {
     try {
-      document.querySelectorAll('meta').forEach((element) => {
-        const property = element.getAttribute('property');
-        const name = element.getAttribute('name');
+      const elements = document.querySelectorAll(`link[rel=${property}]`);
 
-        if (property !== null && property === 'og:site_name') {
-          properties.push(element?.content || null);
-        }
-
-        if (property !== null && property === 'og:title') {
-          properties.push(element?.content || null);
-        }
-
-        if (name === 'twitter:title') {
-          properties.push(element?.content || null);
-        }
-      });
+      if (elements.length !== 0) {
+        const currentIcon = elements[elements.length - 1] as HTMLLinkElement;
+        icon = currentIcon.href;
+        break;
+      }
     } catch (error) {
-      console.log(`error`, error);
+      // Icon not found
     }
+  }
 
-    if (properties.length !== 0) {
-      return properties[0];
-    }
+  if (icon) return icon;
 
-    return null;
-  },
+  // Search icon in <meta>
+  const url = document.querySelector(`meta[itemprop=image]`) as HTMLMetaElement;
+  if (url) {
+    icon = `${location.origin}/${url.content}`;
+  }
+
+  return icon;
+};
+
+
+
+
+
+export const getTitle = () => {
+  return document.title || 'Titlte not found';
+};
+
+
+
+
+
+export const getUrl = () => {
+  return {
+    origin: window.location.origin,
+    url: window.location.href,
+    pathname: window.location.pathname,
+  };
+};
+
+
+
+
+
+export const getPageName = () => {
+  const properties: any = [];
+
+  try {
+    document.querySelectorAll('meta').forEach((element) => {
+      const property = element.getAttribute('property');
+      const name = element.getAttribute('name');
+
+      if (property !== null && property === 'og:site_name') {
+        properties.push(element?.content || null);
+      }
+
+      if (property !== null && property === 'og:title') {
+        properties.push(element?.content || null);
+      }
+
+      if (name === 'twitter:title') {
+        properties.push(element?.content || null);
+      }
+    });
+  } catch (error) {
+    console.log(`error`, error);
+  }
+
+  if (properties.length !== 0) {
+    return properties[0];
+  }
+
+  return document.title;
+};
+
+
+
+
+
+export const getBrightness = async (link: string | null) => {
+  if (link === null) return null;
+  const response = await isImageDark(link);
+
+  return response;
 };

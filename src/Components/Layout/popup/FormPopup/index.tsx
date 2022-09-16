@@ -1,11 +1,9 @@
 import { useState } from 'react';
 import Icon from '../../../utils/icon';
 import style from './style.module.css';
-import Select from 'react-select';
 import Favicon from '../../../Atoms/favicon';
 import '../../../../styles/global.css';
-import { selectCustomStyle } from './selectCustomStyle';
-
+import Select from '../../../Atoms/Select';
 
 interface data {
   page_title: string;
@@ -15,13 +13,12 @@ interface data {
   isDark?: boolean | null;
 }
 
-interface AddShortcut{
+interface AddShortcut {
   changeView: () => void;
   data: data;
 }
 
-function FormPopup({changeView,data,}: AddShortcut) {
-  
+function FormPopup({ changeView, data }: AddShortcut) {
   const [pressed, isPressed] = useState(false);
 
   function toggleButton() {
@@ -72,13 +69,8 @@ function FormPopup({changeView,data,}: AddShortcut) {
           placeholder='Website url...'
           defaultValue={data?.page_url}
         />
-        <Select
-          captureMenuScroll={false}
-          options={options}
-          styles={selectCustomStyle}
-          placeholder='Selecionar categoria'
-          className={style.select}
-        />
+
+        <Select Options={options} className={style.select} />
 
         <div className={style.group}>
           <label htmlFor='toggleAutoload'>Habilitar autoload:</label>

@@ -3,7 +3,7 @@ import Icon from '../../../utils/icon';
 import { useEffect, useState } from 'react';
 import { getCurrentTab } from '../../../../utils/getcurrentTab';
 
-export default function Hero({changeView}: {changeView: () => void}) {
+export default function Hero({ changeView }: { changeView: () => void }) {
   const [pressed, isPressed] = useState(true);
   const [inValidPage, setInValidPage] = useState(false);
 
@@ -12,16 +12,15 @@ export default function Hero({changeView}: {changeView: () => void}) {
   }
 
   useEffect(() => {
-    ;(async() => {
-     
-      const currentTab = await getCurrentTab();
-      if(typeof currentTab !== 'undefined' && currentTab?.title !== 'undefined'){
-        if(!currentTab.url?.includes("chrome://")){
-          setInValidPage(true)
+    (async () => {
+      const tab = await getCurrentTab();
+      if (typeof tab !== 'undefined' && tab?.title !== 'undefined') {
+        if (!tab.url?.includes('chrome://')) {
+          setInValidPage(true);
         }
       }
     })();
-  }, [])
+  }, []);
 
   return (
     <div id={style.hero}>
@@ -32,10 +31,11 @@ export default function Hero({changeView}: {changeView: () => void}) {
       <section className={style.navigation}>
         <ul className={style.menu}>
           <li className={style.menuItem}>
-            <a href='#' 
-            className={style.menuLink} 
-            data-state={inValidPage}
-            onClick={inValidPage ? changeView : () => {}}
+            <a
+              href='#'
+              className={style.menuLink}
+              data-state={inValidPage}
+              onClick={inValidPage ? changeView : () => {}}
             >
               <Icon name='shortcut' />
               <span>Adicionar atalho</span>

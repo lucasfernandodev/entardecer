@@ -1,4 +1,4 @@
-export const selectCustomStyle = {
+export const style = {
   container: (provided: any, state: any) => ({
     ...provided,
     color: 'hsla(180, 2%, 81%, 100%)',

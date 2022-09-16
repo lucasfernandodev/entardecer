@@ -22,7 +22,7 @@ function Popup() {
     }
   }, [data]);
 
-  function addShortcut() {
+  function swichPage() {
     getPageInformation((data) => {
       setData(data);
     });
@@ -35,7 +35,7 @@ function Popup() {
   return (
     <main className={style.main}>
       {dataShortcut === false ? (
-        <Hero changeView={addShortcut} />
+        <Hero changeView={swichPage} />
       ) : (
         <>
           {data !== null && (

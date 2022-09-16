@@ -28,7 +28,10 @@
   border-bottom: 1px solid #2E2B3B;
   padding-bottom: 16px;
 }
-
+.header img{
+  max-width: 32px;
+  height: auto;
+}
 .header h1{
   font-size: 16px;
 }
@@ -78,6 +81,24 @@
   color: hsla(240, 16%, 85%, 100%);
   stroke-opacity: 1;
   stroke: hsla(240, 16%, 85%, 100%);
+}
+
+.navigation .menu .menuItem .menuLink[data-state="false"]{
+  cursor: default;
+  user-select: none;
+  opacity: 0.3;
+}
+
+.navigation .menu .menuItem .menuLink[data-state="false"]:hover{
+  background-color: unset;
+}
+
+.navigation .menu .menuItem .menuLink[data-state="false"]:hover span, 
+.navigation .menu .menuItem .menuLink[data-state="false"]:hover svg,
+.navigation .menu .menuItem .menuLink[data-state="false"]:hover svg *{
+  color: hsla(240, 16%, 85%, 75%);
+  stroke-opacity: unset;
+  stroke: hsla(240, 16%, 85%, 75%);
 }
 
 .footer .btnToggleTheme {

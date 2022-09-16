@@ -9,8 +9,10 @@ export const selectCustomStyle = {
   }),
 
   option: (provided: any, state: any) => {
-    const background = state.isFocused ? 'var(--color-primary)' : 'var(--bg-color)';
-    return { ...provided, background, cursor: "pointer" };
+    const background = state.isFocused
+      ? 'var(--color-primary)'
+      : 'var(--bg-color)';
+    return { ...provided, background, cursor: 'pointer' };
   },
 
   control: (provided: any, state: any) => {
@@ -33,25 +35,27 @@ export const selectCustomStyle = {
   indicatorSeparator: (provided: any, state: any) => {
     const backgroundColor = state.isFocused ? '#27293B' : '#27293B';
     return {
-    ...provided,
-    backgroundColor: backgroundColor,
-    height: 'calc(100% - 8px)',
-    marginTop: '3px',
-  }},
+      ...provided,
+      backgroundColor: backgroundColor,
+      height: 'calc(100% - 8px)',
+      marginTop: '3px',
+    };
+  },
 
   dropdownIndicator: (provided: any, state: any) => {
-    const color = state.isFocused ?'var(--color-primary)' : '#27293B'
+    const color = state.isFocused ? 'var(--color-primary)' : '#27293B';
 
-    return{
-    ...provided,
-    margin: 0,
-    height: '32px',
-    minHeight: '32px',
-    border: 'unset',
-    cursor: 'pointer',
-    padding: '0px 6px',
-    color
-  }},
+    return {
+      ...provided,
+      margin: 0,
+      height: '32px',
+      minHeight: '32px',
+      border: 'unset',
+      cursor: 'pointer',
+      padding: '0px 6px',
+      color,
+    };
+  },
 
   valueContainer: (provided: any, state: any) => ({
     ...provided,
@@ -71,8 +75,8 @@ export const selectCustomStyle = {
     top: '50%',
     transform: 'translateY(-50%)',
     color: 'hsla(180, 2%, 81%, 100%)',
-      fontSize: '13px',
-      fontWeight: 'bold',
+    fontSize: '13px',
+    fontWeight: 'bold',
   }),
 
   placeholder: (provided: any, state: any) => ({
@@ -90,8 +94,7 @@ export const selectCustomStyle = {
     background: 'var(--bg-color)',
     height: '125px',
     overflowY: 'scroll',
-    fontSize: "12px",
-    
+    fontSize: '12px',
   }),
 
   singleValue: (provided: any, state: any) => {

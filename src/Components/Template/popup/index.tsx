@@ -1,6 +1,6 @@
 import style from './style.module.css';
-import AddShortcut from '../../../Components/Layout/popup/addShortcut';
-import Hero from '../../../Components/Layout/popup/hero';
+import FormPopup from '../../Layout/popup/FormPopup';
+import Hero from '../../Layout/popup/hero';
 import { useEffect, useState } from 'react';
 import getPageInformation from './getPageInformations';
 
@@ -35,11 +35,11 @@ function Popup() {
   return (
     <main className={style.main}>
       {dataShortcut === false ? (
-        <Hero changeView={() => addShortcut()} />
+        <Hero changeView={addShortcut} />
       ) : (
         <>
           {data !== null && (
-            <AddShortcut changeView={navigationBack} data={data} />
+            <FormPopup changeView={navigationBack} data={data} />
           )}
         </>
       )}

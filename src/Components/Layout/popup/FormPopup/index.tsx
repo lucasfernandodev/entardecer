@@ -20,7 +20,7 @@ interface AddShortcut{
   data: data;
 }
 
-function AddShortcut({changeView,data,}: AddShortcut) {
+function FormPopup({changeView,data,}: AddShortcut) {
   
   const [pressed, isPressed] = useState(false);
 
@@ -97,4 +97,4 @@ function AddShortcut({changeView,data,}: AddShortcut) {
   );
 }
 
-export default AddShortcut;
+export default FormPopup;

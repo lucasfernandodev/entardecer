@@ -1,15 +1,5 @@
-<svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g clip-path="url(#clip0_97_1816)">
-<path d="M19 33.25C26.8701 33.25 33.25 26.8701 33.25 19C33.25 11.1299 26.8701 4.75 19 4.75C11.1299 4.75 4.75 11.1299 4.75 19C4.75 26.8701 11.1299 33.25 19 33.25Z" stroke="#D3D3DF" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M20.5833 19H28.4999" stroke="#D3D3DF" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M20.5833 23.75H26.9166" stroke="#D3D3DF" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M20.5833 28.5H22.1666" stroke="#D3D3DF" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M20.5833 14.25H26.9166" stroke="#D3D3DF" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M20.5833 9.5H22.1666" stroke="#D3D3DF" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
-</g>
-<defs>
-<clipPath id="clip0_97_1816">
-<rect width="38" height="38" fill="white"/>
-</clipPath>
-</defs>
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M18.454 91.779C13.5396 88.9258 11.8494 82.6177 14.6789 77.6896L45.5899 23.8512C48.4194 18.923 54.6971 17.241 59.6115 20.0942L113.102 51.149C118.016 54.0023 119.706 60.3103 116.877 65.2384L85.9657 119.077C83.1362 124.005 76.8585 125.687 71.9441 122.834L18.454 91.779Z" fill="#F0F0F0"/>
+<path d="M13.8984 76.8509C8.98395 73.9977 7.29374 67.6897 10.1232 62.7615L41.0343 8.92315C43.8637 3.99499 50.1414 2.31291 55.0559 5.16612L108.546 36.221C113.46 39.0742 115.151 45.3823 112.321 50.3104L81.4101 104.149C78.5806 109.077 72.3029 110.759 67.3884 107.906L13.8984 76.8509Z" fill="#3E7BFA"/>
+<path d="M83.4565 90.5346C83.4565 97.7312 77.6644 103.504 70.5948 103.504C63.5251 103.504 57.733 97.7312 57.733 90.5346C57.733 83.338 63.5251 77.5652 70.5948 77.5652C77.6644 77.5652 83.4565 83.338 83.4565 90.5346Z" stroke="#F0F0F0" stroke-width="12.8617"/>
 </svg>

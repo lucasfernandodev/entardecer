@@ -44,8 +44,6 @@ function FormPopup({ changeView, data }: AddShortcut) {
     evt.preventDefault();
     setMsgError('');
 
- 
-
     const errors = [];
     const form = evt.target as HTMLFormElement;
 

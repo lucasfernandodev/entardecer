@@ -22,6 +22,7 @@ chrome.runtime.onMessage.addListener(
       const message: requestMessage = {
         from: 'content-script',
         subject: 'sendDomInformation',
+        to: 'popup',
         data: null,
         error: null,
       };

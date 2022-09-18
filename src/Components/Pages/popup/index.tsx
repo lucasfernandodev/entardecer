@@ -21,7 +21,7 @@ function Popup() {
     }
   }, [data]);
 
-  async function swichPage() {
+  async function getDomInformation() {
 
     const request = await message.send({
       from: 'popup',
@@ -48,7 +48,7 @@ function Popup() {
     return <FormPopup changeView={navigationBack} data={data} />;
   }
 
-  return <Hero changeView={swichPage} />;
+  return <Hero changeView={getDomInformation} />;
 }
 
 export default Popup;

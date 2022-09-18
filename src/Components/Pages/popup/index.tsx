@@ -1,7 +1,7 @@
 import FormPopup from '../../Template/popup/FormPopup';
 import Hero from '../../Template/popup/hero';
 import { useEffect, useState } from 'react';
-import getPageInformation from './getPageInformations';
+import { message } from '../../../Services/chrome/message';
 
 interface data {
   page_title: string;
@@ -21,10 +21,23 @@ function Popup() {
     }
   }, [data]);
 
-  function swichPage() {
-    getPageInformation((data) => {
-      setData(data);
+  async function swichPage() {
+
+    const request = await message.send({
+      from: 'popup',
+      to: 'script-page',
+      subject: 'getDomInformation',
     });
+
+    const response = await request;
+
+    if (response.error === null || response.data !== null) {
+      const data = response.data as data;
+      setData(data);
+      response.error && console.log(response.error.message);
+    }else{
+      console.log(response.error?.message)
+    }
   }
 
   function navigationBack() {

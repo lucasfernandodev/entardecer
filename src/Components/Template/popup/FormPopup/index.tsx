@@ -7,6 +7,7 @@ import Select from '../../../Atoms/Select';
 import { isValidHttpUrl } from '../../../../utils/isValidHttpUrl';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../../../Atoms/Layout';
+import { storage } from '../../../../Services/chrome/storage';
 
 interface data {
   page_title: string;
@@ -168,15 +169,16 @@ function FormPopup({ changeView, data }: AddShortcut) {
               aria-pressed={pressed}
               onClick={toggleButton}
               id='website_autoload'
+              type='button'
             >
               <span className={style.buttonToggleText}>
-                Toggle func autoload
+                Ativar/desativar autoload
               </span>
             </button>
           </div>
 
           <span className={style.msgError}>{msgError}</span>
-          <button className={style.formButtonSave}>Salvar</button>
+          <button className={style.formButtonSave} type="submit">Salvar</button>
         </section>
       </form>
     </Layout>

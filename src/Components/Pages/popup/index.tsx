@@ -2,6 +2,7 @@ import FormPopup from '../../Template/popup/FormPopup';
 import Hero from '../../Template/popup/hero';
 import { useEffect, useState } from 'react';
 import { message } from '../../../Services/chrome/message';
+import configStorage from '../../../utils/configStorage';
 
 interface data {
   page_title: string;
@@ -15,6 +16,10 @@ function Popup() {
   const [dataShortcut, isDataShortcut] = useState(false);
   const [data, setData] = useState<null | data>(null);
 
+  useEffect(() => {
+    configStorage()
+  }, [])
+  
   useEffect(() => {
     if (data !== null) {
       isDataShortcut(true);

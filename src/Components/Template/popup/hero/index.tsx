@@ -21,6 +21,8 @@ export default function Hero({ changeView }: { changeView: () => void }) {
         }
       }
     })();
+
+
   }, []);
 
   return (

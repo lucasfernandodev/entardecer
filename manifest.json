@@ -27,7 +27,8 @@
       "resources": [
         "images/icons/sucess.svg",
         "images/icons/info.svg",
-        "images/icons/error.svg"
+        "images/icons/error.svg",
+        "images/error.svg"
       ],
       "matches": ["https://*/*"]
     }

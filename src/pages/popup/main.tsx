@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import Popup from '../../Components/Pages/popup';
 import '../../styles/global.css';
-import {FormError, FormSucess} from '../../Components/Template/popup/FormMessage';
+import {FormError, FormSuccess} from '../../Components/Template/popup/FormMessage';
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -10,7 +10,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <Router>
       <Routes>
         <Route path='/' element={<Popup />} />
-        <Route path='/sucess' element={<FormSucess />} />
+        <Route path='/success' element={<FormSuccess />} />
         <Route path='/error' element={<FormError />} />
       </Routes>
     </Router>

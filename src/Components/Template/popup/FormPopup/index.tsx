@@ -116,7 +116,7 @@ function FormPopup({ changeView, data }: AddShortcut) {
       autoload: inputs.autoload?.getAttribute('aria-pressed'),
     };
 
-    navigate('/error');
+    navigate('/success');
   }
 
   return (

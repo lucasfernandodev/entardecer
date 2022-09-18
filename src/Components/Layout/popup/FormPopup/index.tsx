@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import React, { HTMLAttributes, useState } from 'react';
 import Icon from '../../../utils/icon';
 import style from './style.module.css';
 import Favicon from '../../../Atoms/favicon';
 import '../../../../styles/global.css';
 import Select from '../../../Atoms/Select';
+import { isValidHttpUrl } from '../../../../utils/isValidHttpUrl';
 
 interface data {
   page_title: string;
@@ -18,27 +19,112 @@ interface AddShortcut {
   data: data;
 }
 
+interface inputs {
+  [key : string]: HTMLInputElement | null
+}
+
+const options = [
+  { value: 'Principal', label: 'Principal' },
+  { value: 'Favoritos', label: 'Favoritos' },
+  { value: 'Trabalho', label: 'Trabalho' },
+  { value: 'Estudo', label: 'Estudo' },
+];
+
+
 function FormPopup({ changeView, data }: AddShortcut) {
   const [pressed, isPressed] = useState(false);
+
+  const [msgError, setMsgError] = useState<string>('');
 
   function toggleButton() {
     isPressed(!pressed);
   }
 
-  const options = [
-    { value: 'Principal', label: 'Principal' },
-    { value: 'Favoritos', label: 'Favoritos' },
-    { value: 'Trabalho', label: 'Trabalho' },
-    { value: 'Estudo', label: 'Estudo' },
-  ];
+  function handlerSubmit(evt: React.FormEvent<HTMLFormElement>) {
+    evt.preventDefault();
+    setMsgError('');
+
+ 
+
+    const errors = [];
+    const form = evt.target as HTMLFormElement;
+
+    const inputs: inputs = {
+      title: form.querySelector('#website_title'),
+      url: form.querySelector('#website_url'),
+      category: form.querySelector('#website_category'),
+      autoload: form.querySelector('#website_autoload'),
+    };
+
+
+    for(let i = 0; i < Object.keys(inputs).length; i++){
+      const inputsName = Object.keys(inputs);
+
+      const input: any = inputs[inputsName[i]];
+      input.classList.remove(style.invalid)
+
+      if(inputsName[i] === 'title'){
+        if(input.value === ''){
+          errors.push({
+            el: input,
+            message: 'O campo title não pode ficar em branco'
+          })
+        }
+
+        if(input.value.lenght < 4){
+          errors.push({
+            el: input,
+            message: 'O campo title deve ter no minimo 4 letras'
+          })
+        }
+
+        if(input.value.lenght > 32){
+          errors.push({
+            el: input,
+            message: 'O campo title deve ter no maximo 32 letras'
+          })
+        }
+      }
+
+      if(inputsName[i] === 'url'){
+        
+        if(input.value === ''){
+          errors.push({
+            el: input,
+            message: 'O campo url não pode ficar em branco'
+          })
+        }
+
+        if(!isValidHttpUrl(input.value)){
+          errors.push({
+            el: input,
+            message: 'O campo url digitado é invalido'
+          })
+        }
+      }
+
+    }
+
+    if(errors.length !== 0){
+      const elError = errors[0].el;
+
+      elError.classList.add(style.invalid);
+      setMsgError(errors[0].message)
+      return;
+    }
+
+    const data = {
+      title: inputs.title?.value,
+      url: inputs.url?.value,
+      category: inputs.category?.value || 'others',
+      autoload: inputs.autoload?.getAttribute('aria-pressed'),
+    }
+
+    console.log(data)
+  }
 
   return (
-    <form
-      onSubmit={(evt) => {
-        evt.preventDefault();
-      }}
-      id={style.form}
-    >
+    <form onSubmit={handlerSubmit} id={style.form}>
       <header className={style.header}>
         <button onClick={changeView}>
           <Icon name='arrow_left' />
@@ -61,6 +147,7 @@ function FormPopup({ changeView, data }: AddShortcut) {
             className={style.siteName}
             placeholder='Website name...'
             defaultValue={data?.page_title}
+            id='website_title'
           />
         </div>
         <input
@@ -68,21 +155,28 @@ function FormPopup({ changeView, data }: AddShortcut) {
           className={style.siteUrl}
           placeholder='Website url...'
           defaultValue={data?.page_url}
+          id='website_url'
         />
 
-        <Select Options={options} className={style.select} />
+        <Select
+          Options={options}
+          className={style.select}
+          id='website_category'
+        />
 
         <div className={style.group}>
-          <label htmlFor='toggleAutoload'>Habilitar autoload:</label>
+          <label htmlFor='website_autoload'>Habilitar autoload:</label>
           <button
             className={style.buttonToggle}
             aria-pressed={pressed}
             onClick={toggleButton}
-            id='toggleAutoload'
+            id='website_autoload'
           >
             <span className={style.buttonToggleText}>Toggle func autoload</span>
           </button>
         </div>
+
+        <span className={style.msgError}>{msgError}</span>
         <button className={style.formButtonSave}>Salvar</button>
       </section>
     </form>

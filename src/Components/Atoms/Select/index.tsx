@@ -1,15 +1,17 @@
 import {style} from './style';
 import ReactSelect, { Options } from 'react-select';
+import { ReactElement } from 'react';
 
 type options = Options<{}>
 
-type SelectInterface ={
+interface SelectInterface{
   Options: options,
-  className: string | undefined
+  className: string | undefined,
+  id: string | undefined
 }
 
 
-const Select: React.FC<SelectInterface> = ({Options,className}) => {
+const Select: React.FC<SelectInterface> = ({Options,className, id}) => {
 
   return (
     <ReactSelect
@@ -18,6 +20,7 @@ const Select: React.FC<SelectInterface> = ({Options,className}) => {
       styles={style}
       placeholder='Selecionar categoria'
       className={className}
+      id={id}
     />
   )
 }

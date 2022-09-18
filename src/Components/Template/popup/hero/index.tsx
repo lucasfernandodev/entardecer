@@ -2,6 +2,7 @@ import style from './style.module.css';
 import Icon from '../../../utils/icon';
 import { useEffect, useState } from 'react';
 import { getCurrentTab } from '../../../../utils/getcurrentTab';
+import Layout from '../../../Atoms/Layout';
 
 export default function Hero({ changeView }: { changeView: () => void }) {
   const [pressed, isPressed] = useState(true);
@@ -23,7 +24,8 @@ export default function Hero({ changeView }: { changeView: () => void }) {
   }, []);
 
   return (
-    <div id={style.hero}>
+   <Layout>
+     <div id={style.hero}>
       <header className={style.header}>
         <img src='/images/logo.svg' alt='Logo entardecer' />
         <h1>Entardecer</h1>
@@ -80,5 +82,6 @@ export default function Hero({ changeView }: { changeView: () => void }) {
         </div>
       </footer>
     </div>
+   </Layout>
   );
 }

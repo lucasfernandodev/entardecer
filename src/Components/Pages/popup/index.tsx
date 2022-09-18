@@ -1,6 +1,5 @@
-import style from './style.module.css';
-import FormPopup from '../../Layout/popup/FormPopup';
-import Hero from '../../Layout/popup/hero';
+import FormPopup from '../../Template/popup/FormPopup';
+import Hero from '../../Template/popup/hero';
 import { useEffect, useState } from 'react';
 import getPageInformation from './getPageInformations';
 
@@ -32,19 +31,11 @@ function Popup() {
     isDataShortcut(!dataShortcut);
   }
 
-  return (
-    <main className={style.main}>
-      {dataShortcut === false ? (
-        <Hero changeView={swichPage} />
-      ) : (
-        <>
-          {data !== null && (
-            <FormPopup changeView={navigationBack} data={data} />
-          )}
-        </>
-      )}
-    </main>
-  );
+  if (data !== null && dataShortcut === true) {
+    return <FormPopup changeView={navigationBack} data={data} />;
+  }
+
+  return <Hero changeView={swichPage} />;
 }
 
 export default Popup;

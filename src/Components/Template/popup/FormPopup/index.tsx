@@ -8,6 +8,7 @@ import { isValidHttpUrl } from '../../../../utils/isValidHttpUrl';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../../../Atoms/Layout';
 import { storage } from '../../../../Services/chrome/storage';
+import {db} from '../../../../Services/chrome/database';
 
 interface data {
   page_title: string;
@@ -26,12 +27,10 @@ interface inputs {
   [key: string]: HTMLInputElement | null;
 }
 
-const options = [
-  { value: 'Principal', label: 'Principal' },
-  { value: 'Favoritos', label: 'Favoritos' },
-  { value: 'Trabalho', label: 'Trabalho' },
-  { value: 'Estudo', label: 'Estudo' },
-];
+const options = storage.read('category').data.map((item: string) => {
+  return {value: item, label: `${item[0].toUpperCase()}${item.slice(1,item.length)}`}
+})
+
 
 function FormPopup({ changeView, data }: AddShortcut) {
   const navigate = useNavigate();
@@ -42,7 +41,8 @@ function FormPopup({ changeView, data }: AddShortcut) {
     isPressed(!pressed);
   }
 
-  function handlerSubmit(evt: React.FormEvent<HTMLFormElement>) {
+  async function handlerSubmit(evt: React.FormEvent<HTMLFormElement>) {
+
     evt.preventDefault();
     setMsgError('');
 
@@ -110,14 +110,23 @@ function FormPopup({ changeView, data }: AddShortcut) {
       return;
     }
 
-    const data = {
-      title: inputs.title?.value,
-      url: inputs.url?.value,
+    const item = {
+      title: inputs.title?.value as string,
+      url: inputs.url?.value as string,
       category: inputs.category?.value || 'others',
-      autoload: inputs.autoload?.getAttribute('aria-pressed'),
+      autoload: inputs.autoload?.getAttribute('aria-pressed') as string,
+      darkType: data.isDark as boolean
     };
 
-    navigate('/success');
+    const database = await db();
+    if(database){
+      const addItem = await database.getAllFromIndex('website', 'by-url', item.url);
+      if(addItem.length === 0){
+        const save = await database.add('website', item);
+        console.log(save)
+      }
+      console.log(addItem)
+    }
   }
 
   return (

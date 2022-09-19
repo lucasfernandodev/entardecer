@@ -115,18 +115,19 @@ function FormPopup({ changeView, data }: AddShortcut) {
       url: inputs.url?.value as string,
       category: inputs.category?.value || 'others',
       autoload: inputs.autoload?.getAttribute('aria-pressed') as string,
-      darkType: data.isDark as boolean
+      darkType: data.isDark as boolean,
+      url_favicon: data.page_url_icon ? data.page_url_icon : null
     };
 
     const database = await db();
-    // if(database){
-    //   const addItem = await database.getAllFromIndex('website', 'by-url', item.url);
-    //   if(addItem.length === 0){
-    //     const save = await database.add('website', item);
-    //     console.log(save)
-    //   }
-    //   console.log(addItem)
-    // }
+    if(database){
+      const isItem = await database.getAllFromIndex('website', 'by-url', item.url);
+      if(isItem.length === 0){
+        const save = await database.add('website', item);
+        console.log(save)
+      }
+      console.log(isItem)
+    }
   }
 
   return (

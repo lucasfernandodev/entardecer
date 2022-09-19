@@ -1,8 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import Homepage from '../../Components/Pages/Homepage'
+import '../../styles/global.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <h1>Estou na Homepage</h1>
+    <Homepage />
   </React.StrictMode>
 )

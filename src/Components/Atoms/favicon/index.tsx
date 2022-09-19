@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useOnLoadImages } from '../../../hooks/useOnLoadImages';
+import { getCurrentTab } from '../../../utils/getcurrentTab';
 import style from './style.module.css';
 
 interface Favicon {
@@ -37,15 +38,15 @@ export default function Favicon({ src, alt, brightness }: Favicon) {
 
   return (
     <div className={style.favicon} ref={wrapperRef} data-state={state}>
-      <img
+     { <img
         src={`${src}?${new Date().getTime()}`}
         alt={alt}
         className={style.faviconImage}
         style={{ filter: `invert(${brightness})` }}
         ref={imageElement}
         data-state={state}
-        crossOrigin='anonymous'
-      />
+        // crossOrigin='anonymous'
+      />}
       {state === 'broken' && (
         <span className={style.alternativeImage}>{alt[0]}</span>
       )}

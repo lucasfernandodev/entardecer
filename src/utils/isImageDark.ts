@@ -22,8 +22,8 @@ function isImageDark(link: string): Promise<isImageDarkResponse> {
 
       reject(response);
     }
-
-
+  
+  
     let fuzzy = 0.1;
 
     let img = document.createElement('img');

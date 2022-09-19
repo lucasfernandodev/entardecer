@@ -3,11 +3,12 @@ import { openDB, DBSchema } from 'idb';
 interface MyDB extends DBSchema {
   website: {
     value: {
-      title: string;
-      category: string;
+      title: string,
+      category: string,
       url: string,
       autoload: string,
-      darkType: boolean;
+      darkType: boolean,
+      url_favicon: string | null
     };
     key: string;
     indexes: { 'by-url': string ,'by-category': string};

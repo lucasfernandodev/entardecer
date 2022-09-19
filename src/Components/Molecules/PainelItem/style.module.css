@@ -1,0 +1,37 @@
+.card{
+  width: 114px;
+  height: 116px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.card .card_image{
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background: #1C1A24;
+  margin: 0 auto;
+  outline: 2px solid #353B48;
+  outline-offset: 3px;
+  cursor: pointer;
+}
+
+.card h3{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  display: block;
+  text-align: center;
+  font-size: 16px;
+}
+
+.card .card_image:hover{
+  outline: 2px solid #3E7BFA;
+}

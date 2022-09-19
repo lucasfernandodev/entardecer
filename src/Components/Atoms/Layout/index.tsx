@@ -1,8 +1,12 @@
 import style from './style.module.css';
 
-export default function Layout({children}: {children: React.ReactNode}){
+interface Layout{
+  children: React.ReactNode,
+  large?: 'full' | 'md'
+}
+export default function Layout({children, large = 'md'}: Layout){
   return (
-    <main className={style.main}>
+    <main className={style.main} data-size={large}>
       {children}
     </main>
   )

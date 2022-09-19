@@ -16,6 +16,7 @@
   "chrome_url_overrides": {
     "newtab": "pages/homepage/index.html"
   },
+  "options_page": "pages/configurations/index.html",
   "content_scripts": [{
     "js": ["Services/chrome/content-script.tsx"],
     "matches": ["*://*/*"]

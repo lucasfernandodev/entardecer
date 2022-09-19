@@ -52,7 +52,7 @@ export default function Hero({ changeView }: { changeView: () => void }) {
             </a>
           </li>
           <li className={style.menuItem}>
-            <a href='#' className={style.menuLink}>
+            <a target="_blank" href={`${chrome.runtime.getURL('pages/configurations/index.html')}`} className={style.menuLink}>
               <Icon name='config' />
               <span>Configurações</span>
             </a>

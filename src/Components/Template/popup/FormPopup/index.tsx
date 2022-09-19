@@ -119,14 +119,14 @@ function FormPopup({ changeView, data }: AddShortcut) {
     };
 
     const database = await db();
-    if(database){
-      const addItem = await database.getAllFromIndex('website', 'by-url', item.url);
-      if(addItem.length === 0){
-        const save = await database.add('website', item);
-        console.log(save)
-      }
-      console.log(addItem)
-    }
+    // if(database){
+    //   const addItem = await database.getAllFromIndex('website', 'by-url', item.url);
+    //   if(addItem.length === 0){
+    //     const save = await database.add('website', item);
+    //     console.log(save)
+    //   }
+    //   console.log(addItem)
+    // }
   }
 
   return (

@@ -31,7 +31,7 @@
   width: 100%;
   display: block;
   text-align: center;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .card .card_image:hover{
@@ -39,13 +39,24 @@
 }
 
 .card[data-edit="true"] .card_image{
-  filter: hue-rotate(-70deg);
+  cursor: default;
+}
+
+.card[data-edit="true"] img{
   cursor: default;
   transition: 350ms linear;
 }
 
 .card[data-edit="true"] .card_image:hover{
-  outline: 2px solid #353B48;
+  outline: 2px solid #fc5c65;
+}
+
+.card .buttonClose:hover ~ a{
+  outline: 2px solid #fc5c65;
+}
+
+.card[data-edit="true"] h3{
+  color: hsla(240, 16%, 85%, 75%);
 }
 
 .card .buttonClose{
@@ -66,10 +77,6 @@
   background: #eb3b5a;
   top: -7px;
   right: 3px;
-}
-
-.card .buttonClose:hover ~ a{
-  filter: hue-rotate(70deg);
 }
 
 .card .buttonClose span{

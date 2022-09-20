@@ -4,12 +4,17 @@ import PainelItem from '../../Molecules/PainelItem';
 import Icon from '../../utils/icon';
 import style from './style.module.css';
 
+
+
 export default function Painel() {
 
   const [data, setData] = useState([]);
+  const [optionsVisibility, setOptionsVisibility] = useState(false);
+  const [itemEdit, setItemEdit] = useState(false);
+  const [update, setUpdate] = useState<string>('');
   useEffect(() => {
     getData()
-  }, [])
+  }, [update])
 
 
   async function getData(){
@@ -19,14 +24,30 @@ export default function Painel() {
     setData(data)
   }
 
-console.log(data)
+  function toggleItensEdit(){
+    setOptionsVisibility(false)
+    setItemEdit(!itemEdit)
+  }
+
+  function PainelOption(){
+    return (
+      <ul className={style.painelOption_suspend}>
+        <li className={style.painelOption_item}><button onClick={toggleItensEdit}>Editar</button></li>
+        <li className={style.painelOption_item}><button>Configurações</button></li>
+      </ul>
+    )
+  }
+
   return (
     <main className={style.painel}>
       <header className={style.header}>
         <div className={style.painelOptions}>
-          <button>
+          <button onClick={() => setOptionsVisibility(!optionsVisibility)}
+          data-focus={optionsVisibility} 
+          className={style.buttonToggleOption}>
             <Icon name='dots' />
           </button>
+          {optionsVisibility && <PainelOption />}
         </div>
         <div className={style.painelTitle}>
           <h3>Atalhos</h3>
@@ -44,8 +65,7 @@ console.log(data)
 
       <section className={style.section}>
         {data && data.map((item: any, index:number) => {
-          console.log(item)
-          return (<PainelItem isDark={item.darkType}key={index} url_image={item.url_favicon} title={item.title} url={item.url}/>)
+          return (<PainelItem onClick={setUpdate} edit={itemEdit} isDark={item.darkType}key={index} url_image={item.url_favicon} title={item.title} url={item.url}/>)
         })}
       </section>
 

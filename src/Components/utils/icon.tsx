@@ -9,7 +9,8 @@ type icons_type =
   | 'dots'
   | 'chevron_left'
   | 'chevron_right'
-  | 'bell';
+  | 'bell'
+  | 'close';
 
 export default function Icon({ name }: { name: icons_type }) {
   type _icons = {
@@ -21,6 +22,8 @@ export default function Icon({ name }: { name: icons_type }) {
 
     bell: '<svg width="13" height="14" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 2.33333C5 1.97971 5.14048 1.64057 5.39052 1.39052C5.64057 1.14048 5.97971 1 6.33333 1C6.68696 1 7.02609 1.14048 7.27614 1.39052C7.52619 1.64057 7.66667 1.97971 7.66667 2.33333C8.43227 2.69535 9.08493 3.25888 9.5547 3.96353C10.0245 4.66818 10.2936 5.48738 10.3333 6.33333V8.33333C10.3835 8.7478 10.5303 9.14471 10.7619 9.49208C10.9935 9.83946 11.3034 10.1276 11.6667 10.3333H1C1.36329 10.1276 1.67321 9.83946 1.90479 9.49208C2.13638 9.14471 2.28316 8.7478 2.33333 8.33333V6.33333C2.37304 5.48738 2.6422 4.66818 3.11197 3.96353C3.58173 3.25888 4.23439 2.69535 5 2.33333" stroke="#D3D3DF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.33331 10.3333V10.9999C4.33331 11.5304 4.54403 12.0391 4.9191 12.4141C5.29417 12.7892 5.80288 12.9999 6.33331 12.9999C6.86375 12.9999 7.37245 12.7892 7.74753 12.4141C8.1226 12.0391 8.33331 11.5304 8.33331 10.9999V10.3333" stroke="#D3D3DF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
     
+    close: '<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L10.5 10.5M10.5 1L1 10.5" stroke="#D3D3DF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+
     chevron_left:
       '<svg width="10" height="16" viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 2L2 8L8 14" stroke="#D3D3DF" stroke-opacity="0.35" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/></svg>',
 

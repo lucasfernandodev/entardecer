@@ -8,7 +8,7 @@ import { isValidHttpUrl } from '../../../../utils/isValidHttpUrl';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../../../Atoms/Layout';
 import { storage } from '../../../../Services/chrome/storage';
-import {db} from '../../../../Services/chrome/database';
+import { db } from '../../../../Services/chrome/database';
 import { message } from '../../../../Services/chrome/message';
 
 interface data {
@@ -29,9 +29,11 @@ interface inputs {
 }
 
 const options = storage.read('category').data.map((item: string) => {
-  return {value: item, label: `${item[0].toUpperCase()}${item.slice(1,item.length)}`}
-})
-
+  return {
+    value: item,
+    label: `${item[0].toUpperCase()}${item.slice(1, item.length)}`,
+  };
+});
 
 function FormPopup({ changeView, data }: AddShortcut) {
   const navigate = useNavigate();
@@ -42,8 +44,7 @@ function FormPopup({ changeView, data }: AddShortcut) {
     isPressed(!pressed);
   }
 
-  async function warnHomepageNewShortcut(){
-  
+  async function notifyHomepage() {
     const request = await message.send({
       from: 'popup',
       to: 'homepage',
@@ -51,15 +52,14 @@ function FormPopup({ changeView, data }: AddShortcut) {
     });
 
     const response = await request;
-   if(!response) {
-    console.log("[Popup]: Não foi possivel notificar a homepage")
-   }
+    if (!response) {
+      console.log('[Popup]: Não foi possivel notificar a homepage');
+    }
 
-   navigate('/success')
+    navigate('/success');
   }
 
   async function handlerSubmit(evt: React.FormEvent<HTMLFormElement>) {
-
     evt.preventDefault();
     setMsgError('');
 
@@ -133,25 +133,26 @@ function FormPopup({ changeView, data }: AddShortcut) {
       category: inputs.category?.value || 'others',
       autoload: inputs.autoload?.getAttribute('aria-pressed') as string,
       darkType: data.isDark as boolean,
-      url_favicon: data.page_url_icon ? data.page_url_icon : null
+      url_favicon: data.page_url_icon ? data.page_url_icon : null,
     };
 
     const database = await db();
 
-    if(database){
-      const isItem = await database.getAllFromIndex('website', 'by-url', item.url);
-      if(isItem.length === 0){
+    if (database) {
+      const isItem = await database.getAllFromIndex(
+        'website',
+        'by-url',
+        item.url
+      );
+      if (isItem.length === 0) {
         const save = await database.add('website', item);
-        if(save === item.url){
-          warnHomepageNewShortcut()
-          
-        }else{
-          navigate('/error')
+        if (save === item.url) {
+          notifyHomepage();
+        } else {
+          navigate('/error');
         }
       }
     }
-
-
   }
 
   return (
@@ -212,7 +213,9 @@ function FormPopup({ changeView, data }: AddShortcut) {
           </div>
 
           <span className={style.msgError}>{msgError}</span>
-          <button className={style.formButtonSave} type="submit">Salvar</button>
+          <button className={style.formButtonSave} type='submit'>
+            Salvar
+          </button>
         </section>
       </form>
     </Layout>

@@ -1,0 +1,35 @@
+
+.painelOption_suspend{
+  position: absolute;
+  top: calc(100% + 8px);
+  height: auto;
+  list-style: none;
+  background: #1C1A24;
+  width: 180px;
+  border-radius: 8px;
+  border: 1px solid #28293D;
+  overflow: hidden;
+}
+
+.painelOption_suspend .painelOption_item button{
+  height: 34px;
+  width: 100%;
+  padding-left: 8px;
+  display: flex;
+  align-items: center;
+  color: hsla(240, 16%, 85%, 75%);
+  font-weight: bold;
+  font-size: 12px;
+  cursor: pointer;
+  background: transparent;
+  border: unset;
+  transition: 300ms linear;
+}
+
+.painelOption_suspend .painelOption_item button:hover{
+  padding-left: 12px;
+}
+
+.painelOption_suspend .painelOption_item:nth-child(1){
+  border-bottom: 1px solid #28293D;
+}

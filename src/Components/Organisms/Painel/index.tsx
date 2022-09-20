@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { db } from '../../../Services/chrome/database';
 import { requestMessage } from '../../../types/requestMessage';
 import PainelItem from '../../Molecules/PainelItem';
+import PainelOption from '../../Molecules/PainelOptions';
 import Icon from '../../utils/icon';
 import style from './style.module.css';
 
@@ -27,36 +28,22 @@ export default function Painel() {
     setItemEdit(!itemEdit);
   }
 
-  function PainelOption() {
-    return (
-      <ul className={style.painelOption_suspend}>
-        <li className={style.painelOption_item}>
-          <button onClick={toggleItensEdit}>Editar</button>
-        </li>
-        <li className={style.painelOption_item}>
-          <button>Configurações</button>
-        </li>
-      </ul>
-    );
-  }
 
   chrome.runtime.onMessage.addListener(
     function(request: requestMessage, sender, sendResponse) {
-      console.log('casa',request);
       if(request.from === 'popup' && request.subject === "update"){
         setUpdate(`item?${Date.now()}}`)
         sendResponse(true)
       }
-
       return true;
     }
   );
 
-  function handleModeEdit(){
-    if(itemEdit){
-      toggleItensEdit()
+  function handleModeEdit(back = false){
+    if(back){
+      setOptionsVisibility(!optionsVisibility);
     }else{
-      setOptionsVisibility(!optionsVisibility)
+      setItemEdit(!itemEdit);
     }
   }
 
@@ -65,13 +52,13 @@ export default function Painel() {
       <header className={style.header}>
         <div className={style.painelOptions}>
           <button
-            onClick={() => handleModeEdit()}
+            onClick={() => handleModeEdit(!itemEdit)}
             data-focus={optionsVisibility}
             className={style.buttonToggleOption}
           >
             {itemEdit ? <Icon name='arrow_left' /> : <Icon name='dots' />}
           </button>
-          {optionsVisibility && <PainelOption />}
+          {optionsVisibility && <PainelOption onClick={toggleItensEdit} onBlur={() => setOptionsVisibility(!optionsVisibility)}/>}
         </div>
         <div className={style.painelTitle}>
           <h3>Atalhos</h3>

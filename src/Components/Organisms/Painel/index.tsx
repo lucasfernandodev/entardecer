@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { db } from '../../../Services/chrome/database';
+import { requestMessage } from '../../../types/requestMessage';
 import PainelItem from '../../Molecules/PainelItem';
 import Icon from '../../utils/icon';
 import style from './style.module.css';
@@ -38,6 +39,18 @@ export default function Painel() {
       </ul>
     );
   }
+
+  chrome.runtime.onMessage.addListener(
+    function(request: requestMessage, sender, sendResponse) {
+      console.log('casa',request);
+      if(request.from === 'popup' && request.subject === "update"){
+        setUpdate(`item?${Date.now()}}`)
+        sendResponse(true)
+      }
+
+      return true;
+    }
+  );
 
   function handleModeEdit(){
     if(itemEdit){

@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import Layout from '../../../Atoms/Layout';
 import { storage } from '../../../../Services/chrome/storage';
 import {db} from '../../../../Services/chrome/database';
+import { message } from '../../../../Services/chrome/message';
 
 interface data {
   page_title: string;
@@ -39,6 +40,22 @@ function FormPopup({ changeView, data }: AddShortcut) {
 
   function toggleButton() {
     isPressed(!pressed);
+  }
+
+  async function warnHomepageNewShortcut(){
+  
+    const request = await message.send({
+      from: 'popup',
+      to: 'homepage',
+      subject: 'update',
+    });
+
+    const response = await request;
+   if(!response) {
+    console.log("[Popup]: Não foi possivel notificar a homepage")
+   }
+
+   navigate('/success')
   }
 
   async function handlerSubmit(evt: React.FormEvent<HTMLFormElement>) {
@@ -120,14 +137,21 @@ function FormPopup({ changeView, data }: AddShortcut) {
     };
 
     const database = await db();
+
     if(database){
       const isItem = await database.getAllFromIndex('website', 'by-url', item.url);
       if(isItem.length === 0){
         const save = await database.add('website', item);
-        console.log(save)
+        if(save === item.url){
+          warnHomepageNewShortcut()
+          
+        }else{
+          navigate('/error')
+        }
       }
-      console.log(isItem)
     }
+
+
   }
 
   return (

@@ -32,7 +32,7 @@ function Popup() {
       from: 'popup',
       to: 'script-page',
       subject: 'getDomInformation',
-    });
+    }, true);
 
     const response = await request;
 

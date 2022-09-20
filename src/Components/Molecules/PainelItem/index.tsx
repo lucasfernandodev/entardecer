@@ -24,7 +24,6 @@ export default function PainelItem({
   async function removeShortcut(url: string){
     const database = await db();
     const result = await database.delete('website', url)
-    console.log(result)
     onClick(url)
   }
 

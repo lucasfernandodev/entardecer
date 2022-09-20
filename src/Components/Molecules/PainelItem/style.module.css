@@ -39,8 +39,9 @@
 }
 
 .card[data-edit="true"] .card_image{
-  filter: grayscale(0.9);
+  filter: hue-rotate(-70deg);
   cursor: default;
+  transition: 350ms linear;
 }
 
 .card[data-edit="true"] .card_image:hover{
@@ -65,6 +66,10 @@
   background: #eb3b5a;
   top: -7px;
   right: 3px;
+}
+
+.card .buttonClose:hover ~ a{
+  filter: hue-rotate(70deg);
 }
 
 .card .buttonClose span{

@@ -1,14 +1,24 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { db } from '../../../Services/chrome/database';
 import style from './style.module.css';
 
 
 export default function PainelOption({onClick, onBlur}: {onClick: () => void, onBlur: () => void}) {
   const menuRef = useRef<null | HTMLUListElement>(null);
+  const [isItens, setIsItens] = useState(false);
 
   useEffect(() => {
     if(menuRef.current){
-      menuRef.current.focus()
-    }
+      menuRef.current.focus();
+
+      ;(async () => {
+        const database = await db();
+        const countShotcuts = await database.getAll('website');
+          if (countShotcuts && countShotcuts.length !== 0) {
+            setIsItens(true)
+          }
+      })()
+    }    
   }, [])
 
   function onblur(evt: React.FocusEvent<HTMLUListElement, Element>){
@@ -18,10 +28,19 @@ export default function PainelOption({onClick, onBlur}: {onClick: () => void, on
     }, 250)
   }
 
+async function handlerClick(){
+  const database = await db();
+    const countShotcuts = await database.getAll('website');
+      if (countShotcuts && countShotcuts.length !== 0) {
+        setIsItens(true)
+        onClick()
+      }
+  }
+
   return (
     <ul ref={menuRef} className={style.painelOption_suspend} onBlur={evt => onblur(evt)} tabIndex={0}>
       <li className={style.painelOption_item}>
-        <button onClick={onClick}>Editar</button>
+        <button onClick={handlerClick} disabled={!isItens}>Editar</button>
       </li>
       <li className={style.painelOption_item}>
         <button>Configurações</button>

@@ -38,28 +38,28 @@
   outline: 2px solid #3E7BFA;
 }
 
-.card[data-edit="true"] .card_image{
+.card[data-stage="true"] .card_image{
   cursor: default;
 }
 
-.card[data-edit="true"] img{
+.card[data-stage="true"] img{
   cursor: default;
   transition: 350ms linear;
 }
 
-.card[data-edit="true"] .card_image:hover{
+.card[data-stage="true"] .card_image:hover{
   outline: 2px solid #fc5c65;
 }
 
-.card .buttonClose:hover ~ a{
+.card .btnClose:hover ~ a{
   outline: 2px solid #fc5c65;
 }
 
-.card[data-edit="true"] h3{
+.card[data-stage="true"] h3{
   color: hsla(240, 16%, 85%, 75%);
 }
 
-.card .buttonClose{
+.card .btnClose{
   position: absolute;
   top: -8px;
   right: 4px;
@@ -73,24 +73,47 @@
   transition: 300ms linear;
 }
 
-.card .buttonClose:hover{
+.card .btnClose:hover{
   background: #eb3b5a;
   top: -7px;
   right: 3px;
 }
 
-.card .buttonClose span{
+.card .btnClose span{
   width: 20px;
   height: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.card .buttonClose svg {
+.card .btnClose svg {
   width: 8px;
   height: 8px;
 }
 
-.card .buttonClose svg path{
+.card .btnClose svg path{
   stroke-width: 3px;
+}
+
+.card[data-removed="true"]{
+  animation: cardOut 350ms linear;
+}
+
+@keyframes cardOut {
+  0%{
+    position: relative;
+    top: 0;
+    opacity: 1;
+  }
+
+  99%{
+    top: -30px;
+    opacity: 0;
+  }
+
+  100%{
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+  }
 }

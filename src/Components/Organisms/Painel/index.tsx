@@ -61,7 +61,7 @@ export default function Painel() {
           {optionsVisibility && <PainelOption onClick={toggleItensEdit} onBlur={() => setOptionsVisibility(!optionsVisibility)}/>}
         </div>
         <div className={style.painelTitle}>
-          <h3>Atalhos</h3>
+          <h3>{itemEdit ? 'Organizar atalhos' :'Atalhos'}</h3>
         </div>
         <div className={style.painelControllers}>
           <button className={style.btnController}>
@@ -78,13 +78,10 @@ export default function Painel() {
           data.map((item: any, index: number) => {
             return (
               <PainelItem
-                onClick={setUpdate}
-                edit={itemEdit}
-                isDark={item.darkType}
+                stage={itemEdit}
+                closeStage={() => setItemEdit(!itemEdit)}
                 key={index}
-                url_image={item.url_favicon}
-                title={item.title}
-                url={item.url}
+                data={item}
               />
             );
           })}

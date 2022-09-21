@@ -3,6 +3,7 @@ import { db } from '../../../Services/chrome/database';
 import { storage } from '../../../Services/chrome/storage';
 import { requestMessage } from '../../../types/requestMessage';
 import PainelItem from '../../Molecules/PainelItem';
+import PainelFooter from '../../Organisms/PainelFooter';
 import PainelHeader from '../../Organisms/PainelHeader';
 import Icon from '../../utils/icon';
 import style from './style.module.css';
@@ -97,12 +98,7 @@ export default function Painel() {
           )): <span className={style.alternativeText}>Nenhum atalho salvo nessa categoria.</span>}
       </section>
 
-      <footer className={style.footer}>
-        <button className={style.buttonNotify}>
-          <Icon name='bell' />
-        </button>
-        <hr />
-      </footer>
+      <PainelFooter />
     </main>
   );
 }

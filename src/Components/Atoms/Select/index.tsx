@@ -7,11 +7,12 @@ type options = Options<{}>
 interface SelectInterface{
   Options: options,
   className: string | undefined,
-  id: string | undefined
+  id: string | undefined,
+  getValue: (evt: any) => void
 }
 
 
-const Select: React.FC<SelectInterface> = ({Options,className, id}) => {
+const Select: React.FC<SelectInterface> = ({Options,className,getValue, id}) => {
 
   return (
     <ReactSelect
@@ -21,6 +22,7 @@ const Select: React.FC<SelectInterface> = ({Options,className, id}) => {
       placeholder='Selecionar categoria'
       className={className}
       id={id}
+      onChange={getValue}
     />
   )
 }

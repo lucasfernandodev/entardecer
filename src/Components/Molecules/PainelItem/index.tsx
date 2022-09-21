@@ -1,4 +1,3 @@
-import { count } from 'console';
 import { useState } from 'react';
 import { db } from '../../../Services/chrome/database';
 import Favicon from '../../Atoms/favicon';
@@ -6,22 +5,17 @@ import Icon from '../../utils/icon';
 import style from './style.module.css';
 
 interface PainelItem {
- 
   stage: boolean;
   closeStage: () => void;
   data: {
     url: string;
-    url_image: string;
+    url_favicon: string;
     title: string;
-    isDark: boolean;
-  }
+    darkType: boolean;
+  };
 }
 
-export default function PainelItem({
-  data,
-  stage,
-  closeStage,
-}: PainelItem) {
+export default function PainelItem({ data, stage, closeStage }: PainelItem) {
   const [isRemoved, setIsRemoved] = useState(false);
   const [itemRemoved, setitemRemoved] = useState(false);
 
@@ -72,8 +66,8 @@ export default function PainelItem({
       >
         <Favicon
           alt={data.title}
-          src={data.url_image}
-          brightness={data.isDark === true ? 1 : 0}
+          src={data.url_favicon}
+          brightness={data.darkType === true ? 1 : 0}
         />
       </a>
 

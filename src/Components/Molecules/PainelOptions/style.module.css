@@ -11,7 +11,8 @@
   overflow: hidden;
 }
 
-.painelOption_suspend .painelOption_item button{
+.painelOption_suspend .painelOption_item button,
+.painelOption_suspend .painelOption_item a{
   height: 34px;
   width: 100%;
   padding-left: 8px;
@@ -26,7 +27,8 @@
   transition: 300ms linear;
 }
 
-.painelOption_suspend .painelOption_item button:hover{
+.painelOption_suspend .painelOption_item button:hover,
+.painelOption_suspend .painelOption_item a:hover{
   padding-left: 12px;
 }
 

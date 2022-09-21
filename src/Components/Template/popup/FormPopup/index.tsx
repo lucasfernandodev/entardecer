@@ -39,9 +39,14 @@ function FormPopup({ changeView, data }: AddShortcut) {
   const navigate = useNavigate();
   const [pressed, isPressed] = useState(false);
   const [msgError, setMsgError] = useState<string>('');
+  const [category, setCategory] = useState('others');
 
   function toggleButton() {
     isPressed(!pressed);
+  }
+
+  function _setCategory(category: any){
+    setCategory(category.value)
   }
 
   async function notifyHomepage() {
@@ -130,7 +135,7 @@ function FormPopup({ changeView, data }: AddShortcut) {
     const item = {
       title: inputs.title?.value as string,
       url: inputs.url?.value as string,
-      category: inputs.category?.value || 'others',
+      category: category || 'others',
       autoload: inputs.autoload?.getAttribute('aria-pressed') as string,
       darkType: data.isDark as boolean,
       url_favicon: data.page_url_icon ? data.page_url_icon : null,
@@ -195,6 +200,7 @@ function FormPopup({ changeView, data }: AddShortcut) {
             Options={options}
             className={style.select}
             id='website_category'
+            getValue={evt => _setCategory(evt)}
           />
 
           <div className={style.group}>

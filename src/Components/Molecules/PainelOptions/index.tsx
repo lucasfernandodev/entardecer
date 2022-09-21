@@ -2,48 +2,60 @@ import { useEffect, useRef, useState } from 'react';
 import { db } from '../../../Services/chrome/database';
 import style from './style.module.css';
 
+interface PainelOption {
+  onClick: () => void;
+  onBlur: () => void;
+  currentCategory: string,
+}
 
-export default function PainelOption({onClick, onBlur}: {onClick: () => void, onBlur: () => void}) {
+export default function PainelOption({ onClick, onBlur, currentCategory }: PainelOption) {
   const menuRef = useRef<null | HTMLUListElement>(null);
   const [isItens, setIsItens] = useState(false);
 
   useEffect(() => {
-    if(menuRef.current){
+    if (menuRef.current) {
       menuRef.current.focus();
 
-      ;(async () => {
+      (async () => {
         const database = await db();
-        const countShotcuts = await database.getAll('website');
-          if (countShotcuts && countShotcuts.length !== 0) {
-            setIsItens(true)
-          }
-      })()
-    }    
-  }, [])
+        const countShotcuts = await database.getAllFromIndex('website', 'by-category', currentCategory);
+        if (countShotcuts && countShotcuts.length !== 0) {
+          setIsItens(true);
+        }
+      })();
+    }
+  }, []);
 
-  function onblur(evt: React.FocusEvent<HTMLUListElement, Element>){
+  function onblur(evt: React.FocusEvent<HTMLUListElement, Element>) {
     evt.stopPropagation();
     setTimeout(() => {
-      onBlur()
-    }, 250)
+      onBlur();
+    }, 250);
   }
 
-async function handlerClick(){
-  const database = await db();
+  async function handlerClick() {
+    const database = await db();
     const countShotcuts = await database.getAll('website');
-      if (countShotcuts && countShotcuts.length !== 0) {
-        setIsItens(true)
-        onClick()
-      }
+    if (countShotcuts && countShotcuts.length !== 0) {
+      setIsItens(true);
+      onClick();
+    }
   }
 
   return (
-    <ul ref={menuRef} className={style.painelOption_suspend} onBlur={evt => onblur(evt)} tabIndex={0}>
+    <ul
+      ref={menuRef}
+      className={style.painelOption_suspend}
+      onBlur={(evt) => onblur(evt)}
+      tabIndex={0}
+    >
       <li className={style.painelOption_item}>
-        <button onClick={handlerClick} disabled={!isItens}>Editar</button>
+        <button onClick={handlerClick} disabled={!isItens}>
+          Editar
+        </button>
       </li>
       <li className={style.painelOption_item}>
-        <button>Configurações</button>
+        <a target="_blank" href={`${chrome.runtime.getURL('pages/configurations/index.html')}`}>Configurações</a>
       </li>
     </ul>
   );

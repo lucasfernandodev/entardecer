@@ -6,6 +6,7 @@
   flex-wrap: nowrap;
   gap: 12px;
   justify-content: center;
+  transition: 300ms;
   position: relative;
 }
 

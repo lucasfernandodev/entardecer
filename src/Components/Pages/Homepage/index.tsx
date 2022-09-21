@@ -1,5 +1,5 @@
 import Layout from '../../Atoms/Layout';
-import Painel from '../../Organisms/Painel';
+import Painel from '../../Template/Painel';
 import style from './style.module.css';
 
 export default function Homepage(){

@@ -39,7 +39,7 @@ function FormPopup({ changeView, data }: AddShortcut) {
   const navigate = useNavigate();
   const [pressed, isPressed] = useState(false);
   const [msgError, setMsgError] = useState<string>('');
-  const [category, setCategory] = useState('others');
+  const [category, setCategory] = useState('apps');
 
   function toggleButton() {
     isPressed(!pressed);
@@ -135,7 +135,7 @@ function FormPopup({ changeView, data }: AddShortcut) {
     const item = {
       title: inputs.title?.value as string,
       url: inputs.url?.value as string,
-      category: category || 'others',
+      category: category || 'apps',
       autoload: inputs.autoload?.getAttribute('aria-pressed') as string,
       darkType: data.isDark as boolean,
       url_favicon: data.page_url_icon ? data.page_url_icon : null,

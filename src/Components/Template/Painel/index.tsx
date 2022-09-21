@@ -22,7 +22,7 @@ export default function Painel() {
   const [category, setCategory] = useState(0);
 
   useEffect(() => {
-    const categories = ['others', ...storage.read('category').data];
+    const categories = ['apps', ...storage.read('category').data];
     setCategories(categories);
   }, [update]);
 
@@ -94,7 +94,7 @@ export default function Painel() {
               key={item.url}
               data={item}
             />
-          )): <span>Nenhum atalho salvo nessa categoria</span>}
+          )): <span className={style.alternativeText}>Nenhum atalho salvo nessa categoria.</span>}
       </section>
 
       <footer className={style.footer}>

@@ -5,7 +5,6 @@ import { requestMessage } from '../../../types/requestMessage';
 import PainelItem from '../../Molecules/PainelItem';
 import PainelFooter from '../../Organisms/PainelFooter';
 import PainelHeader from '../../Organisms/PainelHeader';
-import Icon from '../../utils/icon';
 import style from './style.module.css';
 
 interface data {
@@ -38,7 +37,7 @@ export default function Painel() {
         setData(data);
       }
     })();
-  }, [category]);
+  }, [category, update]);
 
 
   function changeCategory(action: string) {

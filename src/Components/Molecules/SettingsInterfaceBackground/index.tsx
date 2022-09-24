@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { db } from '../../../Services/chrome/database';
-import getBase64Image from '../../../utils/getBase64Image';
+import blobToBase64 from '../../../utils/blobToBase64';
+import getBase64Image from '../../../utils/blobToBase64';
 import Icon from '../../utils/icon';
 import Alert from '../Alert';
 import style from './style.module.css';
@@ -25,13 +26,7 @@ export default function SettingsInterfaceBackground() {
     })();
   }, [])
 
-  function blobToBase64(blob: Blob) {
-    return new Promise((resolve, _) => {
-      const reader = new FileReader();
-      reader.onloadend = () => resolve(reader.result);
-      reader.readAsDataURL(blob);
-    });
-  }
+  
 
   async function storeImage(file: any) {
     console.log('store image initilized');

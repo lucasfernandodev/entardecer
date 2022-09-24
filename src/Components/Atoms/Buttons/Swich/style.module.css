@@ -1,0 +1,62 @@
+
+.btnSwich {
+  width: 39px;
+  height: 18px;
+  border-radius: 18px;
+  border: 1px solid #27293b;
+  position: relative;
+  background: transparent;
+  cursor: pointer;
+  transition: 300ms linear;
+}
+
+.btnSwich .alternativeText {
+  display: none;
+}
+
+.btnSwich::before {
+  content: '';
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #27293b;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 3px;
+}
+.btnSwich:hover {
+  border: 1px solid var(--color-primary);
+}
+
+.btnSwich[aria-pressed='true']::before {
+  animation: moveRigth 350ms linear forwards;
+}
+.btnSwich[aria-pressed='false']::before {
+  animation: moveLeft 350ms linear forwards;
+}
+
+.btnSwich[aria-pressed='true'] {
+  border-color: var(--color-primary);
+}
+
+@keyframes moveRigth {
+  0% {
+    right: unset;
+    left: 0px;
+  }
+  100% {
+    left: calc(100% - 17px);
+    background: var(--color-primary);
+  }
+}
+
+@keyframes moveLeft {
+  0% {
+    left: unset;
+    right: 0px;
+  }
+  100% {
+    right: calc(100% - 17px);
+  }
+}

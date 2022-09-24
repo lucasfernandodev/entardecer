@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Layout from '../../Atoms/Layout';
+import { SettingsInterface } from '../../Organisms/SettingsInterface';
 import {SettingsInterfaceMenu } from '../../Molecules/SettingsInterfaceMenu';
 import style from './style.module.css';
 
@@ -60,8 +61,7 @@ export default function Configurations() {
               <h1>Configurações - {option}</h1>
             </div>
             <div className={style.painelMain}>
-            <SettingsInterfaceMenu />
-            <SettingsInterfaceAnimation />
+           {option === 'interface' && <SettingsInterface />}
             </div>
           </section>
         </main>
@@ -71,8 +71,3 @@ export default function Configurations() {
 }
 
 
-export function SettingsInterfaceAnimation(){
-  return (
-    <div><span>interface</span></div>
-  )
-}

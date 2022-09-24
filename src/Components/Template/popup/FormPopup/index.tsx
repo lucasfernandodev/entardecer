@@ -141,7 +141,7 @@ function FormPopup({ changeView, data }: AddShortcut) {
       url_favicon: data.page_url_icon ? data.page_url_icon : null,
     };
 
-    const database = await db();
+    const {shortcuts : database} = await db();
 
     if (database) {
       const isItem = await database.getAllFromIndex(

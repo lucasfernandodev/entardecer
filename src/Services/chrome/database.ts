@@ -16,8 +16,20 @@ interface MyDB extends DBSchema {
 }
 
 
+interface bg_homepageDB extends DBSchema {
+  image: {
+    value: {
+      data: unknown,
+      id: string
+    };
+    key: string;
+    indexes: { 'by-data': string};
+  };
+}
+
+
 export async function db() {
-  const db = await openDB<MyDB>('shortcuts', 1, {
+  const shortcuts = await openDB<MyDB>('shortcuts', 1, {
     upgrade(db) {
 
       const productStore = db.createObjectStore('website', {
@@ -29,6 +41,18 @@ export async function db() {
     },
   });
 
-  return db;
+
+  const bg_homepage = await openDB<bg_homepageDB>('bg_homepage', 1, {
+    upgrade(db) {
+
+      const store = db.createObjectStore('image', {
+        keyPath: 'id',
+      });
+
+      store.createIndex('by-data', 'data');
+    },
+  });
+
+  return {shortcuts, bg_homepage};
 
 }

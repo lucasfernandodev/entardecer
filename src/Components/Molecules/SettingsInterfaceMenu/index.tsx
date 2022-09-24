@@ -1,7 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import style from './style.module.css';
 
-export function SettingsInterfaceMenu() {
+interface SettingsInterfaceMenu{
+  getOptionSelect: (option: string) => void
+}
+export function SettingsInterfaceMenu({getOptionSelect}: SettingsInterfaceMenu) {
+  
   const [option, setOption] = useState<string>('animations');
   const MenuRef = useRef<null | HTMLUListElement>(null);
 
@@ -14,6 +18,7 @@ export function SettingsInterfaceMenu() {
         `a[data-label=${option}]`
       );
       activeLink?.setAttribute('data-active', 'true');
+      getOptionSelect(option)
     }
   }, [option]);
 

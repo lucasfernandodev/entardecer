@@ -1,3 +1,8 @@
+interface Icon{
+  name: icons_type,
+  className?: string
+}
+
 type icons_type =
   | 'help'
   | 'config'
@@ -10,15 +15,18 @@ type icons_type =
   | 'chevron_left'
   | 'chevron_right'
   | 'bell'
-  | 'close';
+  | 'close'
+  | 'image';
 
-export default function Icon({ name }: { name: icons_type }) {
+export default function Icon({ name, className}: Icon) {
   type _icons = {
     [key in icons_type]: string;
   };
 
   const icons: _icons = {
     help: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_97_1857)"><path d="M8 14C11.3137 14 14 11.3137 14 8C14 4.68629 11.3137 2 8 2C4.68629 2 2 4.68629 2 8C2 11.3137 4.68629 14 8 14Z" stroke="#D3D3DF" stroke-opacity="0.75" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 11.3334V11.34" stroke="#D3D3DF" stroke-opacity="0.75" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.00008 9.00003C7.98781 8.78361 8.04619 8.56906 8.16643 8.3887C8.28667 8.20834 8.46226 8.07194 8.66675 8.00003C8.91733 7.9042 9.14225 7.75152 9.32379 7.554C9.50534 7.35648 9.63856 7.11951 9.71296 6.86175C9.78737 6.604 9.80092 6.33249 9.75257 6.06861C9.70421 5.80472 9.59526 5.55566 9.43429 5.34104C9.27332 5.12642 9.06473 4.95209 8.82494 4.83177C8.58515 4.71146 8.32071 4.64846 8.05243 4.64771C7.78415 4.64697 7.51936 4.70851 7.27891 4.82749C7.03846 4.94647 6.8289 5.11963 6.66675 5.33336" stroke="#D3D3DF" stroke-opacity="0.75" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></g><defs><clipPath id="clip0_97_1857"><rect width="16" height="16" fill="white"/></clipPath></defs></svg>',
+
+    image: '<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-photo" width="32" height="32" viewBox="0 0 24 24" stroke-width="1.5" stroke="#111" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="15" y1="8" x2="15.01" y2="8" /><rect x="4" y="4" width="16" height="16" rx="3" /><path d="M4 15l4 -4a3 5 0 0 1 3 0l5 5" /><path d="M14 14l1 -1a3 5 0 0 1 3 0l2 2" /></svg>',
 
     bell: '<svg width="13" height="14" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 2.33333C5 1.97971 5.14048 1.64057 5.39052 1.39052C5.64057 1.14048 5.97971 1 6.33333 1C6.68696 1 7.02609 1.14048 7.27614 1.39052C7.52619 1.64057 7.66667 1.97971 7.66667 2.33333C8.43227 2.69535 9.08493 3.25888 9.5547 3.96353C10.0245 4.66818 10.2936 5.48738 10.3333 6.33333V8.33333C10.3835 8.7478 10.5303 9.14471 10.7619 9.49208C10.9935 9.83946 11.3034 10.1276 11.6667 10.3333H1C1.36329 10.1276 1.67321 9.83946 1.90479 9.49208C2.13638 9.14471 2.28316 8.7478 2.33333 8.33333V6.33333C2.37304 5.48738 2.6422 4.66818 3.11197 3.96353C3.58173 3.25888 4.23439 2.69535 5 2.33333" stroke="#D3D3DF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.33331 10.3333V10.9999C4.33331 11.5304 4.54403 12.0391 4.9191 12.4141C5.29417 12.7892 5.80288 12.9999 6.33331 12.9999C6.86375 12.9999 7.37245 12.7892 7.74753 12.4141C8.1226 12.0391 8.33331 11.5304 8.33331 10.9999V10.3333" stroke="#D3D3DF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
     
@@ -48,6 +56,7 @@ export default function Icon({ name }: { name: icons_type }) {
   };
   return (
     <span
+    className={className}
       key={name}
       dangerouslySetInnerHTML={{
         __html: icons[name] || `${name}: Icon not found!`,

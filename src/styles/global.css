@@ -8,7 +8,8 @@
   --bg-color: #1C1A24;
   --paper-color: #27293B;
   --color-primary: #3E7BFA;
-  
+  --color-success: #10ac84;
+  --color-error: #eb4d4b;
 }
 
 html,body,button,input{

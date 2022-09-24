@@ -17,7 +17,7 @@ export default function PainelOption({ onClick, onBlur, currentCategory }: Paine
       menuRef.current.focus();
 
       (async () => {
-        const database = await db();
+        const {shortcuts : database} = await db();
         const countShotcuts = await database.getAllFromIndex('website', 'by-category', currentCategory);
         if (countShotcuts && countShotcuts.length !== 0) {
           setIsItens(true);
@@ -34,7 +34,7 @@ export default function PainelOption({ onClick, onBlur, currentCategory }: Paine
   }
 
   async function handlerClick() {
-    const database = await db();
+    const {shortcuts : database} = await db();
     const countShotcuts = await database.getAll('website');
     if (countShotcuts && countShotcuts.length !== 0) {
       setIsItens(true);

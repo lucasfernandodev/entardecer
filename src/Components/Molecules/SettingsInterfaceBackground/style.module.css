@@ -1,0 +1,299 @@
+.uploadPhoto {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  position: relative;
+  width: 550px;
+  height: auto;
+  font-family: 'Roboto', system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+    sans-serif;
+}
+
+.uploadPhoto #inputImage {
+  display: none;
+}
+
+.uploadPhoto h3 {
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 16px;
+  color: #ddddff;
+}
+
+.uploadPhoto p {
+  font-size: 15px;
+  color: #ddddffaa;
+  margin-top: 8px;
+}
+
+.uploadPhoto .preview {
+  height: auto;
+  display: flex;
+  width: 650px;
+  height: 380px;
+  position: relative;
+  border: 2px double #27293b;
+  background-color: #121118;
+  border-radius: 4px;
+  margin-top: 8px;
+
+  background-size: cover;
+  background-position: center center;
+}
+
+.uploadPhoto .preview[data-loading-image='true']::before {
+  content: '';
+  background: linear-gradient(
+    134.74deg,
+    #1c1a24 0.45%,
+    rgba(4, 4, 4, 0.35) 100%
+  );
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+}
+
+.uploadPhoto .preview[data-loading-image='true']::after {
+  content: '';
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 3px solid var(--color-primary);
+  border-top-color: transparent;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  z-index: 111;
+  animation: rotateLoading 600ms linear infinite;
+}
+
+@keyframes rotateLoading {
+  from {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.uploadPhoto .preview .placeholder {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    134.74deg,
+    #1c1a24 0.45%,
+    rgba(4, 4, 4, 0.65) 100%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.uploadPhoto .preview .placeholder .content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+}
+
+.uploadPhoto .preview .placeholder .icon {
+  width: fit-content;
+}
+
+.uploadPhoto .preview .placeholder svg {
+  stroke: #ddddff55;
+}
+
+.uploadPhoto .preview .placeholder label {
+  color: var(--color-success);
+  cursor: pointer;
+}
+
+.uploadPhoto .preview[data-loading-image='true'] .placeholder {
+  display: none;
+}
+
+.uploadPhoto .msgError {
+  font-weight: bold;
+  color: #ee5253;
+  font-size: 13px;
+}
+
+.uploadPhoto .preview.dragOver {
+  border: 2px dotted #10ac84;
+}
+
+.uploadPhoto .btnActions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 4px;
+  gap: 8px;
+  /* position: absolute; */
+  padding: 8px 0px;
+  z-index: 100;
+  width: 100%;
+}
+
+.uploadPhoto .btnActions button {
+  cursor: pointer;
+  background: linear-gradient(to right, var(--color-primary), #1a49ad);
+  border: unset;
+  font-family: 'roboto', system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+    sans-serif;
+  border-radius: 3px;
+  color: #ddddff;
+  font-weight: bold;
+  font-size: 13px;
+  height: 25px;
+  width: 100px;
+}
+
+.uploadPhoto .btnActions button:hover {
+  background: linear-gradient(to right, var(--color-primary), #598eff, #1a49ad);
+  outline-offset: 2px;
+  outline: 1px solid #1a49ad;
+}
+
+.uploadPhoto .btnActions button:nth-child(1) {
+  background: transparent;
+  border: 1px solid var(--paper-color);
+}
+
+.uploadPhoto .btnActions button:nth-child(1):hover {
+  background: var(--paper-color);
+  outline: 1px solid var(--paper-color);
+}
+
+/* 
+.uploadPhoto input.uploadPhoto{
+  display: none;
+}
+
+.uploadPhoto fieldset label{
+  width: 558px;
+  height: 328px;
+  min-width: 558px;
+  min-height: 328px;
+  display: block;
+  color: transparent;
+  position: relative;
+  color: transparent;
+  border: 1px double #27293B;
+  cursor: pointer;
+  background-color: #121118;
+
+  transition: 300ms linear;
+  overflow: hidden;
+}
+
+.uploadPhoto fieldset label:-moz-drag-over{
+  border: 1px double var(--color-success);
+}
+
+.uploadPhoto fieldset label:hover{
+  border: 1px double var(--color-primary);
+}
+
+.uploadPhoto .AlertText{
+  font-weight: bold;
+  font-size: 12px;
+  color: #ffbe76;
+}
+
+
+
+.uploadPhoto fieldset .uploadPhoto{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  width: 64px;
+  height: 64px;
+}
+
+.uploadPhoto fieldset .uploadPhoto svg{
+  stroke: #27293B;
+}
+
+.uploadPhoto fieldset label:hover .uploadPhoto svg{
+  stroke: var(--color-primary);
+}
+
+
+
+.uploadPhoto img{
+  position: absolute;
+  top: 0;
+  width: 558px;
+  height: 328px;
+  min-width: 558px;
+  min-height: 328px;
+  left: 0;
+  object-fit: cover;
+  object-position: center;
+  z-index: 4;
+}
+
+.uploadPhoto fieldset label::before{
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 558px;
+  height: 328px;
+  min-width: 558px;
+  min-height: 328px;
+  left: 0;
+  z-index: 8;
+  background: linear-gradient(134.74deg, #1C1A24 0.45%, rgba(4, 4, 4, 0.35) 100%);
+}
+
+
+.uploadPhoto fieldset .btnActions{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 8px;
+  position: absolute;
+  bottom: 8px;
+  right: 4px;
+  z-index: 100;
+}
+
+.uploadPhoto fieldset .btnActions button{
+  cursor: pointer;
+  background: linear-gradient(to right, var(--color-primary), #1a49ad);
+  border: unset;
+  padding: 4px 12px;
+  font-family: "roboto", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  border-radius: 4px;
+  color: #ddddff;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.uploadPhoto fieldset .btnActions button:hover{
+  background: linear-gradient(to right, var(--color-primary), #598eff, #1a49ad);
+  outline-offset: 2px;
+  outline: 1px solid #1a49ad;
+}
+
+.uploadPhoto fieldset .btnActions button:nth-child(1){
+  background: transparent;
+  border: 1px solid var(--paper-color);
+}
+
+.uploadPhoto fieldset .btnActions button:nth-child(1):hover{
+  background: var(--paper-color);
+  outline: 1px solid var(--paper-color);
+}
+
+.dragOver{
+  border: 4px solid var(--color-success) !important;
+} */

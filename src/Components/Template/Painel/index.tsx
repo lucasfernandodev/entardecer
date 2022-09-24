@@ -28,7 +28,7 @@ export default function Painel() {
 
   useEffect(() => {
     (async () => {
-      const database = await db();
+      const {shortcuts : database} = await db();
 
       const data = await database.getAllFromIndex('website','by-category',
         categories[category]) as data[]

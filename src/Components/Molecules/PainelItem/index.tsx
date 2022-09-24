@@ -20,7 +20,7 @@ export default function PainelItem({ data, stage, closeStage }: PainelItem) {
   const [itemRemoved, setitemRemoved] = useState(false);
 
   async function removeShortcut() {
-    const database = await db();
+    const {shortcuts : database} = await db();
     try {
       await database.delete('website', data.url);
       setIsRemoved(true);

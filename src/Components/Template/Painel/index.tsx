@@ -20,6 +20,10 @@ export default function Painel() {
   const [update, setUpdate] = useState<string>('');
   const [categories, setCategories] = useState<string[]>([]);
   const [category, setCategory] = useState(0);
+  
+
+ 
+
 
   useEffect(() => {
     const categories = ['apps', ...storage.read('category').data];

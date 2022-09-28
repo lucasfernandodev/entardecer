@@ -6,22 +6,27 @@ Entardecer é uma extensão para o chrome com o objetivo de substituir a homepag
 
 ### Começando
 
-Para testar na sua maquina: 
+Para rodar o projeto na maquina: 
 
 ```
 git clone git@github.com:lucasfernandodev/entardecer.git
 cd entarder
+```
+
+Com o projeto baixado instale as dependências
+
+```
 npm install
 ```
 
-Com o projeto baixado e os pacotes instaladores, rode o projeto com o comando:
+Com as dependências baixas vamos iniciar o projeto:
 
 ```
 npm run dev
-
 ```
 
-Agora que o projeto ta rodando, falta adicionar ele no chrome,
-no chrome vá em Mais <b>ferramentas > Extensões</b>. Dentro de extensões procure pela opção "Carregar sem compactação" ao clicar vá até a pasta do seu projeto e adicione.
+Com o projeto ta rodando, agora so falta adicionar no chrome.
+
+Entrando no chrome va em <b> Mais ferramentas > Extensões</b>, Dentro de extensões procure pela opção de "Carregar sem compactação" e ao selecionar, procure pela pasta do seu projeto e adicione.
 
 Com isso seu projeto já deve estar rodando!

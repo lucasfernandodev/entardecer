@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Layout from '../../Atoms/Layout';
 import { SettingsInterface } from '../../Organisms/SettingsInterface';
-import {SettingsInterfaceMenu } from '../../Molecules/SettingsInterfaceMenu';
 import style from './style.module.css';
 
 export default function Configurations() {

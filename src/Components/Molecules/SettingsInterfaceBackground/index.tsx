@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { message } from '../../../services/chrome/message';
 import { db } from '../../../storage/database';
 import blobToBase64 from '../../../utils/blobToBase64';
 import getBase64Image from '../../../utils/blobToBase64';
@@ -14,40 +15,55 @@ export default function SettingsInterfaceBackground() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    ;(async () => {
-      setIsLoading(true)
+    (async () => {
+      setIsLoading(true);
       const { bg_homepage: database } = await db();
       const isImage = await database.getAll('image');
-      if(isImage.length > 0) {
+      if (isImage.length > 0) {
         // const image = URL.createObjectURL(isImage[0].data)
         setImage(isImage[0].data);
       }
-      setIsLoading(false)
+      setIsLoading(false);
     })();
-  }, [])
-
-  
+  }, []);
 
   async function storeImage(file: any) {
     console.log('store image initilized');
-    const imageInBase64 = await blobToBase64(file)
+    const imageInBase64 = await blobToBase64(file);
     try {
       if (file) {
         const { bg_homepage: database } = await db();
 
         const isImage = await database.getAll('image');
 
-
         if (isImage.length === 0) {
-          await database.add('image', { data: imageInBase64, id: 'bg_homepage'});
+          await database.add('image', {
+            data: imageInBase64,
+            id: 'bg_homepage',
+          });
         } else {
-          await database.put('image', { data: imageInBase64, id: 'bg_homepage'});
+          await database.put('image', {
+            data: imageInBase64,
+            id: 'bg_homepage',
+          });
         }
-        
-        setIsUploadLoading(false)
-        setIsUploaded(true)
+
+        setIsUploadLoading(false);
+        setIsUploaded(true);
         setImage(URL.createObjectURL(file));
-          console.log('store image end');
+        console.log('store image end');
+        
+       try {
+        const request= await message.send({
+          from: 'configuration',
+          to: 'homepage',
+          subject: 'update',
+        });
+
+        console.log(request)
+       } catch (error) {
+        console.log(error)
+       }
       }
     } catch (error) {
       console.log(error);
@@ -69,7 +85,7 @@ export default function SettingsInterfaceBackground() {
   }
 
   function preverImage(evt: React.ChangeEvent<HTMLInputElement>) {
-    setIsUploadLoading(true)
+    setIsUploadLoading(true);
     const input = evt.target as any;
     const file = input.files[0];
     handleFile(file);
@@ -77,7 +93,7 @@ export default function SettingsInterfaceBackground() {
 
   function dropHandler(ev: React.DragEvent<HTMLDivElement>) {
     // Impedir o comportamento padrão (impedir que o arquivo seja aberto)
-    setIsUploadLoading(true)
+    setIsUploadLoading(true);
     ev.preventDefault();
     const el = ev.target as HTMLElement;
 
@@ -127,17 +143,19 @@ export default function SettingsInterfaceBackground() {
         onDrop={dropHandler}
         onDragLeave={onDragLeave}
         style={{ backgroundImage: `url(${image})` }}
-        data-loading-image={isUploadLoading || isLoading && !isUploaded ? true : false}
+        data-loading-image={
+          isUploadLoading || (isLoading && !isUploaded) ? true : false
+        }
       >
         {!isUploaded && (
           <div className={style.placeholder}>
-           <div className={style.content}>
-           <Icon name='image' className={style.icon} />
-            <p>
-              Solte sua imagem aqui, ou{' '}
-              <label htmlFor={style.inputImage}>selecionar imagem</label>
-            </p>
-           </div>
+            <div className={style.content}>
+              <Icon name='image' className={style.icon} />
+              <p>
+                Solte sua imagem aqui, ou{' '}
+                <label htmlFor={style.inputImage}>selecionar imagem</label>
+              </p>
+            </div>
           </div>
         )}
       </div>
@@ -149,11 +167,13 @@ export default function SettingsInterfaceBackground() {
         accept='image/*'
         onChange={preverImage}
       />
-      {isUploaded && <Alert 
-          type='success' 
-          title='Configurações de interface' 
+      {isUploaded && (
+        <Alert
+          type='success'
+          title='Configurações de interface'
           msg='O Background alterado com sucesso'
-        />}
+        />
+      )}
     </form>
   );
 }

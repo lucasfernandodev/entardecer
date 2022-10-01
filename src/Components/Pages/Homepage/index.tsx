@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { db } from '../../../storage/database';
+import { requestMessage } from '../../../types/requestMessage';
 import Layout from '../../Atoms/Layout';
 import Painel from '../../Template/Painel';
 import style from './style.module.css';
@@ -16,9 +17,21 @@ export default function Homepage(){
       }
     }
 
-    getImageBackground()
+    getImageBackground();
+
+      
+  chrome.runtime.onMessage.addListener(function (
+    request: requestMessage,
+    sender,
+    sendResponse
+  ) {
+    console.log(request)
+    if (request.from === 'configuration' && request.to === "homepage" && request.subject === 'update') {
+     location.reload();
+    }
+    return true;
+  });
   }, [])
-  
 
 
   return (

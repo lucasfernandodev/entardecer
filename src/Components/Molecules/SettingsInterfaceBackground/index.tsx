@@ -2,10 +2,15 @@ import { useEffect, useState } from 'react';
 import { message } from '../../../services/chrome/message';
 import { db } from '../../../storage/database';
 import blobToBase64 from '../../../utils/blobToBase64';
-import getBase64Image from '../../../utils/blobToBase64';
+import crop from '../../../utils/image/crop';
 import Icon from '../../utils/icon';
 import Alert from '../Alert';
 import style from './style.module.css';
+
+interface imagecroped {
+  data?: Blob,
+  crop: Boolean
+}
 
 export default function SettingsInterfaceBackground() {
   const [error, setError] = useState<string | null>(null);
@@ -28,8 +33,16 @@ export default function SettingsInterfaceBackground() {
   }, []);
 
   async function storeImage(file: any) {
+
+    const windowSize = {width: window.innerWidth,
+      height: window.innerHeight};
+
     console.log('store image initilized');
-    const imageInBase64 = await blobToBase64(file);
+    const imageUrl = URL.createObjectURL(file);
+    const imageCropped = await crop(imageUrl,windowSize)  as imagecroped
+
+    const imageInBase64 = imageCropped.data ? imageCropped.data : await blobToBase64(file);
+
     try {
       if (file) {
         const { bg_homepage: database } = await db();
@@ -50,7 +63,7 @@ export default function SettingsInterfaceBackground() {
 
         setIsUploadLoading(false);
         setIsUploaded(true);
-        setImage(URL.createObjectURL(file));
+        setImage(imageUrl);
         console.log('store image end');
         
        try {
@@ -60,7 +73,6 @@ export default function SettingsInterfaceBackground() {
           subject: 'update',
         });
 
-        console.log(request)
        } catch (error) {
         console.log(error)
        }
@@ -140,6 +152,7 @@ export default function SettingsInterfaceBackground() {
 
       <div
         className={style.preview}
+        onDragOver={onDragOver}
         onDrop={dropHandler}
         onDragLeave={onDragLeave}
         style={{ backgroundImage: `url(${image})` }}

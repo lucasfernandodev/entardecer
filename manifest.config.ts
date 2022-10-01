@@ -12,10 +12,10 @@ export default defineManifest(async (env) => ({
   name: names[env.command],
   version,
   icons: {
-    '16': 'images/entardecer_16x16.png',
-    '32': 'images/entardecer_32x32.png',
-    '48': 'images/entardecer_48x48.png',
-    '128': 'images/entardecer_128x128.png',
+    '16': 'images/icons/app/entardecer_16x16.png',
+    '32': 'images/icons/app/entardecer_32x32.png',
+    '48': 'images/icons/app/entardecer_48x48.png',
+    '128': 'images/icons/app/entardecer_128x128.png',
   },
   action: {
     default_popup: 'pages/popup/index.html',
@@ -27,7 +27,7 @@ export default defineManifest(async (env) => ({
   options_page: 'pages/configurations/index.html',
   content_scripts: [
     {
-      js: ['Services/chrome/content-script.tsx'],
+      js: ['services/chrome/content-script.tsx'],
       matches: ['*://*/*'],
     },
   ],
@@ -36,9 +36,6 @@ export default defineManifest(async (env) => ({
   web_accessible_resources: [
     {
       resources: [
-        'images/icons/sucess.svg',
-        'images/icons/info.svg',
-        'images/icons/error.svg',
         'images/error.svg',
       ],
       matches: ['https://*/*'],

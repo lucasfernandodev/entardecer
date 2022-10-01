@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useOnLoadImages } from '../../../hooks/useOnLoadImages';
-import { getCurrentTab } from '../../../utils/getcurrentTab';
+import { getCurrentTab } from '../../../utils/chrome/getcurrentTab';
 import style from './style.module.css';
 
 interface Favicon {

@@ -1,4 +1,4 @@
-import { storage } from "../Services/chrome/storage";
+import { storage } from "../../storage/storage";
 
 export default function configStorage() {
   interface config {
@@ -8,7 +8,6 @@ export default function configStorage() {
     category: ['all'],
     theme: 'dark',
     autoload: [],
-    background: 'unset',
   };
 
 

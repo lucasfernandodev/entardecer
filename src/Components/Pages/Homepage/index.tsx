@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { db } from '../../../Services/chrome/database';
+import { db } from '../../../storage/database';
 import Layout from '../../Atoms/Layout';
 import Painel from '../../Template/Painel';
 import style from './style.module.css';

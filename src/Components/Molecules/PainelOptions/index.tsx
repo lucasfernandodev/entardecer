@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { db } from '../../../Services/chrome/database';
+import { db } from '../../../storage/database';
 import style from './style.module.css';
 
 interface PainelOption {

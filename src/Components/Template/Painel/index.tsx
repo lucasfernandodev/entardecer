@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { db } from '../../../Services/chrome/database';
-import { storage } from '../../../Services/chrome/storage';
+import { db } from '../../../storage/database';
+import { storage } from '../../../storage/storage';
 import { requestMessage } from '../../../types/requestMessage';
 import PainelItem from '../../Molecules/PainelItem';
 import PainelFooter from '../../Organisms/PainelFooter';

@@ -1,4 +1,4 @@
-import isImageDark from './isImageDark';
+import isImageDark from '../isImageDark';
 
 
 export const getIcon = () => {

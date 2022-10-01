@@ -7,9 +7,9 @@ import Select from '../../../Atoms/Select';
 import { isValidHttpUrl } from '../../../../utils/isValidHttpUrl';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../../../Atoms/Layout';
-import { storage } from '../../../../Services/chrome/storage';
-import { db } from '../../../../Services/chrome/database';
-import { message } from '../../../../Services/chrome/message';
+import { storage } from '../../../../storage/storage';
+import { db } from '../../../../storage/database';
+import { message } from '../../../../services/chrome/message';
 
 interface data {
   page_title: string;

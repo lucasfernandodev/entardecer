@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { db } from '../../../Services/chrome/database';
+import { db } from '../../../storage/database';
 import blobToBase64 from '../../../utils/blobToBase64';
 import getBase64Image from '../../../utils/blobToBase64';
 import Icon from '../../utils/icon';

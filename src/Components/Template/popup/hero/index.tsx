@@ -1,7 +1,7 @@
 import style from './style.module.css';
 import Icon from '../../../utils/icon';
 import { useEffect, useState } from 'react';
-import { getCurrentTab } from '../../../../utils/getcurrentTab';
+import { getCurrentTab } from '../../../../utils/chrome/getcurrentTab';
 import Layout from '../../../Atoms/Layout';
 
 export default function Hero({ changeView }: { changeView: () => void }) {

@@ -5,7 +5,7 @@ import {
   getTitle,
   getPageName,
   getUrl,
-} from '../../utils/collectInfomationDom';
+} from '../../utils/chrome/collectInfomationDom';
 
 interface data {
   page_title: string;

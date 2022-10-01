@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { db } from '../../../Services/chrome/database';
+import { db } from '../../../storage/database';
 import Favicon from '../../Atoms/favicon';
 import Icon from '../../utils/icon';
 import style from './style.module.css';

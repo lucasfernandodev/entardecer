@@ -1,8 +1,8 @@
 import FormPopup from '../../Template/popup/FormPopup';
 import Hero from '../../Template/popup/hero';
 import { useEffect, useState } from 'react';
-import { message } from '../../../Services/chrome/message';
-import configStorage from '../../../utils/configStorage';
+import { message } from '../../../services/chrome/message';
+import configStorage from '../../../utils/chrome/configStorage';
 
 interface data {
   page_title: string;

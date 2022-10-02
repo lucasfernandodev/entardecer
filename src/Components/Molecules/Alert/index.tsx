@@ -22,7 +22,7 @@ export default function Alert({type, msg, title}: Alert){
   useEffect(() => {
     timer = setTimeout(() => {
       setIsVisible(false);
-    }, 2500)
+    }, 3000)
 
     return () => {
       clearTimeout(timer)

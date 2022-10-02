@@ -27,18 +27,22 @@ export default async function crop(url: string, scropSizes: scropSizes) {
 
       // Posiciona o corte no centro da imagem
       if (imageWidth > windowWidth && imageHeight > windowHeight) {
-        positionImageX = (imageWidth - windowWidth) * .5;
-        positionImageY = (imageHeight - windowHeight) * .5;
+        let px = (imageWidth - windowWidth) * .5;
+        let py = (imageHeight - windowHeight) * .5;
+        positionImageX = px > 0 ?  px : 0;
+        positionImageY = py > 0 ?  py : 0;
       }
 
       // Posiciona o corte na horizontal
       if (imageWidth > windowWidth && imageHeight <= windowHeight) {
-        positionImageX = (imageWidth - windowWidth) * .5;
+        let px = (imageWidth - windowWidth) * .5;
+        positionImageX = px > 0 ?  (0 - px)  : 0;
       }
 
       // Posiciona o corte na vertical
       if (imageWidth <= windowWidth && imageHeight > windowHeight) {
-        positionImageY = (imageHeight - windowHeight) * .5;
+        let py = (imageHeight - windowHeight) * .5;
+        positionImageY = py > 0 ?  (0 - py) : 0;
       }
 
       const outputImage = document.createElement('canvas');
@@ -46,14 +50,20 @@ export default async function crop(url: string, scropSizes: scropSizes) {
       outputImage.height = windowHeight
       const ctx = outputImage.getContext('2d');
 
-     
-      if (ctx) {
-        ctx.drawImage(inputImage, (0 - positionImageX), (0 - positionImageY));
+      if(positionImageX <= 0 && positionImageY <= 0){
         resolve({
-          crop: true,
-          data: outputImage.toDataURL(),
+          crop: false,
+          msg: 'A imagem está no tamanho correto e não precisa ser cortada',
         });
-      }
+      }else{
+        if (ctx) {
+          ctx.drawImage(inputImage,positionImageX, positionImageY);
+          resolve({
+            crop: true,
+            data: outputImage.toDataURL(),
+          });
+        }
+      }   
     };
 
     inputImage.onerror = (err) => {

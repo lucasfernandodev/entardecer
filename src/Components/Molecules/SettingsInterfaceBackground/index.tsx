@@ -37,6 +37,8 @@ export default function SettingsInterfaceBackground() {
 
   async function storeImage(file: File) {
     setError('');
+    setIsUploaded(false)
+    
     async function uploadImage(image64: string) {
       const { bg_homepage: database } = await db();
 
@@ -68,8 +70,6 @@ export default function SettingsInterfaceBackground() {
     }
 
     if(!imageTypesAccepts.includes(file.type)){
-      console.log(file.type)
-      console.log(imageTypesAccepts)
       setError('- Arquivo de imagem invalido');
       setImage(null);
       setIsUploadLoading(false);
@@ -80,9 +80,7 @@ export default function SettingsInterfaceBackground() {
     const imageUrl = URL.createObjectURL(file);
     const isCropImage = (await crop(imageUrl, windowSize)) as imagecroped;
 
-    const image64 = isCropImage.data
-      ? isCropImage.data
-      : await blobToBase64(file);
+    const image64 = isCropImage.data ? isCropImage.data : await blobToBase64(file)
 
     try {
       await uploadImage(image64 as string);

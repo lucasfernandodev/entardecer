@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
+import useImageBackgroundLoading from '../../../hooks/useImageBackgroundLoading';
 import { message } from '../../../services/chrome/message';
 import { db } from '../../../storage/database';
 import blobToBase64 from '../../../utils/blobToBase64';
 import crop from '../../../utils/image/crop';
-import ButtonSwich from '../../Atoms/Buttons/Swich';
 import Icon from '../../utils/icon';
 import Alert from '../Alert';
 import style from './style.module.css';
@@ -16,29 +16,19 @@ interface imagecroped {
 type Drag = React.DragEvent<HTMLDivElement>;
 
 export default function SettingsInterfaceBackground() {
+  const [image, setImage] = useState<any | String>(null);
   const [error, setError] = useState<string | null>(null);
   const [isUploadLoading, setIsUploadLoading] = useState(false);
-  const [image, setImage] = useState<any | String>(null);
   const [isUploaded, setIsUploaded] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    (async () => {
-      setIsLoading(true);
-      const { bg_homepage: database } = await db();
-      const isImage = await database.getAll('image');
-      if (isImage.length > 0) {
-        // const image = URL.createObjectURL(isImage[0].data)
-        setImage(isImage[0].data);
-      }
-      setIsLoading(false);
-    })();
-  }, []);
+  const [backgroundImage] = useImageBackgroundLoading();
+
 
   async function storeImage(file: File) {
     setError('');
-    setIsUploaded(false)
-    
+    setIsUploaded(false);
+
     async function uploadImage(image64: string) {
       const { bg_homepage: database } = await db();
 
@@ -59,28 +49,36 @@ export default function SettingsInterfaceBackground() {
 
     const fileSize = file.size / 1024;
     const windowSize = { width: window.innerWidth, height: window.innerHeight };
-    const imageTypesAccepts: string[] = ['image/png', 'image/jpg', 'image/jpeg', 'image/webp', 'image/svg+xml']
+    const imageTypesAccepts: string[] = [
+      'image/png',
+      'image/jpg',
+      'image/jpeg',
+      'image/webp',
+      'image/svg+xml',
+    ];
 
     if (fileSize > 3072) {
       setError('- São aceitas somentes imagem de tamanho maximo 3MB');
       setImage(null);
       setIsUploadLoading(false);
-      setIsLoading(false)
+      setIsLoading(false);
       return;
     }
 
-    if(!imageTypesAccepts.includes(file.type)){
+    if (!imageTypesAccepts.includes(file.type)) {
       setError('- Arquivo de imagem invalido');
       setImage(null);
       setIsUploadLoading(false);
-      setIsLoading(false)
+      setIsLoading(false);
       return;
     }
 
     const imageUrl = URL.createObjectURL(file);
     const isCropImage = (await crop(imageUrl, windowSize)) as imagecroped;
 
-    const image64 = isCropImage.data ? isCropImage.data : await blobToBase64(file)
+    const image64 = isCropImage.data
+      ? isCropImage.data
+      : await blobToBase64(file);
 
     try {
       await uploadImage(image64 as string);
@@ -103,7 +101,7 @@ export default function SettingsInterfaceBackground() {
     const input = evt.target as any;
     const file = input.files[0];
     storeImage(file);
-    input.value = ''
+    input.value = '';
   }
 
   function handleDrag() {
@@ -155,13 +153,13 @@ export default function SettingsInterfaceBackground() {
     };
   }
 
-  function resetUpload(e: React.MouseEvent<HTMLButtonElement, MouseEvent>){
-    e.preventDefault()
+  function resetUpload(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    e.preventDefault();
     setImage(null);
-    setIsUploaded(false)
+    setIsUploaded(false);
     setIsUploadLoading(false);
-    setIsLoading(false)
-    setError('')
+    setIsLoading(false);
+    setError('');
   }
 
   return (
@@ -171,10 +169,10 @@ export default function SettingsInterfaceBackground() {
 
       <div
         className={style.preview}
-        onDragOver={handleDrag().over} 
+        onDragOver={handleDrag().over}
         onDrop={handleDrag().drop}
         onDragLeave={handleDrag().leave}
-        style={{ backgroundImage: `url(${image})` }}
+        style={{ backgroundImage: `url(${backgroundImage})` }}
         data-loading={
           isUploadLoading || (isLoading && !isUploaded) ? true : false
         }
@@ -191,10 +189,11 @@ export default function SettingsInterfaceBackground() {
           </div>
         )}
 
-        {isUploaded && 
-        (<button className={style.btnUpdateImage} onClick={resetUpload}>
-        <Icon name='update' />  
-      </button>)}
+        {isUploaded && (
+          <button className={style.btnUpdateImage} onClick={resetUpload}>
+            <Icon name='update' />
+          </button>
+        )}
       </div>
 
       <p className={style.msgError}>{error}</p>
@@ -211,8 +210,6 @@ export default function SettingsInterfaceBackground() {
           msg='O Background alterado com sucesso'
         />
       )}
-
-      
     </form>
   );
 }

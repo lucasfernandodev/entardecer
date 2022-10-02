@@ -19,7 +19,7 @@ interface MyDB extends DBSchema {
 interface bg_homepageDB extends DBSchema {
   image: {
     value: {
-      data: unknown,
+      data: string,
       id: string
     };
     key: string;

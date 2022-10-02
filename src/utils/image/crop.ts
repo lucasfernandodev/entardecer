@@ -29,8 +29,8 @@ export default async function crop(url: string, scropSizes: scropSizes) {
       if (imageWidth > windowWidth && imageHeight > windowHeight) {
         let px = (imageWidth - windowWidth) * .5;
         let py = (imageHeight - windowHeight) * .5;
-        positionImageX = px > 0 ?  px : 0;
-        positionImageY = py > 0 ?  py : 0;
+        positionImageX = px > 0 ?   (0 - px) : 0;
+        positionImageY = py > 0 ?   (0 - py) : 0;
       }
 
       // Posiciona o corte na horizontal

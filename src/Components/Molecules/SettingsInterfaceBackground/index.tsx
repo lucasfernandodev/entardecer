@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import useImageBackgroundLoading from '../../../hooks/useImageBackgroundLoading';
+import useImageUpload from '../../../hooks/useImageUpload';
 import { message } from '../../../services/chrome/message';
 import { db } from '../../../storage/database';
 import blobToBase64 from '../../../utils/blobToBase64';
@@ -8,96 +9,23 @@ import Icon from '../../utils/icon';
 import Alert from '../Alert';
 import style from './style.module.css';
 
-interface imagecroped {
-  data?: Blob;
-  crop: Boolean;
-}
 
 type Drag = React.DragEvent<HTMLDivElement>;
 
 export default function SettingsInterfaceBackground() {
-  const [image, setImage] = useState<any | String>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [isUploadLoading, setIsUploadLoading] = useState(false);
-  const [isUploaded, setIsUploaded] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
+  const [loading, setLoading] = useState<boolean>(false);
   const [backgroundImage] = useImageBackgroundLoading();
 
+  const {storeImage, onFinish,error, image, clearInput} = useImageUpload()
 
-  async function storeImage(file: File) {
-    setError('');
-    setIsUploaded(false);
+  useEffect(() => {
+    if(onFinish) setLoading(false);
+  }, [loading, onFinish])
 
-    async function uploadImage(image64: string) {
-      const { bg_homepage: database } = await db();
-
-      const isImage = await database.getAll('image');
-
-      if (isImage.length === 0) {
-        await database.add('image', {
-          data: image64,
-          id: 'bg_homepage',
-        });
-      } else {
-        await database.put('image', {
-          data: image64,
-          id: 'bg_homepage',
-        });
-      }
-    }
-
-    const fileSize = file.size / 1024;
-    const windowSize = { width: window.innerWidth, height: window.innerHeight };
-    const imageTypesAccepts: string[] = [
-      'image/png',
-      'image/jpg',
-      'image/jpeg',
-      'image/webp',
-      'image/svg+xml',
-    ];
-
-    if (fileSize > 3072) {
-      setError('- São aceitas somentes imagem de tamanho maximo 3MB');
-      setImage(null);
-      setIsUploadLoading(false);
-      setIsLoading(false);
-      return;
-    }
-
-    if (!imageTypesAccepts.includes(file.type)) {
-      setError('- Arquivo de imagem invalido');
-      setImage(null);
-      setIsUploadLoading(false);
-      setIsLoading(false);
-      return;
-    }
-
-    const imageUrl = URL.createObjectURL(file);
-    const isCropImage = (await crop(imageUrl, windowSize)) as imagecroped;
-
-    const image64 = isCropImage.data
-      ? isCropImage.data
-      : await blobToBase64(file);
-
-    try {
-      await uploadImage(image64 as string);
-      setIsUploadLoading(false);
-      setIsUploaded(true);
-      setImage(imageUrl);
-
-      await message.send({
-        from: 'configuration',
-        to: 'homepage',
-        subject: 'update',
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
+  
   function handleOnChange(evt: React.ChangeEvent<HTMLInputElement>) {
-    setIsUploadLoading(true);
+    setLoading(true)
     const input = evt.target as any;
     const file = input.files[0];
     storeImage(file);
@@ -135,8 +63,8 @@ export default function SettingsInterfaceBackground() {
         el.classList.add(style.dragOver);
       },
       drop: (e: Drag) => {
+        setLoading(true)
         e.preventDefault();
-        setIsUploadLoading(true);
 
         const el = e.target as HTMLElement;
 
@@ -153,15 +81,6 @@ export default function SettingsInterfaceBackground() {
     };
   }
 
-  function resetUpload(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
-    e.preventDefault();
-    setImage(null);
-    setIsUploaded(false);
-    setIsUploadLoading(false);
-    setIsLoading(false);
-    setError('');
-  }
-
   return (
     <form className={style.form}>
       <h3>Alterar plano de fundo</h3>
@@ -172,12 +91,10 @@ export default function SettingsInterfaceBackground() {
         onDragOver={handleDrag().over}
         onDrop={handleDrag().drop}
         onDragLeave={handleDrag().leave}
-        style={{ backgroundImage: `url(${backgroundImage})` }}
-        data-loading={
-          isUploadLoading || (isLoading && !isUploaded) ? true : false
-        }
+        style={{ backgroundImage: `url(${image ? image : backgroundImage})` }}
+        data-loading={loading}
       >
-        {!isUploaded && (
+        {!onFinish && (
           <div className={style.placeholder}>
             <div className={style.content}>
               <Icon name='image' className={style.icon} />
@@ -189,21 +106,21 @@ export default function SettingsInterfaceBackground() {
           </div>
         )}
 
-        {isUploaded && (
-          <button className={style.btnUpdateImage} onClick={resetUpload}>
+        {onFinish && (
+          <button className={style.btnUpdateImage} onClick={clearInput}>
             <Icon name='update' />
           </button>
         )}
       </div>
 
-      <p className={style.msgError}>{error}</p>
+      <p className={style.msgError}>{error[0]}</p>
       <input
         type='file'
         id={style.formInput}
         accept='image/*'
         onChange={handleOnChange}
       />
-      {isUploaded && (
+      {onFinish && (
         <Alert
           type='success'
           title='Configurações de interface'

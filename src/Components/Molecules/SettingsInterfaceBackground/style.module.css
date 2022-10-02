@@ -44,6 +44,10 @@
   background-position: center center;
 }
 
+.form .preview.dragOver {
+  border: 2px dotted #10ac84;
+}
+
 .form .preview[data-loading='true']::before {
   content: '';
   background: linear-gradient(
@@ -111,6 +115,7 @@
 .form .preview .placeholder label {
   color: var(--color-success);
   cursor: pointer;
+  margin-left: 6px;
 }
 
 .form .preview[data-loading='true'] .placeholder {
@@ -121,51 +126,6 @@
   font-weight: bold;
   color: #ee5253;
   font-size: 13px;
-}
-
-.form .preview.dragOver {
-  border: 2px dotted #10ac84;
-}
-
-.form .btnActions {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: center;
-  border-radius: 4px;
-  gap: 8px;
-  padding: 8px 0px;
-  z-index: 100;
-  width: 100%;
-}
-
-.form .btnActions button {
-  cursor: pointer;
-  background: linear-gradient(to right, var(--color-primary), #1a49ad);
-  border: unset;
-  border-radius: 3px;
-  color: #ddddff;
-  font-weight: bold;
-  font-size: 13px;
-  height: 25px;
-  width: 100px;
-}
-
-.form .btnActions button:hover {
-  background: linear-gradient(to right, var(--color-primary), #598eff, #1a49ad);
-  outline-offset: 2px;
-  outline: 1px solid #1a49ad;
-}
-
-.form .btnActions button:nth-child(1) {
-  background: transparent;
-  border: 1px solid var(--paper-color);
-}
-
-.form .btnActions button:nth-child(1):hover {
-  background: var(--paper-color);
-  outline: 1px solid var(--paper-color);
 }
 
 .form .btnUpdateImage{

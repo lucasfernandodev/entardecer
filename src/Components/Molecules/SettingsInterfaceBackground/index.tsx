@@ -157,6 +157,14 @@ export default function SettingsInterfaceBackground() {
     };
   }
 
+  function resetUpload(e: React.MouseEvent<HTMLButtonElement, MouseEvent>){
+    e.preventDefault()
+    setImage(null);
+    setIsUploaded(false)
+    setIsUploadLoading(false);
+    setIsLoading(false)
+    setError('')
+  }
 
   return (
     <form className={style.form}>
@@ -186,7 +194,7 @@ export default function SettingsInterfaceBackground() {
         )}
 
         {isUploaded && 
-        (<button className={style.btnUpdateImage} onClick={e => e.preventDefault()}>
+        (<button className={style.btnUpdateImage} onClick={resetUpload}>
         <Icon name='update' />  
       </button>)}
       </div>

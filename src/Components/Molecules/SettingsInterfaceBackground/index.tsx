@@ -1,31 +1,24 @@
 import { useEffect, useState } from 'react';
 import useImageBackgroundLoading from '../../../hooks/useImageBackgroundLoading';
 import useImageUpload from '../../../hooks/useImageUpload';
-import { message } from '../../../services/chrome/message';
-import { db } from '../../../storage/database';
-import blobToBase64 from '../../../utils/blobToBase64';
-import crop from '../../../utils/image/crop';
 import Icon from '../../utils/icon';
 import Alert from '../Alert';
 import style from './style.module.css';
 
-
 type Drag = React.DragEvent<HTMLDivElement>;
 
 export default function SettingsInterfaceBackground() {
-
   const [loading, setLoading] = useState<boolean>(false);
-  const [backgroundImage] = useImageBackgroundLoading();
 
-  const {storeImage, onFinish,error, image, clearInput} = useImageUpload()
+  const [backgroundImage] = useImageBackgroundLoading();
+  const { storeImage, onFinish, error, image, clearInput } = useImageUpload();
 
   useEffect(() => {
-    if(onFinish) setLoading(false);
-  }, [loading, onFinish])
+    if (onFinish) setLoading(false);
+  }, [loading, onFinish]);
 
-  
   function handleOnChange(evt: React.ChangeEvent<HTMLInputElement>) {
-    setLoading(true)
+    setLoading(true);
     const input = evt.target as any;
     const file = input.files[0];
     storeImage(file);
@@ -63,7 +56,7 @@ export default function SettingsInterfaceBackground() {
         el.classList.add(style.dragOver);
       },
       drop: (e: Drag) => {
-        setLoading(true)
+        setLoading(true);
         e.preventDefault();
 
         const el = e.target as HTMLElement;

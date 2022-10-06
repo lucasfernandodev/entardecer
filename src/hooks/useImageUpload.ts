@@ -49,8 +49,6 @@ export default function useImageUpload() {
 
     const fileSize = file.size / 1024;
 
-
-
     if (fileSize > 3072) {
       setError([
         ...error,

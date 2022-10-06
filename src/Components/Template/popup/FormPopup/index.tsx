@@ -28,7 +28,9 @@ interface inputs {
   [key: string]: HTMLInputElement | null;
 }
 
-const options = storage.read('category').data.map((item: string) => {
+const category = storage.read('category').data || []
+
+const options = category.map((item: string) => {
   return {
     value: item,
     label: `${item[0].toUpperCase()}${item.slice(1, item.length)}`,

@@ -12,7 +12,8 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.4.0",
-    "react-select": "^5.4.0"
+    "react-select": "^5.4.0",
+    "vite-plugin-favicons-inject": "^2.1.0"
   },
   "devDependencies": {
     "@crxjs/vite-plugin": "^1.0.14",

@@ -36,7 +36,7 @@ export default function Homepage(){
 
   return (
     <Layout large='full'>
-      <div className={style.container} style={{backgroundImage: `url(${bg})`}}>
+      <div className={style.container} style={bg ? {backgroundImage: `url(${bg})`} : {}}>
         <Painel />
       </div>
     </Layout>

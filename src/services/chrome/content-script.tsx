@@ -1,11 +1,11 @@
-import { requestMessage } from '../../types/requestMessage';
+import { requestMessage } from "../../types/requestMessage";
 import {
   getBrightness,
   getIcon,
   getTitle,
   getPageName,
   getUrl,
-} from '../../utils/chrome/collectInfomationDom';
+} from "../../utils/chrome/collectInfomationDom";
 
 interface data {
   page_title: string;
@@ -17,12 +17,12 @@ interface data {
 
 chrome.runtime.onMessage.addListener(
   (request: requestMessage, sender, sendResponse) => {
-    if (request.from === 'popup' && request.subject === 'getDomInformation') {
+    if (request.from === "popup" && request.subject === "getDomInformation") {
       // Message Response Model
       const message: requestMessage = {
-        from: 'content-script',
-        subject: 'sendDomInformation',
-        to: 'popup',
+        from: "content-script",
+        subject: "sendDomInformation",
+        to: "popup",
         data: null,
         error: null,
       };
@@ -42,7 +42,7 @@ chrome.runtime.onMessage.addListener(
       ) {
         message.error = {
           message:
-            '[content-script]: Erro não foi possivel buscar todos os dados',
+            "[content-script]: Erro não foi possivel buscar todos os dados",
         };
 
         sendResponse(message);
@@ -50,18 +50,17 @@ chrome.runtime.onMessage.addListener(
 
       getBrightness(data.page_url_icon)
         .then((response) => {
-         
-          if(response?.error === null){
+          if (response?.error === null) {
             message.data = {
               ...data,
               isDark: response.isDark,
             };
-          }else{
+          } else {
             message.error = {
-              message: response?.error.message || 'Message Error not encontred'
-            }
+              message: response?.error.message || "Message Error not encontred",
+            };
           }
-         
+
           sendResponse(message);
         })
         .catch((err) => {
@@ -69,10 +68,10 @@ chrome.runtime.onMessage.addListener(
             ...data,
             isDark: null,
           };
-          
+
           message.error = {
-            message: err.msg
-          }
+            message: err.msg,
+          };
 
           sendResponse(message);
         });

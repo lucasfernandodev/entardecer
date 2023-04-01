@@ -2,6 +2,7 @@
   "name": "entardecer",
   "private": true,
   "version": "0.0.2",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -16,7 +17,7 @@
     "vite-plugin-favicons-inject": "^2.1.0"
   },
   "devDependencies": {
-    "@crxjs/vite-plugin": "^1.0.14",
+    "@crxjs/vite-plugin": "^2.0.0-beta.15",
     "@types/chrome": "^0.0.196",
     "@types/node": "^18.7.16",
     "@types/react": "^18.0.0",

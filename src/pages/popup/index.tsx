@@ -1,8 +1,8 @@
-import FormPopup from '../../Template/popup/FormPopup';
-import Hero from '../../Template/popup/hero';
-import { useEffect, useState } from 'react';
-import { message } from '../../../services/chrome/message';
-import configStorage from '../../../utils/chrome/configStorage';
+import FormPopup from "../../Components/Template/popup/FormPopup";
+import Hero from "../../Components/Template/popup/hero";
+import { useEffect, useState } from "react";
+import { message } from "../../services/chrome/message";
+import configStorage from "../../utils/chrome/configStorage";
 
 interface data {
   page_title: string;
@@ -17,9 +17,9 @@ function Popup() {
   const [data, setData] = useState<null | data>(null);
 
   useEffect(() => {
-    configStorage()
-  }, [])
-  
+    configStorage();
+  }, []);
+
   useEffect(() => {
     if (data !== null) {
       isDataShortcut(true);
@@ -27,12 +27,14 @@ function Popup() {
   }, [data]);
 
   async function getDomInformation() {
-
-    const request = await message.send({
-      from: 'popup',
-      to: 'script-page',
-      subject: 'getDomInformation',
-    }, true);
+    const request = await message.send(
+      {
+        from: "popup",
+        to: "script-page",
+        subject: "getDomInformation",
+      },
+      true
+    );
 
     const response = await request;
 
@@ -40,8 +42,8 @@ function Popup() {
       const data = response.data as data;
       setData(data);
       response.error && console.log(response.error.message);
-    }else{
-      console.log(response.error?.message)
+    } else {
+      console.log(response.error?.message);
     }
   }
 

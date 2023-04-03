@@ -1,15 +1,12 @@
+import { ISetupConfig } from "../types/setupConfig";
 import { storage } from "../utils/storage";
 
-interface config {
-  [key: string]: string | string[] | boolean;
-}
 
-function setup() {
+const setup = () => {
 
-  const config: config = {
+  const config: ISetupConfig = {
     category: ['all'],
     theme: 'dark',
-    autoload: [],
   };
 
   try {

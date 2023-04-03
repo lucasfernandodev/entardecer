@@ -25,13 +25,8 @@ interface FormPopupTemplateProps {
 
 function FormPopupTemplate({ changeView, data }: FormPopupTemplateProps) {
   const navigate = useNavigate();
-  const [pressed, isPressed] = useState(false);
   const [msgError, setMsgError] = useState<string>("");
   const [category, setCategory] = useState("apps");
-
-  function toggleButton() {
-    isPressed(!pressed);
-  }
 
   const categories = storage.read<string[]>("category") || [];
   const options = categories.map(

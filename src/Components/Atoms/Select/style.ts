@@ -1,5 +1,5 @@
 export const style = {
-  container: (provided: any, state: any) => ({
+  container: (provided: any) => ({
     ...provided,
     color: 'hsla(180, 2%, 81%, 100%)',
     background: 'var(--bg-color)',
@@ -57,7 +57,7 @@ export const style = {
     };
   },
 
-  valueContainer: (provided: any, state: any) => ({
+  valueContainer: (provided: any) => ({
     ...provided,
     minHeight: '32px',
     paddingTop: 0,
@@ -65,7 +65,7 @@ export const style = {
     display: 'flex',
   }),
 
-  input: (provided: any, state: any) => ({
+  input: (provided: any) => ({
     ...provided,
     paddingTop: 0,
     margin: 0,
@@ -79,14 +79,14 @@ export const style = {
     fontWeight: 'bold',
   }),
 
-  placeholder: (provided: any, state: any) => ({
+  placeholder: (provided: any) => ({
     ...provided,
     color: 'hsla(180, 2%, 81%, 50%)',
     fontSize: '12px',
     fontWeight: 'bold',
   }),
 
-  menu: (provided: any, state: any) => ({
+  menu: (provided: any) => ({
     ...provided,
     width: '100%',
     border: '1px solid #27293B',

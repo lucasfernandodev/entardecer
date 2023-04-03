@@ -31,14 +31,16 @@ export default defineManifest(async (env) => ({
       matches: ['*://*/*'],
     },
   ],
-  permissions: ['storage', 'contextMenus', 'tabs', 'activeTab', 'scripting'],
+  permissions: ['favicon', 'storage', 'contextMenus', 'tabs', 'activeTab', 'scripting'],
   host_permissions: ['*://*/*'],
   web_accessible_resources: [
     {
       resources: [
         'images/error.svg',
+        '_favicon/*'
       ],
-      matches: ['https://*/*'],
+      matches: ['<all_urls>'],
+      "extension_ids": ["*"]
     },
   ],
 }));

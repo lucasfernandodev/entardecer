@@ -1,15 +1,15 @@
 import FormPopup from "../../Components/Template/popup/FormPopup";
 import Hero from "../../Components/Template/popup/hero";
 import { useEffect, useState } from "react";
-import { message } from "../../services/chrome/message";
 import configStorage from "../../utils/chrome/configStorage";
+import { getPageMeta } from "../../utils/chrome/getTabMeta";
+import { message } from "../../services/chrome/message";
 
 interface data {
-  page_title: string;
-  page_url: string;
-  page_url_icon: string | null;
-  page_name: string;
-  isDark?: boolean | null;
+  title: string;
+  url: string;
+  favicon: string;
+  brightness: boolean;
 }
 
 function Popup() {
@@ -27,7 +27,7 @@ function Popup() {
   }, [data]);
 
   async function getDomInformation() {
-    const request = await message.send(
+    const meta = await message.send(
       {
         from: "popup",
         to: "script-page",
@@ -36,15 +36,7 @@ function Popup() {
       true
     );
 
-    const response = await request;
-
-    if (response.error === null || response.data !== null) {
-      const data = response.data as data;
-      setData(data);
-      response.error && console.log(response.error.message);
-    } else {
-      console.log(response.error?.message);
-    }
+    meta.data && setData(meta.data);
   }
 
   function navigationBack() {

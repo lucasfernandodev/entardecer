@@ -31,7 +31,7 @@ export default function SettingsInterfaceBackground() {
 
       if (e.dataTransfer.items) {
         // Use a interface DataTransferItemList para acessar o (s) arquivo (s)
-        for (var i = 0; i < e.dataTransfer.items.length; i++) {
+        for (let i = 0; i < e.dataTransfer.items.length; i++) {
           // Se os itens soltos não forem arquivos, rejeite-os
           if (e.dataTransfer.items[i].kind === 'file') {
             file = e.dataTransfer.items[i].getAsFile() as any;

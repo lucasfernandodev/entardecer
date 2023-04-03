@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
-import { db } from '../../../storage/database';
-import { storage } from '../../../storage/storage';
-import { requestMessage } from '../../../types/requestMessage';
-import PainelItem from '../../Molecules/PainelItem';
-import PainelFooter from '../../Organisms/PainelFooter';
-import PainelHeader from '../../Organisms/PainelHeader';
-import style from './style.module.css';
+import { useEffect, useState } from "react";
+import { db } from "../../../database/indexDB";
+import { storage } from "../../../utils/storage";
+import { requestMessage } from "../../../types/requestMessage";
+import PainelItem from "../../Molecules/PainelItem";
+import PainelFooter from "../../Organisms/PainelFooter";
+import PainelHeader from "../../Organisms/PainelHeader";
+import style from "./style.module.css";
 
 interface data {
   url: string;
@@ -17,24 +17,26 @@ interface data {
 export default function Painel() {
   const [data, setData] = useState<data[]>([]);
   const [stage, setStage] = useState(false);
-  const [update, setUpdate] = useState<string>('');
+  const [update, setUpdate] = useState<string>("");
   const [categories, setCategories] = useState<string[]>([]);
   const [category, setCategory] = useState(0);
 
-
   useEffect(() => {
-    const data = storage.read('category').data
-    const categories = ['apps', data !== null ? data : ''];
-    console.log(data)
+    const data = storage.read("category").data as string;
+    const categories = ["apps", data !== null ? data : ""];
+
     setCategories(categories);
   }, [update]);
 
   useEffect(() => {
     (async () => {
-      const {shortcuts : database} = await db();
+      const { shortcuts: database } = await db();
 
-      const data = await database.getAllFromIndex('website','by-category',
-        categories[category]) as data[]
+      const data = (await database.getAllFromIndex(
+        "website",
+        "by-category",
+        categories[category]
+      )) as data[];
 
       if (data !== undefined) {
         setData(data);
@@ -42,18 +44,17 @@ export default function Painel() {
     })();
   }, [category, update]);
 
-
   function changeCategory(action: string) {
     const qtdCategories = categories.length - 1;
 
-    if (action === 'goToNext') {
+    if (action === "goToNext") {
       if (category + 1 <= qtdCategories) {
         const currentCategory = category + 1;
         setCategory(currentCategory);
       }
     }
 
-    if (action === 'goToBack') {
+    if (action === "goToBack") {
       if (category - 1 >= 0) {
         const currentCategory = category - 1;
         setCategory(currentCategory);
@@ -66,16 +67,16 @@ export default function Painel() {
     sender,
     sendResponse
   ) {
-    if (request.from === 'popup' && request.subject === 'update') {
+    if (request.from === "popup" && request.subject === "update") {
       setUpdate(`item?${Date.now()}}`);
       sendResponse(true);
     }
     return true;
   });
 
-  function changeStage(){
-    if(data.length > 0){
-      setStage(!stage)
+  function changeStage() {
+    if (data.length > 0) {
+      setStage(!stage);
     }
   }
 
@@ -89,7 +90,7 @@ export default function Painel() {
       />
 
       <section className={style.section}>
-        {data.length > 0 ?
+        {data.length > 0 ? (
           data.map((item) => (
             <PainelItem
               stage={stage}
@@ -97,7 +98,12 @@ export default function Painel() {
               key={item.url}
               data={item}
             />
-          )): <span className={style.alternativeText}>Nenhum atalho salvo nessa categoria.</span>}
+          ))
+        ) : (
+          <span className={style.alternativeText}>
+            Nenhum atalho salvo nessa categoria.
+          </span>
+        )}
       </section>
 
       <PainelFooter />

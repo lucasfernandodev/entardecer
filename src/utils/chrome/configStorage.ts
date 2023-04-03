@@ -1,4 +1,4 @@
-import { storage } from "../../storage/storage";
+import { storage } from "../storage";
 
 export default function configStorage() {
   interface config {
@@ -16,10 +16,10 @@ export default function configStorage() {
     arrayNames.forEach((name: string) => {
       const item = config[name];
 
-      if(storage.read(name)?.data === null){
-       
+      if (storage.read(name)?.data === null) {
+
         const save = storage.create(name, item);
-        if(typeof save?.data !== 'undefined'){
+        if (typeof save?.data !== 'undefined') {
           console.log(`storage ${name} criado com sucesso`)
         }
       }

@@ -1,24 +1,17 @@
 import { requestMessage } from "../../types/requestMessage";
-import {
-  getBrightness,
-  getIcon,
-  getTitle,
-  getPageName,
-  getUrl,
-} from "../../utils/chrome/collectInfomationDom";
+import { getPageMeta } from "../../utils/chrome/getTabMeta";
+import { listener } from "../../utils/chrome/listener";
 
 interface data {
-  page_title: string;
-  page_url: string;
-  page_url_icon: string | null;
-  page_name: string;
-  isDark?: boolean | null;
+  title: string;
+  url: string;
+  favicon: string;
+  brightness: boolean;
 }
 
 chrome.runtime.onMessage.addListener(
-  (request: requestMessage, sender, sendResponse) => {
+  listener(async (request, _, sendResponse) => {
     if (request.from === "popup" && request.subject === "getDomInformation") {
-      // Message Response Model
       const message: requestMessage = {
         from: "content-script",
         subject: "sendDomInformation",
@@ -27,58 +20,15 @@ chrome.runtime.onMessage.addListener(
         error: null,
       };
 
-      const data: data = {
-        page_title: getTitle(),
-        page_url: getUrl().url,
-        page_url_icon: getIcon(),
-        page_name: getPageName(),
-      };
+      const data: data = await getPageMeta();
 
-      if (
-        data.page_title === null ||
-        data.page_url === null ||
-        data.page_name === null ||
-        data.page_url_icon === null
-      ) {
-        message.error = {
-          message:
-            "[content-script]: Erro não foi possivel buscar todos os dados",
-        };
+      message.data = data;
 
-        sendResponse(message);
-      }
-
-      getBrightness(data.page_url_icon)
-        .then((response) => {
-          if (response?.error === null) {
-            message.data = {
-              ...data,
-              isDark: response.isDark,
-            };
-          } else {
-            message.error = {
-              message: response?.error.message || "Message Error not encontred",
-            };
-          }
-
-          sendResponse(message);
-        })
-        .catch((err) => {
-          message.data = {
-            ...data,
-            isDark: null,
-          };
-
-          message.error = {
-            message: err.msg,
-          };
-
-          sendResponse(message);
-        });
+      sendResponse(message);
     }
 
     return true;
-  }
+  })
 );
 
 export {};

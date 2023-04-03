@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { db } from "../../storage/database";
+import { db } from "../../database/indexDB";
 import { requestMessage } from "../../types/requestMessage";
 import Layout from "../../Components/Atoms/Layout";
 import Painel from "../../Components/Template/Painel";
@@ -19,12 +19,7 @@ export default function Homepage() {
 
     getImageBackground();
 
-    chrome.runtime.onMessage.addListener(function (
-      request: requestMessage,
-      sender,
-      sendResponse
-    ) {
-      console.log(request);
+    chrome.runtime.onMessage.addListener(function (request: requestMessage) {
       if (
         request.from === "configuration" &&
         request.to === "homepage" &&

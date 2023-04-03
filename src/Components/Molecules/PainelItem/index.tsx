@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { db } from '../../../storage/database';
-import Favicon from '../../Atoms/favicon';
-import Icon from '../../utils/icon';
-import style from './style.module.css';
+import { useState } from "react";
+import { db } from "../../../database/indexDB";
+import Favicon from "../../Atoms/favicon";
+import Icon from "../../utils/icon";
+import style from "./style.module.css";
 
 interface PainelItem {
   stage: boolean;
@@ -20,42 +20,42 @@ export default function PainelItem({ data, stage, closeStage }: PainelItem) {
   const [itemRemoved, setitemRemoved] = useState(false);
 
   async function removeShortcut() {
-    const {shortcuts : database} = await db();
+    const { shortcuts: database } = await db();
     try {
-      await database.delete('website', data.url);
+      await database.delete("website", data.url);
       setIsRemoved(true);
       setTimeout(() => {
         setitemRemoved(true);
       }, 300);
 
-      const countShotcuts = await database.getAll('website');
+      const countShotcuts = await database.getAll("website");
       if (countShotcuts && countShotcuts.length === 0) {
         closeStage();
       }
     } catch (error) {
-      console.log('Não foi possivel apagar o atalho', error);
+      console.log("Não foi possivel apagar o atalho", error);
     }
   }
 
   const linkPropertie = {
-    target: stage ? '_self' : '_blank',
-    href: stage ? '#' : data.url,
+    target: stage ? "_self" : "_blank",
+    href: stage ? "#" : data.url,
   };
 
   return (
     <div
       className={style.card}
-      style={itemRemoved ? { display: 'none' } : {}}
+      style={itemRemoved ? { display: "none" } : {}}
       data-stage={stage}
       data-removed={isRemoved}
     >
       {stage && (
         <button
           className={style.btnClose}
-          title='Apagar atalho'
+          title="Apagar atalho"
           onClick={removeShortcut}
         >
-          <Icon name='close' />
+          <Icon name="close" />
         </button>
       )}
 

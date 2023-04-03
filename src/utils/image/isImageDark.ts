@@ -6,7 +6,7 @@ interface isImageDarkResponse {
 }
 
 function isImageDark(link: string): Promise<isImageDarkResponse> {
-  let response: isImageDarkResponse = {
+  const response: isImageDarkResponse = {
     error: null,
     isDark: null,
   };
@@ -22,12 +22,11 @@ function isImageDark(link: string): Promise<isImageDarkResponse> {
 
       reject(response);
     }
-  
-  
-    let fuzzy = 0.1;
 
-    let img = document.createElement('img');
-    img.crossOrigin = 'Anonymous';
+
+    const fuzzy = 0.1;
+
+    const img = document.createElement('img');
     img.src = link;
 
     img.style.display = 'none';
@@ -37,17 +36,17 @@ function isImageDark(link: string): Promise<isImageDarkResponse> {
     img.onload = function (this: any) {
 
       // create canvas
-      let canvas = document.createElement('canvas');
+      const canvas = document.createElement('canvas');
       canvas.width = this.width;
       canvas.height = this.height;
 
-      let ctx = canvas.getContext('2d');
+      const ctx = canvas.getContext('2d');
 
       if (ctx) {
         ctx.drawImage(this, 0, 0);
 
-        let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        let data = imageData.data;
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const data = imageData.data;
         let r, g, b, max_rgb;
         let light = 0, dark = 0;
 
@@ -61,7 +60,7 @@ function isImageDark(link: string): Promise<isImageDarkResponse> {
           else light++;
         }
 
-        let dl_diff = (light - dark) / (this.width * this.height);
+        const dl_diff = (light - dark) / (this.width * this.height);
 
         if (dl_diff !== null) {
           response.isDark = dl_diff + fuzzy < 0 ? true : false

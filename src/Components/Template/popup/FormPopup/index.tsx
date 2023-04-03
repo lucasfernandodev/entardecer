@@ -1,22 +1,21 @@
-import React, { HTMLAttributes, useState } from 'react';
-import Icon from '../../../utils/icon';
-import style from './style.module.css';
-import Favicon from '../../../Atoms/favicon';
-import '../../../../styles/global.css';
-import Select from '../../../Atoms/Select';
-import { isValidHttpUrl } from '../../../../utils/isValidHttpUrl';
-import { useNavigate } from 'react-router-dom';
-import Layout from '../../../Atoms/Layout';
-import { storage } from '../../../../storage/storage';
-import { db } from '../../../../storage/database';
-import { message } from '../../../../services/chrome/message';
+import React, { HTMLAttributes, useState } from "react";
+import Icon from "../../../utils/icon";
+import style from "./style.module.css";
+import Favicon from "../../../Atoms/favicon";
+import "../../../../styles/global.css";
+import Select from "../../../Atoms/Select";
+import { isValidHttpUrl } from "../../../../utils/isValidHttpUrl";
+import { useNavigate } from "react-router-dom";
+import Layout from "../../../Atoms/Layout";
+import { storage } from "../../../../utils/storage";
+import { db } from "../../../../database/indexDB";
+import { message } from "../../../../services/chrome/message";
 
 interface data {
-  page_title: string;
-  page_url: string;
-  page_url_icon: string | null;
-  page_name: string;
-  isDark?: boolean | null;
+  title: string;
+  url: string;
+  favicon: string;
+  brightness: boolean;
 }
 
 interface AddShortcut {
@@ -28,7 +27,7 @@ interface inputs {
   [key: string]: HTMLInputElement | null;
 }
 
-const category = storage.read('category').data || []
+const category = (storage.read("category").data as string[]) || [];
 
 const options = category.map((item: string) => {
   return {
@@ -40,44 +39,44 @@ const options = category.map((item: string) => {
 function FormPopup({ changeView, data }: AddShortcut) {
   const navigate = useNavigate();
   const [pressed, isPressed] = useState(false);
-  const [msgError, setMsgError] = useState<string>('');
-  const [category, setCategory] = useState('apps');
+  const [msgError, setMsgError] = useState<string>("");
+  const [category, setCategory] = useState("apps");
 
   function toggleButton() {
     isPressed(!pressed);
   }
 
-  function _setCategory(category: any){
-    setCategory(category.value)
+  function _setCategory(category: any) {
+    setCategory(category.value);
   }
 
   async function notifyHomepage() {
     const request = await message.send({
-      from: 'popup',
-      to: 'homepage',
-      subject: 'update',
+      from: "popup",
+      to: "homepage",
+      subject: "update",
     });
 
     const response = await request;
     if (!response) {
-      console.log('[Popup]: Não foi possivel notificar a homepage');
+      console.log("[Popup]: Não foi possivel notificar a homepage");
     }
 
-    navigate('/success');
+    navigate("/success");
   }
 
   async function handlerSubmit(evt: React.FormEvent<HTMLFormElement>) {
     evt.preventDefault();
-    setMsgError('');
+    setMsgError("");
 
     const errors = [];
     const form = evt.target as HTMLFormElement;
 
     const inputs: inputs = {
-      title: form.querySelector('#website_title'),
-      url: form.querySelector('#website_url'),
-      category: form.querySelector('#website_category'),
-      autoload: form.querySelector('#website_autoload'),
+      title: form.querySelector("#website_title"),
+      url: form.querySelector("#website_url"),
+      category: form.querySelector("#website_category"),
+      autoload: form.querySelector("#website_autoload"),
     };
 
     for (let i = 0; i < Object.keys(inputs).length; i++) {
@@ -86,41 +85,41 @@ function FormPopup({ changeView, data }: AddShortcut) {
       const input: any = inputs[inputsName[i]];
       input.classList.remove(style.invalid);
 
-      if (inputsName[i] === 'title') {
-        if (input.value === '') {
+      if (inputsName[i] === "title") {
+        if (input.value === "") {
           errors.push({
             el: input,
-            message: 'O campo title não pode ficar em branco',
+            message: "O campo title não pode ficar em branco",
           });
         }
 
         if (input.value.lenght < 4) {
           errors.push({
             el: input,
-            message: 'O campo title deve ter no minimo 4 letras',
+            message: "O campo title deve ter no minimo 4 letras",
           });
         }
 
         if (input.value.lenght > 32) {
           errors.push({
             el: input,
-            message: 'O campo title deve ter no maximo 32 letras',
+            message: "O campo title deve ter no maximo 32 letras",
           });
         }
       }
 
-      if (inputsName[i] === 'url') {
-        if (input.value === '') {
+      if (inputsName[i] === "url") {
+        if (input.value === "") {
           errors.push({
             el: input,
-            message: 'O campo url não pode ficar em branco',
+            message: "O campo url não pode ficar em branco",
           });
         }
 
         if (!isValidHttpUrl(input.value)) {
           errors.push({
             el: input,
-            message: 'O campo url digitado é invalido',
+            message: "O campo url digitado é invalido",
           });
         }
       }
@@ -137,26 +136,26 @@ function FormPopup({ changeView, data }: AddShortcut) {
     const item = {
       title: inputs.title?.value as string,
       url: inputs.url?.value as string,
-      category: category || 'apps',
-      autoload: inputs.autoload?.getAttribute('aria-pressed') as string,
-      darkType: data.isDark as boolean,
-      url_favicon: data.page_url_icon ? data.page_url_icon : null,
+      category: category || "apps",
+      autoload: inputs.autoload?.getAttribute("aria-pressed") as string,
+      darkType: data.brightness,
+      url_favicon: data.favicon,
     };
 
-    const {shortcuts : database} = await db();
+    const { shortcuts: database } = await db();
 
     if (database) {
       const isItem = await database.getAllFromIndex(
-        'website',
-        'by-url',
+        "website",
+        "by-url",
         item.url
       );
       if (isItem.length === 0) {
-        const save = await database.add('website', item);
+        const save = await database.add("website", item);
         if (save === item.url) {
           notifyHomepage();
         } else {
-          navigate('/error');
+          navigate("/error");
         }
       }
     }
@@ -167,52 +166,52 @@ function FormPopup({ changeView, data }: AddShortcut) {
       <form onSubmit={handlerSubmit} id={style.form}>
         <header className={style.header}>
           <button onClick={changeView}>
-            <Icon name='arrow_left' />
+            <Icon name="arrow_left" />
           </button>
           <h1>Novo atalho</h1>
         </header>
         <section className={style.sectionForm}>
           <div className={style.group}>
             <div className={style.icon}>
-              {data.page_url_icon && (
+              {data.favicon && (
                 <Favicon
-                  src={data.page_url_icon}
-                  alt={data.page_title}
-                  brightness={data.isDark === true ? 1 : 0}
+                  src={data.favicon}
+                  alt={data.title}
+                  brightness={data.brightness === true ? 1 : 0}
                 />
               )}
             </div>
             <input
-              type='text'
+              type="text"
               className={style.siteName}
-              placeholder='Website name...'
-              defaultValue={data?.page_title}
-              id='website_title'
+              placeholder="Website name..."
+              defaultValue={data?.title}
+              id="website_title"
             />
           </div>
           <input
-            type='text'
+            type="text"
             className={style.siteUrl}
-            placeholder='Website url...'
-            defaultValue={data?.page_url}
-            id='website_url'
+            placeholder="Website url..."
+            defaultValue={data?.url}
+            id="website_url"
           />
 
           <Select
             Options={options}
             className={style.select}
-            id='website_category'
-            getValue={evt => _setCategory(evt)}
+            id="website_category"
+            getValue={(evt) => _setCategory(evt)}
           />
 
           <div className={style.group}>
-            <label htmlFor='website_autoload'>Habilitar autoload:</label>
+            <label htmlFor="website_autoload">Habilitar autoload:</label>
             <button
               className={style.buttonToggle}
               aria-pressed={pressed}
               onClick={toggleButton}
-              id='website_autoload'
-              type='button'
+              id="website_autoload"
+              type="button"
             >
               <span className={style.buttonToggleText}>
                 Ativar/desativar autoload
@@ -221,7 +220,7 @@ function FormPopup({ changeView, data }: AddShortcut) {
           </div>
 
           <span className={style.msgError}>{msgError}</span>
-          <button className={style.formButtonSave} type='submit'>
+          <button className={style.formButtonSave} type="submit">
             Salvar
           </button>
         </section>

@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
-import { useOnLoadImages } from '../../../hooks/useOnLoadImages';
-import { getCurrentTab } from '../../../utils/chrome/getcurrentTab';
-import style from './style.module.css';
+import { useEffect, useRef, useState } from "react";
+import { useOnLoadImages } from "../../../hooks/useOnLoadImages";
+import { getCurrentTab } from "../../../utils/chrome/getcurrentTab";
+import style from "./style.module.css";
 
 interface Favicon {
   src: string;
@@ -9,11 +9,9 @@ interface Favicon {
   brightness: 0 | 1;
 }
 
-
-
 export default function Favicon({ src, alt, brightness }: Favicon) {
-  const [state, setState] = useState<'loading' | 'broken' | 'complete'>(
-    'loading'
+  const [state, setState] = useState<"loading" | "broken" | "complete">(
+    "loading"
   );
 
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -26,11 +24,11 @@ export default function Favicon({ src, alt, brightness }: Favicon) {
       if (imageElement.current) {
         const image = imageElement.current as HTMLImageElement;
         image.onerror = () => {
-          setState('broken');
+          setState("broken");
         };
 
-        if(state === 'loading'){
-          setState('complete');
+        if (state === "loading") {
+          setState("complete");
         }
       }
     }
@@ -38,16 +36,18 @@ export default function Favicon({ src, alt, brightness }: Favicon) {
 
   return (
     <div className={style.favicon} ref={wrapperRef} data-state={state}>
-     { <img
-        src={`${src}?${new Date().getTime()}`}
-        alt={alt}
-        className={style.faviconImage}
-        style={{ filter: `invert(${brightness})` }}
-        ref={imageElement}
-        data-state={state}
-        // crossOrigin='anonymous'
-      />}
-      {state === 'broken' && (
+      {
+        <img
+          src={src}
+          alt={alt}
+          className={style.faviconImage}
+          style={{ filter: `invert(${brightness})` }}
+          ref={imageElement}
+          data-state={state}
+          crossOrigin="anonymous"
+        />
+      }
+      {state === "broken" && (
         <span className={style.alternativeImage}>{alt[0]}</span>
       )}
     </div>

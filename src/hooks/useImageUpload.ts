@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { message } from '../services/chrome/message';
-import { db } from '../storage/database';
+import { db } from '../database/indexDB';
 import blobToBase64 from '../utils/blobToBase64';
 import crop from '../utils/image/crop';
 
 interface imagecroped {
   data?: Blob;
-  crop: Boolean;
+  crop: boolean;
 }
 
 export default function useImageUpload() {
@@ -88,14 +88,14 @@ export default function useImageUpload() {
 
 
   return {
-      onFinish: onFinish,
-      error: error,
-      image: image,
-      storeImage: (file: File) => handleImage(file),
-      clearInput: () => {
-        setImage(null)
-        setError([])
-        setOnFinish(false)
-      }
+    onFinish: onFinish,
+    error: error,
+    image: image,
+    storeImage: (file: File) => handleImage(file),
+    clearInput: () => {
+      setImage(null)
+      setError([])
+      setOnFinish(false)
+    }
   }
 }

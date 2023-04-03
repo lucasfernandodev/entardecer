@@ -1,14 +1,18 @@
-import { useEffect, useRef, useState } from 'react';
-import { db } from '../../../storage/database';
-import style from './style.module.css';
+import { useEffect, useRef, useState } from "react";
+import { db } from "../../../database/indexDB";
+import style from "./style.module.css";
 
 interface PainelOption {
   onClick: () => void;
   onBlur: () => void;
-  currentCategory: string,
+  currentCategory: string;
 }
 
-export default function PainelOption({ onClick, onBlur, currentCategory }: PainelOption) {
+export default function PainelOption({
+  onClick,
+  onBlur,
+  currentCategory,
+}: PainelOption) {
   const menuRef = useRef<null | HTMLUListElement>(null);
   const [isItens, setIsItens] = useState(false);
 
@@ -17,8 +21,12 @@ export default function PainelOption({ onClick, onBlur, currentCategory }: Paine
       menuRef.current.focus();
 
       (async () => {
-        const {shortcuts : database} = await db();
-        const countShotcuts = await database.getAllFromIndex('website', 'by-category', currentCategory);
+        const { shortcuts: database } = await db();
+        const countShotcuts = await database.getAllFromIndex(
+          "website",
+          "by-category",
+          currentCategory
+        );
         if (countShotcuts && countShotcuts.length !== 0) {
           setIsItens(true);
         }
@@ -34,8 +42,8 @@ export default function PainelOption({ onClick, onBlur, currentCategory }: Paine
   }
 
   async function handlerClick() {
-    const {shortcuts : database} = await db();
-    const countShotcuts = await database.getAll('website');
+    const { shortcuts: database } = await db();
+    const countShotcuts = await database.getAll("website");
     if (countShotcuts && countShotcuts.length !== 0) {
       setIsItens(true);
       onClick();
@@ -55,7 +63,13 @@ export default function PainelOption({ onClick, onBlur, currentCategory }: Paine
         </button>
       </li>
       <li className={style.painelOption_item}>
-        <a target="_blank" href={`${chrome.runtime.getURL('pages/configurations/index.html')}`}>Configurações</a>
+        <a
+          rel="noreferrer"
+          target="_blank"
+          href={`${chrome.runtime.getURL("pages/configurations/index.html")}`}
+        >
+          Configurações
+        </a>
       </li>
     </ul>
   );

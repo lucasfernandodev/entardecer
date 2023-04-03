@@ -1,8 +1,7 @@
-import React, { HTMLAttributes, useState } from "react";
+import React, { useState } from "react";
 import Icon from "../../../utils/icon";
 import style from "./style.module.css";
 import Favicon from "../../../Atoms/favicon";
-import "../../../../styles/global.css";
 import Select from "../../../Atoms/Select";
 import { isValidHttpUrl } from "../../../../utils/isValidHttpUrl";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +9,7 @@ import Layout from "../../../Atoms/Layout";
 import { storage } from "../../../../utils/storage";
 import { db } from "../../../../database/indexDB";
 import { message } from "../../../../services/chrome/message";
+import "../../../../styles/global.css";
 
 interface data {
   title: string;
@@ -18,28 +18,12 @@ interface data {
   brightness: boolean;
 }
 
-interface AddShortcut {
+interface FormPopupTemplateProps {
   changeView: () => void;
   data: data;
 }
 
-interface inputs {
-  [key: string]: HTMLInputElement | null;
-}
-
-const category = storage.read<string[]>("category");
-
-const options =
-  category !== null
-    ? category.map((item: string) => {
-        return {
-          value: item,
-          label: `${item[0].toUpperCase()}${item.slice(1, item.length)}`,
-        };
-      })
-    : [];
-
-function FormPopup({ changeView, data }: AddShortcut) {
+function FormPopupTemplate({ changeView, data }: FormPopupTemplateProps) {
   const navigate = useNavigate();
   const [pressed, isPressed] = useState(false);
   const [msgError, setMsgError] = useState<string>("");
@@ -49,22 +33,24 @@ function FormPopup({ changeView, data }: AddShortcut) {
     isPressed(!pressed);
   }
 
+  const categories = storage.read<string[]>("category");
+
+  const options =
+    categories !== null
+      ? categories.map((item) => new Object({ value: item, label: item }))
+      : [];
+
   function _setCategory(category: { value: string }) {
     setCategory(category.value);
   }
 
   async function notifyHomepage() {
-    const request = await message.send({
-      from: "popup",
-      to: "homepage",
-      subject: "update",
-    });
-
-    if (!request) {
-      console.log("[Popup]: Não foi possivel notificar a homepage");
+    try {
+      await message.send({ from: "popup", to: "homepage", subject: "update" });
+      navigate("/success");
+    } catch (err) {
+      navigate("/success");
     }
-
-    navigate("/success");
   }
 
   async function handlerSubmit(evt: React.FormEvent<HTMLFormElement>) {
@@ -74,7 +60,7 @@ function FormPopup({ changeView, data }: AddShortcut) {
     const errors = [];
     const form = evt.target as HTMLFormElement;
 
-    const inputs: inputs = {
+    const inputs: Record<string, null | HTMLInputElement> = {
       title: form.querySelector("#website_title"),
       url: form.querySelector("#website_url"),
       category: form.querySelector("#website_category"),
@@ -84,7 +70,7 @@ function FormPopup({ changeView, data }: AddShortcut) {
     for (let i = 0; i < Object.keys(inputs).length; i++) {
       const inputsName = Object.keys(inputs);
 
-      const input: any = inputs[inputsName[i]];
+      const input = inputs[inputsName[i]] as HTMLInputElement;
       input.classList.remove(style.invalid);
 
       if (inputsName[i] === "title") {
@@ -95,14 +81,14 @@ function FormPopup({ changeView, data }: AddShortcut) {
           });
         }
 
-        if (input.value.lenght < 4) {
+        if (input.value.length < 4) {
           errors.push({
             el: input,
             message: "O campo title deve ter no minimo 4 letras",
           });
         }
 
-        if (input.value.lenght > 32) {
+        if (input.value.length > 32) {
           errors.push({
             el: input,
             message: "O campo title deve ter no maximo 32 letras",
@@ -231,4 +217,4 @@ function FormPopup({ changeView, data }: AddShortcut) {
   );
 }
 
-export default FormPopup;
+export default FormPopupTemplate;

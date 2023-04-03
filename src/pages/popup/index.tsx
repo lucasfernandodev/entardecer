@@ -1,9 +1,9 @@
-import FormPopup from "../../Components/Template/popup/FormPopup";
 import Hero from "../../Components/Template/popup/hero";
 import { useEffect, useState } from "react";
 import { setup } from "../../database/localstorage";
 import { message } from "../../services/chrome/message";
 import { storage } from "../../utils/storage";
+import FormPopupTemplate from "../../Components/Template/popup/FormPopup";
 
 interface data {
   title: string;
@@ -46,7 +46,7 @@ function Popup() {
   }
 
   if (data !== null && dataShortcut === true) {
-    return <FormPopup changeView={navigationBack} data={data} />;
+    return <FormPopupTemplate changeView={navigationBack} data={data} />;
   }
 
   return <Hero changeView={getDomInformation} />;

@@ -1,9 +1,9 @@
 import FormPopup from "../../Components/Template/popup/FormPopup";
 import Hero from "../../Components/Template/popup/hero";
 import { useEffect, useState } from "react";
-import configStorage from "../../utils/chrome/configStorage";
-import { getPageMeta } from "../../utils/chrome/getTabMeta";
+import { setup } from "../../database/localstorage";
 import { message } from "../../services/chrome/message";
+import { storage } from "../../utils/storage";
 
 interface data {
   title: string;
@@ -17,7 +17,9 @@ function Popup() {
   const [data, setData] = useState<null | data>(null);
 
   useEffect(() => {
-    configStorage();
+    if (!storage.read("theme")) {
+      setup();
+    }
   }, []);
 
   useEffect(() => {

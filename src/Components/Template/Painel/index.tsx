@@ -22,8 +22,8 @@ export default function Painel() {
   const [category, setCategory] = useState(0);
 
   useEffect(() => {
-    const data = storage.read("category").data as string;
-    const categories = ["apps", data !== null ? data : ""];
+    const data = storage.read<string[]>("category");
+    const categories = data !== null ? data : [];
 
     setCategories(categories);
   }, [update]);
@@ -62,17 +62,15 @@ export default function Painel() {
     }
   }
 
-  chrome.runtime.onMessage.addListener(function (
-    request: requestMessage,
-    sender,
-    sendResponse
-  ) {
-    if (request.from === "popup" && request.subject === "update") {
-      setUpdate(`item?${Date.now()}}`);
-      sendResponse(true);
+  chrome.runtime.onMessage.addListener(
+    (request: requestMessage, _, sendResponse) => {
+      if (request.from === "popup" && request.subject === "update") {
+        setUpdate(`item?${Date.now()}}`);
+        sendResponse(true);
+      }
+      return true;
     }
-    return true;
-  });
+  );
 
   function changeStage() {
     if (data.length > 0) {

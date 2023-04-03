@@ -27,14 +27,17 @@ interface inputs {
   [key: string]: HTMLInputElement | null;
 }
 
-const category = (storage.read("category").data as string[]) || [];
+const category = storage.read<string[]>("category");
 
-const options = category.map((item: string) => {
-  return {
-    value: item,
-    label: `${item[0].toUpperCase()}${item.slice(1, item.length)}`,
-  };
-});
+const options =
+  category !== null
+    ? category.map((item: string) => {
+        return {
+          value: item,
+          label: `${item[0].toUpperCase()}${item.slice(1, item.length)}`,
+        };
+      })
+    : [];
 
 function FormPopup({ changeView, data }: AddShortcut) {
   const navigate = useNavigate();
@@ -46,7 +49,7 @@ function FormPopup({ changeView, data }: AddShortcut) {
     isPressed(!pressed);
   }
 
-  function _setCategory(category: any) {
+  function _setCategory(category: { value: string }) {
     setCategory(category.value);
   }
 
@@ -57,8 +60,7 @@ function FormPopup({ changeView, data }: AddShortcut) {
       subject: "update",
     });
 
-    const response = await request;
-    if (!response) {
+    if (!request) {
       console.log("[Popup]: Não foi possivel notificar a homepage");
     }
 

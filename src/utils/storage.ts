@@ -1,63 +1,44 @@
-const prefix = 'ent';
-
 interface storage {
-  create: (storage_name: string, data: object | string | boolean) => { data?: any },
-  read: (storage_name: string) => { data?: unknown },
-  update: (storage_name: string, data: object | string | boolean) => object,
-  delete: (storage_name: string) => boolean,
+  create: <T>(key: string, data: T) => void,
+  read: <T>(key: string) => null | T,
+  update: <T>(key: string, data: T) => void,
+  delete: (key: string) => void,
+  clear: () => void
 }
 
 export const storage: storage = {
-  create: (storage_name, data) => {
-    const isStorage = localStorage.getItem(prefix + '_' + storage_name);
+  create: (key, data) => {
+    const isStorage = localStorage.getItem(key);
 
-    if (!isStorage) {
-      localStorage.setItem(prefix + '_' + storage_name, JSON.stringify(data));
+    if (isStorage) throw new Error('O chave informada já existe no localstorage');
 
-      return {
-        data: JSON.parse(localStorage.getItem(prefix + '_' + storage_name) as string)
-      };
-    } else {
-      throw new Error('O storage informado já existe');
-    }
+    localStorage.setItem(key, JSON.stringify(data));
+
   },
 
-  read: (storage_name) => {
-    const isStorage = localStorage.getItem(prefix + '_' + storage_name);
+  read: (key) => {
+    const isStorage = localStorage.getItem(key);
 
-    if (isStorage) {
-      return {
-        data: JSON.parse(isStorage as string)
-      };
-    } else {
-      return {
-        data: null
-      }
-    }
+    if (!isStorage) return null
+    return JSON.parse(isStorage)
   },
 
-  update: (storage_name, data) => {
-    const isStorage = localStorage.getItem(prefix + '_' + storage_name);
-    if (isStorage) {
-      localStorage.setItem(prefix + '_' + storage_name, JSON.stringify(data));
+  update: (key, data) => {
+    const isStorage = localStorage.getItem(key);
 
-      return {
-        data: JSON.parse(localStorage.getItem(prefix + '_' + storage_name) as string)
-      };
-    } else {
-      throw new Error('O storage informado não existe');
-    }
+    if (!isStorage) throw new Error('O chave informada não existe no localstorage');
+
+    localStorage.setItem(key, JSON.stringify(data));
   },
-  delete: (storage_name) => {
-    const isStorage = localStorage.getItem(prefix + '_' + storage_name);
-    if (isStorage) {
-      localStorage.removeItem(isStorage);
 
-      if (localStorage.getItem(prefix + '_' + storage_name) === null) return true;
+  delete: (key) => {
+    const isStorage = localStorage.getItem(key);
+    if (!isStorage) throw new Error(`O chave informada não existe no localstorage`);
 
-      throw new Error(`Não foi possivel deletar o storage ${storage_name}`);
-    } else {
-      throw new Error('O storage informado não existe');
-    }
+    localStorage.removeItem(isStorage);
   },
+
+  clear: () => {
+    localStorage.clear()
+  }
 }

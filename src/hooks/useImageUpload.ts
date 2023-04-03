@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { message } from '../services/chrome/message';
 import { db } from '../database/indexDB';
-import blobToBase64 from '../utils/blobToBase64';
+import blobToBase64 from '../utils/image/blobToBase64';
 import crop from '../utils/image/crop';
 
 interface imagecroped {

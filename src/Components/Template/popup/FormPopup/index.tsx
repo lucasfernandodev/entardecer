@@ -61,7 +61,6 @@ function FormPopupTemplate({ changeView, data }: FormPopupTemplateProps) {
       title: form.querySelector("#website_title"),
       url: form.querySelector("#website_url"),
       category: form.querySelector("#website_category"),
-      autoload: form.querySelector("#website_autoload"),
     };
 
     // Valida os inputs
@@ -74,7 +73,6 @@ function FormPopupTemplate({ changeView, data }: FormPopupTemplateProps) {
         title: title.value,
         url: url.value,
         category: category || "all",
-        autoload: "false",
         darkType: data.brightness,
         url_favicon: data.favicon,
       };
@@ -147,22 +145,6 @@ function FormPopupTemplate({ changeView, data }: FormPopupTemplateProps) {
             id="website_category"
             getValue={(evt) => updateCategory(evt)}
           />
-
-          <div className={style.group}>
-            <label htmlFor="website_autoload">Habilitar autoload:</label>
-            <button
-              className={style.buttonToggle}
-              aria-pressed={pressed}
-              onClick={toggleButton}
-              id="website_autoload"
-              type="button"
-            >
-              <span className={style.buttonToggleText}>
-                Ativar/desativar autoload
-              </span>
-            </button>
-          </div>
-
           <span className={style.msgError}>{msgError}</span>
           <button className={style.formButtonSave} type="submit">
             Salvar

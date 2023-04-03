@@ -6,12 +6,11 @@ interface MyDB extends DBSchema {
       title: string,
       category: string,
       url: string,
-      autoload: string,
       darkType: boolean,
       url_favicon: string | null
     };
     key: string;
-    indexes: { 'by-url': string ,'by-category': string};
+    indexes: { 'by-url': string, 'by-category': string };
   };
 }
 
@@ -23,7 +22,7 @@ interface bg_homepageDB extends DBSchema {
       id: string
     };
     key: string;
-    indexes: { 'by-data': string};
+    indexes: { 'by-data': string };
   };
 }
 
@@ -53,6 +52,6 @@ export async function db() {
     },
   });
 
-  return {shortcuts, bg_homepage};
+  return { shortcuts, bg_homepage };
 
 }

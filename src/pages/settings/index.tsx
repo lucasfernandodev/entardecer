@@ -60,16 +60,6 @@ export default function settings() {
                 href="#"
                 className={style.menuLink}
                 onClick={selectOption}
-                data-label="autoload"
-              >
-                autoload
-              </a>
-            </li>
-            <li className={style.menuItem}>
-              <a
-                href="#"
-                className={style.menuLink}
-                onClick={selectOption}
                 data-label="categorias"
               >
                 Categorias

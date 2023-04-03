@@ -3,13 +3,13 @@ import Icon from "../../../utils/icon";
 import style from "./style.module.css";
 import Favicon from "../../../Atoms/favicon";
 import Select from "../../../Atoms/Select";
-import { isValidHttpUrl } from "../../../../utils/isValidHttpUrl";
 import { useNavigate } from "react-router-dom";
 import Layout from "../../../Atoms/Layout";
 import { storage } from "../../../../utils/storage";
 import { db } from "../../../../database/indexDB";
 import { message } from "../../../../services/chrome/message";
 import "../../../../styles/global.css";
+import { InputValidade } from "./validade";
 
 interface data {
   title: string;
@@ -33,18 +33,16 @@ function FormPopupTemplate({ changeView, data }: FormPopupTemplateProps) {
     isPressed(!pressed);
   }
 
-  const categories = storage.read<string[]>("category");
+  const categories = storage.read<string[]>("category") || [];
+  const options = categories.map(
+    (item) => new Object({ value: item, label: item })
+  );
 
-  const options =
-    categories !== null
-      ? categories.map((item) => new Object({ value: item, label: item }))
-      : [];
-
-  function _setCategory(category: { value: string }) {
+  function updateCategory(category: { value: string }) {
     setCategory(category.value);
   }
 
-  async function notifyHomepage() {
+  async function updateHome() {
     try {
       await message.send({ from: "popup", to: "homepage", subject: "update" });
       navigate("/success");
@@ -57,7 +55,6 @@ function FormPopupTemplate({ changeView, data }: FormPopupTemplateProps) {
     evt.preventDefault();
     setMsgError("");
 
-    const errors = [];
     const form = evt.target as HTMLFormElement;
 
     const inputs: Record<string, null | HTMLInputElement> = {
@@ -67,85 +64,44 @@ function FormPopupTemplate({ changeView, data }: FormPopupTemplateProps) {
       autoload: form.querySelector("#website_autoload"),
     };
 
-    for (let i = 0; i < Object.keys(inputs).length; i++) {
-      const inputsName = Object.keys(inputs);
+    // Valida os inputs
+    const errors = InputValidade(inputs);
 
-      const input = inputs[inputsName[i]] as HTMLInputElement;
-      input.classList.remove(style.invalid);
+    if (errors.length === 0) {
+      const { title, url } = inputs as Record<string, HTMLInputElement>;
 
-      if (inputsName[i] === "title") {
-        if (input.value === "") {
-          errors.push({
-            el: input,
-            message: "O campo title não pode ficar em branco",
-          });
-        }
+      const item = {
+        title: title.value,
+        url: url.value,
+        category: category || "all",
+        autoload: "false",
+        darkType: data.brightness,
+        url_favicon: data.favicon,
+      };
 
-        if (input.value.length < 4) {
-          errors.push({
-            el: input,
-            message: "O campo title deve ter no minimo 4 letras",
-          });
-        }
+      const { shortcuts: database } = await db();
 
-        if (input.value.length > 32) {
-          errors.push({
-            el: input,
-            message: "O campo title deve ter no maximo 32 letras",
-          });
-        }
-      }
+      if (database) {
+        const isItem = await database.getAllFromIndex(
+          "website",
+          "by-url",
+          item.url
+        );
 
-      if (inputsName[i] === "url") {
-        if (input.value === "") {
-          errors.push({
-            el: input,
-            message: "O campo url não pode ficar em branco",
-          });
-        }
+        if (isItem.length === 0) {
+          const shortcut = await database.add("website", item);
 
-        if (!isValidHttpUrl(input.value)) {
-          errors.push({
-            el: input,
-            message: "O campo url digitado é invalido",
-          });
+          if (shortcut !== item.url) {
+            navigate("/error");
+          }
+
+          updateHome();
         }
       }
-    }
-
-    if (errors.length !== 0) {
-      const elError = errors[0].el;
-
-      elError.classList.add(style.invalid);
+    } else {
+      // Show messages error of validation
+      errors[0].el.classList.add(style.invalid);
       setMsgError(errors[0].message);
-      return;
-    }
-
-    const item = {
-      title: inputs.title?.value as string,
-      url: inputs.url?.value as string,
-      category: category || "apps",
-      autoload: inputs.autoload?.getAttribute("aria-pressed") as string,
-      darkType: data.brightness,
-      url_favicon: data.favicon,
-    };
-
-    const { shortcuts: database } = await db();
-
-    if (database) {
-      const isItem = await database.getAllFromIndex(
-        "website",
-        "by-url",
-        item.url
-      );
-      if (isItem.length === 0) {
-        const save = await database.add("website", item);
-        if (save === item.url) {
-          notifyHomepage();
-        } else {
-          navigate("/error");
-        }
-      }
     }
   }
 
@@ -189,7 +145,7 @@ function FormPopupTemplate({ changeView, data }: FormPopupTemplateProps) {
             Options={options}
             className={style.select}
             id="website_category"
-            getValue={(evt) => _setCategory(evt)}
+            getValue={(evt) => updateCategory(evt)}
           />
 
           <div className={style.group}>

@@ -1,5 +1,7 @@
+import { CSSObjectWithLabel } from "react-select";
+
 export const style = {
-  container: (provided: any) => ({
+  container: (provided: CSSObjectWithLabel) => ({
     ...provided,
     color: 'hsla(180, 2%, 81%, 100%)',
     background: 'var(--bg-color)',
@@ -8,14 +10,14 @@ export const style = {
     outline: 'unset',
   }),
 
-  option: (provided: any, state: any) => {
+  option: (provided: CSSObjectWithLabel, state: any) => {
     const background = state.isFocused
       ? 'var(--color-primary)'
       : 'var(--bg-color)';
     return { ...provided, background, cursor: 'pointer' };
   },
 
-  control: (provided: any, state: any) => {
+  control: (provided: CSSObjectWithLabel, state: any) => {
     const border = state.isFocused
       ? '1px solid var(--color-primary)'
       : '1px solid #27293B';
@@ -32,7 +34,7 @@ export const style = {
     };
   },
 
-  indicatorSeparator: (provided: any, state: any) => {
+  indicatorSeparator: (provided: CSSObjectWithLabel, state: any) => {
     const backgroundColor = state.isFocused ? '#27293B' : '#27293B';
     return {
       ...provided,
@@ -42,7 +44,7 @@ export const style = {
     };
   },
 
-  dropdownIndicator: (provided: any, state: any) => {
+  dropdownIndicator: (provided: CSSObjectWithLabel, state: any) => {
     const color = state.isFocused ? 'var(--color-primary)' : '#27293B';
 
     return {
@@ -57,7 +59,7 @@ export const style = {
     };
   },
 
-  valueContainer: (provided: any) => ({
+  valueContainer: (provided: CSSObjectWithLabel) => ({
     ...provided,
     minHeight: '32px',
     paddingTop: 0,
@@ -79,7 +81,7 @@ export const style = {
     fontWeight: 'bold',
   }),
 
-  placeholder: (provided: any) => ({
+  placeholder: (provided: CSSObjectWithLabel) => ({
     ...provided,
     color: 'hsla(180, 2%, 81%, 50%)',
     fontSize: '12px',
@@ -97,7 +99,7 @@ export const style = {
     fontSize: '12px',
   }),
 
-  singleValue: (provided: any, state: any) => {
+  singleValue: (provided: CSSObjectWithLabel, state: any) => {
     const opacity = state.isDisabled ? 0.5 : 1;
     const transition = 'opacity 300ms';
 

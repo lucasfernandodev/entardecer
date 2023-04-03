@@ -53,9 +53,7 @@ export default function Hero({ changeView }: { changeView: () => void }) {
               <a
                 target="_blank"
                 rel="noreferrer"
-                href={`${chrome.runtime.getURL(
-                  "pages/configurations/index.html"
-                )}`}
+                href={`${chrome.runtime.getURL("pages/settings/index.html")}`}
                 className={style.menuLink}
               >
                 <Icon name="config" />

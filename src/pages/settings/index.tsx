@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
+import style from "../../styles/pages/settings/style.module.css";
 import Layout from "../../Components/Atoms/Layout";
 import { SettingsInterface } from "../../Components/Organisms/SettingsInterface";
-import style from "../../styles/pages/configurations/style.module.css";
 
-export default function Configurations() {
+export default function settings() {
   const [option, setOption] = useState<string>("painel");
   const MenuRef = useRef<null | HTMLUListElement>(null);
 

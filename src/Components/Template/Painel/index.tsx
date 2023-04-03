@@ -22,8 +22,7 @@ export default function Painel() {
   const [category, setCategory] = useState(0);
 
   useEffect(() => {
-    const data = storage.read<string[]>("category");
-    const categories = data !== null ? data : [];
+    const categories = storage.read<string[]>("category") || [];
 
     setCategories(categories);
   }, [update]);

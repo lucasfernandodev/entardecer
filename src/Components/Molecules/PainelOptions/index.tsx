@@ -66,7 +66,7 @@ export default function PainelOption({
         <a
           rel="noreferrer"
           target="_blank"
-          href={`${chrome.runtime.getURL("pages/configurations/index.html")}`}
+          href={`${chrome.runtime.getURL("pages/settings/index.html")}`}
         >
           Configurações
         </a>

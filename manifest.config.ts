@@ -24,7 +24,7 @@ export default defineManifest(async (env) => ({
   chrome_url_overrides: {
     newtab: 'pages/homepage/index.html',
   },
-  options_page: 'pages/configurations/index.html',
+  options_page: 'pages/settings/index.html',
   content_scripts: [
     {
       js: ['services/chrome/content-script.tsx'],

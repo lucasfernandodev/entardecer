@@ -4,10 +4,10 @@ import react from '@vitejs/plugin-react'
 import { crx } from "@crxjs/vite-plugin";
 import manifest from './manifest.config';
 import eslint from 'vite-plugin-eslint';
-const root = resolve(__dirname, 'src');
 
-// exit src folder
-const outDir = '../dist/';
+
+const root = resolve(__dirname, 'src');
+const outDir = resolve(__dirname, 'dist');
 
 // https://vitejs.dev/config/
 export default defineConfig({

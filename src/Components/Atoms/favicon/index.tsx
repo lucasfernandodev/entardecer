@@ -1,5 +1,4 @@
-import { useEffect, useRef, useState } from "react";
-import { useOnLoadImages } from "../../../hooks/useOnLoadImages";
+import { useState } from "react";
 import style from "./style.module.css";
 
 interface Favicon {
@@ -8,42 +7,23 @@ interface Favicon {
   brightness: 0 | 1;
 }
 
+type imageState = "loading" | "broken" | "complete";
+
 export default function Favicon({ src, alt, brightness }: Favicon) {
-  const [state, setState] = useState<"loading" | "broken" | "complete">(
-    "loading"
-  );
-
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const imagesLoaded = useOnLoadImages(wrapperRef);
-
-  const imageElement = useRef(null);
-
-  useEffect(() => {
-    if (imagesLoaded) {
-      if (imageElement.current) {
-        const image = imageElement.current as HTMLImageElement;
-        image.onerror = () => {
-          setState("broken");
-        };
-
-        if (state === "loading") {
-          setState("complete");
-        }
-      }
-    }
-  }, [imagesLoaded]);
+  const [state, setState] = useState<imageState>("loading");
 
   return (
-    <div className={style.favicon} ref={wrapperRef} data-state={state}>
+    <div className={style.favicon} data-state={state}>
       {
         <img
           src={src}
           alt={alt}
           className={style.faviconImage}
           style={{ filter: `invert(${brightness})` }}
-          ref={imageElement}
           data-state={state}
           crossOrigin="anonymous"
+          onLoad={() => setState("complete")}
+          onError={() => setState("broken")}
         />
       }
       {state === "broken" && (

@@ -27,6 +27,7 @@ export default function PainelOption({
           "by-category",
           currentCategory
         );
+        console.log("count", countShotcuts);
         if (countShotcuts && countShotcuts.length !== 0) {
           setIsItens(true);
         }
@@ -44,6 +45,7 @@ export default function PainelOption({
   async function handlerClick() {
     const { shortcuts: database } = await db();
     const countShotcuts = await database.getAll("website");
+
     if (countShotcuts && countShotcuts.length !== 0) {
       setIsItens(true);
       onClick();

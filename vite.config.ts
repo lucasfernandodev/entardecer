@@ -12,6 +12,7 @@ const outDir = resolve(__dirname, 'dist');
 // https://vitejs.dev/config/
 export default defineConfig({
   root,
+  server: { port: 3000, hmr: { port: 3000 } },
   plugins: [react(), crx({ manifest }), eslint()],
   build: {
     outDir,

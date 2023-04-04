@@ -1,4 +1,4 @@
-.card{
+.card {
   width: 114px;
   height: 116px;
   display: flex;
@@ -10,57 +10,57 @@
   position: relative;
 }
 
-
-.card .card_image{
+.card .card_image {
   width: 80px;
   height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 4px;
-  background: #1C1A24;
+  background: #1c1a24;
   margin: 0 auto;
-  outline: 2px solid #353B48;
+  outline: 2px solid #353b48;
   outline-offset: 3px;
   cursor: pointer;
 }
 
-.card h3{
+.card .cardTitle {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   width: 100%;
   display: block;
   text-align: center;
-  font-size: 14px;
+  font-size: 13px;
+  font-weight: 500;
 }
 
-.card .card_image:hover{
-  outline: 2px solid #3E7BFA;
+.card .card_image:hover {
+  outline: 2px solid #3e7bfa;
 }
 
-.card[data-stage="true"] .card_image{
+.card[data-stage="true"] .card_image {
   cursor: default;
 }
 
-.card[data-stage="true"] img{
+.card[data-stage="true"] img {
   cursor: default;
   transition: 350ms linear;
 }
 
-.card[data-stage="true"] .card_image:hover{
+.card[data-stage="true"] .card_image:hover {
   outline: 2px solid #fc5c65;
 }
 
-.card .btnClose:hover ~ a{
+.card .btnClose:hover ~ a {
   outline: 2px solid #fc5c65;
 }
 
-.card[data-stage="true"] h3{
+.card[data-stage="true"] h3 {
   color: hsla(240, 16%, 85%, 75%);
 }
 
-.card .btnClose{
+.card .btnClose {
   position: absolute;
   top: -8px;
   right: 4px;
@@ -74,13 +74,13 @@
   transition: 300ms linear;
 }
 
-.card .btnClose:hover{
+.card .btnClose:hover {
   background: #eb3b5a;
   top: -7px;
   right: 3px;
 }
 
-.card .btnClose span{
+.card .btnClose span {
   width: 20px;
   height: 20px;
   display: flex;
@@ -92,27 +92,27 @@
   height: 8px;
 }
 
-.card .btnClose svg path{
+.card .btnClose svg path {
   stroke-width: 3px;
 }
 
-.card[data-removed="true"]{
+.card[data-removed="true"] {
   animation: cardOut 350ms linear;
 }
 
 @keyframes cardOut {
-  0%{
+  0% {
     position: relative;
     top: 0;
     opacity: 1;
   }
 
-  99%{
+  99% {
     top: -30px;
     opacity: 0;
   }
 
-  100%{
+  100% {
     display: none;
     opacity: 0;
     visibility: hidden;

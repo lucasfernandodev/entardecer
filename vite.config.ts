@@ -16,6 +16,7 @@ export default defineConfig({
   plugins: [react(), crx({ manifest }), eslint()],
   build: {
     outDir,
+    sourcemap: true,
     rollupOptions: {
       input: {
         main: resolve(root, 'pages', 'popup', 'index.html'),

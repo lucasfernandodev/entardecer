@@ -1,4 +1,4 @@
-.SettingsInterfaceAnimation fieldset{
+.SettingsInterfaceAnimation fieldset {
   border: unset;
   height: 32px;
   display: flex;
@@ -7,13 +7,14 @@
   align-items: center;
   min-width: 550px;
 }
-.SettingsInterfaceAnimation fieldset label{
+
+.SettingsInterfaceAnimation fieldset label {
   font-family: roboto;
   font-weight: 500;
   color: #ddddff;
 }
 
-.SettingsInterfaceAnimation fieldset ~ p{
+.SettingsInterfaceAnimation fieldset ~ p {
   font-size: 15px;
   color: #ddddffaa;
   font-family: roboto;

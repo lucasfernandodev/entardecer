@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { db } from "../../../database/indexDB";
 import { storage } from "../../../utils/storage";
 import { requestMessage } from "../../../types/requestMessage";
-import PainelItem from "../../Molecules/PainelItem";
-import PainelFooter from "../../Organisms/PainelFooter";
-import PainelHeader from "../../Organisms/PainelHeader";
+import PainelItem from "../../Molecules/Painel/PainelItem";
+import PainelFooter from "../../Organisms/Painel/PainelFooter";
+import PainelHeader from "../../Organisms/Painel/PainelHeader";
 import style from "./style.module.css";
 
 interface data {
@@ -31,11 +31,7 @@ export default function Painel() {
     (async () => {
       const { shortcuts: database } = await db();
 
-      const data = (await database.getAllFromIndex(
-        "website",
-        "by-category",
-        categories[category]
-      )) as data[];
+      const data = (await database.getAllFromIndex("website", "by-category", categories[category])) as data[];
 
       if (data !== undefined) {
         setData(data);
@@ -61,15 +57,13 @@ export default function Painel() {
     }
   }
 
-  chrome.runtime.onMessage.addListener(
-    (request: requestMessage, _, sendResponse) => {
-      if (request.from === "popup" && request.subject === "update") {
-        setUpdate(`item?${Date.now()}}`);
-        sendResponse(true);
-      }
-      return true;
+  chrome.runtime.onMessage.addListener((request: requestMessage, _, sendResponse) => {
+    if (request.from === "popup" && request.subject === "update") {
+      setUpdate(`item?${Date.now()}}`);
+      sendResponse(true);
     }
-  );
+    return true;
+  });
 
   function changeStage() {
     if (data.length > 0) {
@@ -79,27 +73,13 @@ export default function Painel() {
 
   return (
     <main className={style.painel}>
-      <PainelHeader
-        title={categories[category]}
-        changeCategory={changeCategory}
-        changeStage={changeStage}
-        stage={stage}
-      />
+      <PainelHeader title={categories[category]} changeCategory={changeCategory} changeStage={changeStage} stage={stage} />
 
       <section className={style.section}>
         {data.length > 0 ? (
-          data.map((item) => (
-            <PainelItem
-              stage={stage}
-              closeStage={() => setStage(!stage)}
-              key={item.url}
-              data={item}
-            />
-          ))
+          data.map((item) => <PainelItem stage={stage} closeStage={() => setStage(!stage)} key={item.url} data={item} />)
         ) : (
-          <span className={style.alternativeText}>
-            Nenhum atalho salvo nessa categoria.
-          </span>
+          <span className={style.alternativeText}>Nenhum atalho salvo nessa categoria.</span>
         )}
       </section>
 

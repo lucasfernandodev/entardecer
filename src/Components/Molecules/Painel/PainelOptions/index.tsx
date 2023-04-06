@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { db } from "../../../database/indexDB";
+import { db } from "../../../../database/indexDB";
 import style from "./style.module.css";
 
 interface PainelOption {
@@ -8,11 +8,7 @@ interface PainelOption {
   currentCategory: string;
 }
 
-export default function PainelOption({
-  onClick,
-  onBlur,
-  currentCategory,
-}: PainelOption) {
+export default function PainelOption({ onClick, onBlur, currentCategory }: PainelOption) {
   const menuRef = useRef<null | HTMLUListElement>(null);
   const [isItens, setIsItens] = useState(false);
 
@@ -22,11 +18,7 @@ export default function PainelOption({
 
       (async () => {
         const { shortcuts: database } = await db();
-        const countShotcuts = await database.getAllFromIndex(
-          "website",
-          "by-category",
-          currentCategory
-        );
+        const countShotcuts = await database.getAllFromIndex("website", "by-category", currentCategory);
         console.log("count", countShotcuts);
         if (countShotcuts && countShotcuts.length !== 0) {
           setIsItens(true);
@@ -53,23 +45,14 @@ export default function PainelOption({
   }
 
   return (
-    <ul
-      ref={menuRef}
-      className={style.painelOption_suspend}
-      onBlur={(evt) => onblur(evt)}
-      tabIndex={0}
-    >
+    <ul ref={menuRef} className={style.painelOption_suspend} onBlur={(evt) => onblur(evt)} tabIndex={0}>
       <li className={style.painelOption_item}>
         <button onClick={handlerClick} disabled={!isItens}>
           Editar
         </button>
       </li>
       <li className={style.painelOption_item}>
-        <a
-          rel="noreferrer"
-          target="_blank"
-          href={`${chrome.runtime.getURL("pages/settings/index.html")}`}
-        >
+        <a rel="noreferrer" target="_blank" href={`${chrome.runtime.getURL("pages/settings/index.html")}`}>
           Configurações
         </a>
       </li>

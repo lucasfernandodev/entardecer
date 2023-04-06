@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { db } from "../../../database/indexDB";
-import Favicon from "../../Atoms/favicon";
-import Icon from "../../utils/icon";
+import { db } from "../../../../database/indexDB";
+import Favicon from "../../../Atoms/favicon";
+import Icon from "../../../utils/icon";
 import style from "./style.module.css";
 
 interface PainelItem {
@@ -43,32 +43,15 @@ export default function PainelItem({ data, stage, closeStage }: PainelItem) {
   };
 
   return (
-    <div
-      className={style.card}
-      style={itemRemoved ? { display: "none" } : {}}
-      data-stage={stage}
-      data-removed={isRemoved}
-    >
+    <div className={style.card} style={itemRemoved ? { display: "none" } : {}} data-stage={stage} data-removed={isRemoved}>
       {stage && (
-        <button
-          className={style.btnClose}
-          title="Apagar atalho"
-          onClick={removeShortcut}
-        >
+        <button className={style.btnClose} title="Apagar atalho" onClick={removeShortcut}>
           <Icon name="close" />
         </button>
       )}
 
-      <a
-        target={linkPropertie.target}
-        href={linkPropertie.href}
-        className={style.card_image}
-      >
-        <Favicon
-          alt={data.title}
-          src={data.url_favicon}
-          brightness={data.darkType === true ? 1 : 0}
-        />
+      <a target={linkPropertie.target} href={linkPropertie.href} className={style.card_image}>
+        <Favicon alt={data.title} src={data.url_favicon} brightness={data.darkType === true ? 1 : 0} />
       </a>
 
       <h3 className={style.cardTitle} title={data.title}>

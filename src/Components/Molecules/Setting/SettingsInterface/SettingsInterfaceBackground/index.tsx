@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
-import useImageBackgroundLoading from '../../../hooks/useImageBackgroundLoading';
-import useImageUpload from '../../../hooks/useImageUpload';
-import Icon from '../../utils/icon';
-import Alert from '../Alert';
-import style from './style.module.css';
+import { useEffect, useState } from "react";
+import useImageBackgroundLoading from "../../../../../hooks/useImageBackgroundLoading";
+import useImageUpload from "../../../../../hooks/useImageUpload";
+import Icon from "../../../../utils/icon";
+import Alert from "../../../Alert";
+import style from "./style.module.css";
 
 type Drag = React.DragEvent<HTMLDivElement>;
 
@@ -22,7 +22,7 @@ export default function SettingsInterfaceBackground() {
     const input = evt.target as any;
     const file = input.files[0];
     storeImage(file);
-    input.value = '';
+    input.value = "";
   }
 
   function handleDrag() {
@@ -33,7 +33,7 @@ export default function SettingsInterfaceBackground() {
         // Use a interface DataTransferItemList para acessar o (s) arquivo (s)
         for (let i = 0; i < e.dataTransfer.items.length; i++) {
           // Se os itens soltos não forem arquivos, rejeite-os
-          if (e.dataTransfer.items[i].kind === 'file') {
+          if (e.dataTransfer.items[i].kind === "file") {
             file = e.dataTransfer.items[i].getAsFile() as any;
           }
         }
@@ -90,7 +90,7 @@ export default function SettingsInterfaceBackground() {
         {!onFinish && (
           <div className={style.placeholder}>
             <div className={style.content}>
-              <Icon name='image' className={style.icon} />
+              <Icon name="image" className={style.icon} />
               <p>
                 <span>Solte sua imagem aqui, ou</span>
                 <label htmlFor={style.formInput}>selecionar imagem</label>
@@ -101,25 +101,14 @@ export default function SettingsInterfaceBackground() {
 
         {onFinish && (
           <button className={style.btnUpdateImage} onClick={clearInput}>
-            <Icon name='update' />
+            <Icon name="update" />
           </button>
         )}
       </div>
 
       <p className={style.msgError}>{error[0]}</p>
-      <input
-        type='file'
-        id={style.formInput}
-        accept='image/*'
-        onChange={handleOnChange}
-      />
-      {onFinish && (
-        <Alert
-          type='success'
-          title='Configurações de interface'
-          msg='O Background alterado com sucesso'
-        />
-      )}
+      <input type="file" id={style.formInput} accept="image/*" onChange={handleOnChange} />
+      {onFinish && <Alert type="success" title="Configurações de interface" msg="O Background alterado com sucesso" />}
     </form>
   );
 }

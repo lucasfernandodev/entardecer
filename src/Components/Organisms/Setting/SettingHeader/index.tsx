@@ -15,7 +15,7 @@ const SettingHeader = ({ fn, optionCurrent }: SettingHeaderProps) => {
     if (menu) {
       const links = menu.querySelectorAll("a");
       links.forEach((e) => e.removeAttribute("data-active"));
-      const activeLink = menu.querySelector(`a[data-id="${optionCurrent}]`);
+      const activeLink = menu.querySelector(`a[data-id="${optionCurrent}"]`);
       activeLink?.setAttribute("data-active", "true");
     }
   }, [optionCurrent]);

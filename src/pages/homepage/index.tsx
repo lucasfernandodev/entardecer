@@ -4,8 +4,10 @@ import { requestMessage } from "../../types/requestMessage";
 import Layout from "../../Components/Atoms/Layout";
 import Painel from "../../Components/Template/Painel";
 import style from "../../styles/pages/Homepage/style.module.css";
+import { storage } from "../../utils/storage";
 
 export default function Homepage() {
+  const state = storage.read<boolean>("painel-visibility");
   const [bg, setBg] = useState<unknown | null>(null);
 
   useEffect(() => {
@@ -19,12 +21,8 @@ export default function Homepage() {
 
     getImageBackground();
 
-    chrome.runtime.onMessage.addListener(function (request: requestMessage) {
-      if (
-        request.from === "configuration" &&
-        request.to === "homepage" &&
-        request.subject === "update"
-      ) {
+    chrome.runtime.onMessage.addListener(({ from, to, subject }: requestMessage) => {
+      if (from === "configuration" && to === "homepage" && subject === "update") {
         location.reload();
       }
       return true;
@@ -33,11 +31,8 @@ export default function Homepage() {
 
   return (
     <Layout large="full">
-      <div
-        className={style.container}
-        style={bg ? { backgroundImage: `url(${bg})` } : {}}
-      >
-        <Painel />
+      <div className={style.container} style={bg ? { backgroundImage: `url(${bg})` } : {}}>
+        {!state && <Painel />}
       </div>
     </Layout>
   );

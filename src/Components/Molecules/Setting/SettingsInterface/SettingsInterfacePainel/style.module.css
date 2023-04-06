@@ -1,0 +1,21 @@
+.container fieldset {
+  border: unset;
+  height: 32px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 550px;
+}
+
+.container fieldset label {
+  font-family: roboto;
+  font-weight: 500;
+  color: #ddddff;
+}
+
+.container fieldset ~ p {
+  font-size: 15px;
+  color: #ddddffaa;
+  font-family: roboto;
+}

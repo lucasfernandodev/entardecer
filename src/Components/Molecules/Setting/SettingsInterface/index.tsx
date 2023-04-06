@@ -3,6 +3,7 @@ import style from "./style.module.css";
 import { SettingsInterfaceMenu } from "./SettingsInterfaceMenu";
 import SettingsInterfaceAnimation from "./SettingsInterfaceAnimation";
 import SettingsInterfaceBackground from "./SettingsInterfaceBackground";
+import SettingsInterfacePainel from "./SettingsInterfacePainel";
 
 export function SettingsInterface() {
   const [option, setOption] = useState<string>("animation");
@@ -15,6 +16,7 @@ export function SettingsInterface() {
       <SettingsInterfaceMenu getOptionSelect={selectOption} />
       {option === "animations" && <SettingsInterfaceAnimation />}
       {option === "background" && <SettingsInterfaceBackground />}
+      {option === "painel" && <SettingsInterfacePainel />}
     </main>
   );
 }

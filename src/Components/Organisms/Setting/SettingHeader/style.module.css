@@ -36,11 +36,7 @@
 }
 
 .menu .menuItem .menuLink[data-active="true"] {
-  background: linear-gradient(
-    to right,
-    hsla(252, 16%, 12%, 100%),
-    hsla(252, 16%, 8%, 100%)
-  );
+  background: linear-gradient(to right, hsla(252, 16%, 12%, 100%), hsla(252, 16%, 8%, 100%));
   border: 1px solid hsla(252, 16%, 12%, 100%);
   border-right: unset;
   color: #fff;

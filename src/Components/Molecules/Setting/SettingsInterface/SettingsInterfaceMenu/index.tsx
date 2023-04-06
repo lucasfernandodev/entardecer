@@ -49,14 +49,6 @@ export function SettingsInterfaceMenu({ getOptionSelect }: SettingsInterfaceMenu
         </li>
       </ul>
       <section className={style.settingContent}></section>
-      {/*
-
-      1. change background
-      2. change theme
-      3. disabled animations
-      4. painel position
-
-      */}
     </div>
   );
 }

@@ -1,0 +1,17 @@
+.brand {
+  display: flex;
+  height: 64px;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+}
+
+.brand img {
+  max-width: 32px;
+  height: auto;
+}
+
+.brand h1 {
+  font-size: 13px;
+  font-weight: 700;
+}

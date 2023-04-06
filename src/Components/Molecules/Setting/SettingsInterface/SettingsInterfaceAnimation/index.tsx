@@ -8,7 +8,11 @@ export default function SettingsInterfaceAnimation() {
     <form className={style.SettingsInterfaceAnimation}>
       <fieldset>
         <label htmlFor="">Reduzir Movimento</label>
-        <ButtonSwich isPressed={(pressed) => setIsMotionState(pressed)} alternativeText="Ativar / Desativar Animações" />
+        <ButtonSwich
+          pressed={isMotionState}
+          isPressed={(pressed) => setIsMotionState(pressed)}
+          alternativeText="Ativar / Desativar Animações"
+        />
       </fieldset>
       <p>Reduz animações e transições na interface do usuário</p>
     </form>

@@ -44,7 +44,7 @@ jobs:
         with:
           tag_name: latest
           name: Entardecer (latest)
-          files: ./entardecer.xpi
+          files: ./target/entardecer.xpi
           generate_release_notes: true
           prerelease: false
         env:

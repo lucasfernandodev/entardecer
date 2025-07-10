@@ -9,6 +9,9 @@ import { storage } from "../../utils/storage";
 export default function Homepage() {
   const state = storage.read<boolean>("painel-visibility");
   const [bg, setBg] = useState<unknown | null>(null);
+  const [overlayerOpacity] = useState(
+    window.localStorage.getItem('overlayer-opacity') || '50'
+  )
 
   useEffect(() => {
     async function getImageBackground() {
@@ -31,7 +34,13 @@ export default function Homepage() {
 
   return (
     <Layout large="full">
-      <div className={style.container} style={bg ? { backgroundImage: `url(${bg})` } : {}}>
+      <div
+        className={style.container}
+        style={{
+          backgroundImage: bg ? `url(${bg})` : 'none',
+          ['--overlayer-opacity' as any]: `${overlayerOpacity}%`
+        }}
+      >
         {!state && <Painel />}
       </div>
     </Layout>

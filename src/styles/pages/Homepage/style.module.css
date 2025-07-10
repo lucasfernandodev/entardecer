@@ -13,9 +13,10 @@
   content: "";
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(134.74deg, #1C1A24 0.45%, rgba(4, 4, 4, 0.35) 100%);
+  background: rgb(4, 4, 4);
   position: absolute;
   top: 0;
   left: 0;
   z-index: 2;
+  opacity: var(--overlayer-opacity, 50%);
 }

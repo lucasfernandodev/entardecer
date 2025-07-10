@@ -52,7 +52,7 @@ export default function PainelOption({ onClick, onBlur, currentCategory }: Paine
         </button>
       </li>
       <li className={style.painelOption_item}>
-        <a rel="noreferrer" target="_blank" href={`${chrome.runtime.getURL("pages/settings/index.html")}`}>
+        <a rel="noreferrer"  href={`${chrome.runtime.getURL("pages/settings/index.html")}`}>
           Configurações
         </a>
       </li>

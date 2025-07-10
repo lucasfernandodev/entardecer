@@ -4,6 +4,8 @@ import { SettingsInterfaceMenu } from "./SettingsInterfaceMenu";
 import SettingsInterfaceAnimation from "./SettingsInterfaceAnimation";
 import SettingsInterfaceBackground from "./SettingsInterfaceBackground";
 import SettingsInterfacePainel from "./SettingsInterfacePainel";
+import { SettingInterfaceBackgroudOverlayer } from "./SettingInterfaceBackgroudOverlayer";
+import { Container } from "../../../Atoms/Container";
 
 export function SettingsInterface() {
   const [option, setOption] = useState<string>("animation");
@@ -15,7 +17,12 @@ export function SettingsInterface() {
     <main className={style.main} id="setting-inteface">
       <SettingsInterfaceMenu getOptionSelect={selectOption} />
       {option === "animations" && <SettingsInterfaceAnimation />}
-      {option === "background" && <SettingsInterfaceBackground />}
+      {option === "background" &&
+        <Container>
+          <SettingsInterfaceBackground />
+          <SettingInterfaceBackgroudOverlayer />
+        </Container>
+      }
       {option === "painel" && <SettingsInterfacePainel />}
     </main>
   );

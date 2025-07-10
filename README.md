@@ -2,31 +2,50 @@
 
 # Entardecer
 
-Entardecer é uma extensão para o chrome visando substituir a homepage.
+Entardecer é uma extensão para Chrome que substitui a homepage padrão por uma experiência personalizada.
 
-### Começando
+## Instalação
 
-Para testar o projeto na máquina, digite no terminal: 
+Você pode baixar a versão atual para **Firefox** neste link:
+[Download Entardecer para Firefox](https://github.com/lucasfernandodev/entardecer/releases/download/latest/entardecer.xpi)
+
+> ⚠️ Por se tratar de uma extensão não assinada, será necessário instalá-la no modo de depuração:  
+> Acesse `about:debugging#/runtime/this-firefox` e carregue o arquivo manualmente.
+
+## Desenvolvimento
+
+1. Siga os passos abaixo para rodar o projeto localmente:
 
 ```
 git clone git@github.com:lucasfernandodev/entardecer.git
-cd entarder
+cd entardecer
 ```
 
-Instale as dependências:
+2. Instale as dependências:
 
 ```
-npm install
+pnpm install
 ```
 
-Com as dependências instaladas, agora iniciaremos o projeto:
+3. Inicie o ambiente de desenvolvimento:
 
 ```
-npm run dev
+pnpm run dev
 ```
 
-Com o projeto rodando, agora só falta adicionar ao chrome.
+> ⚠️ Se for usar no Firefox use o comando `pnpm run build:watch`
 
-Entrando no chrome vá em <b> Mais ferramentas > Extensões</b>, dentro de extensões procure pela opção de "Carregar sem compactação" e ao selecionar, procure pela pasta do seu projeto e adicione.
+4. Configurar navegador:
+  ## Carregue a extensão no Chrome:
 
-Com isso seu projeto já deve estar rodando!
+  - Abra o Chrome e acesse `chrome://extensions/` (ou pelo menu: Mais ferramentas > Extensões)
+  - Ative o *Modo do desenvolvedor* (canto superior direito)
+  - Clique em *Carregar sem compactação* e selecione a pasta raiz do projeto
+
+  ## Carregue a extensão no Firefox:
+
+  - Abra o Firefox e acesse `about:debugging#/runtime/this-firefox`.
+  - Clique em “*Carregar complemento temporário*”.
+  - Selecione o arquivo `manifest.json` dentro da pasta `dist/`.
+
+Pronto! A extensão estará rodando no seu navegador para testes.

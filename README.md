@@ -35,17 +35,15 @@ pnpm run dev
 
 > ⚠️ Se for usar no Firefox use o comando `pnpm run build:watch`
 
-4. Configurar navegador:
-  ## Carregue a extensão no Chrome:
 
-  - Abra o Chrome e acesse `chrome://extensions/` (ou pelo menu: Mais ferramentas > Extensões)
-  - Ative o *Modo do desenvolvedor* (canto superior direito)
-  - Clique em *Carregar sem compactação* e selecione a pasta raiz do projeto
+### Carregue a extensão no Chrome:
+- Abra o Chrome e acesse `chrome://extensions/` (ou pelo menu: Mais ferramentas > Extensões)
+- Ative o *Modo do desenvolvedor* (canto superior direito)
+- Clique em *Carregar sem compactação* e selecione a pasta raiz do projeto
 
-  ## Carregue a extensão no Firefox:
-
-  - Abra o Firefox e acesse `about:debugging#/runtime/this-firefox`.
-  - Clique em “*Carregar complemento temporário*”.
-  - Selecione o arquivo `manifest.json` dentro da pasta `dist/`.
+### Carregue a extensão no Firefox:
+- Abra o Firefox e acesse `about:debugging#/runtime/this-firefox`.
+- Clique em “*Carregar complemento temporário*”.
+- Selecione o arquivo `manifest.json` dentro da pasta `dist/`.
 
 Pronto! A extensão estará rodando no seu navegador para testes.

@@ -1,9 +1,8 @@
 import { resolve } from 'path';
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import { defineManifest } from "@crxjs/vite-plugin/dist/index.mjs";
+import { crx } from "@crxjs/vite-plugin";
 import manifest from './manifest.config';
-import eslint from 'vite-plugin-eslint';
 
 
 const root = resolve(__dirname, 'src');
@@ -13,7 +12,7 @@ const outDir = resolve(__dirname, 'dist');
 export default defineConfig({
   root,
   server: { port: 3000, hmr: { port: 3000 } },
-  plugins: [react(), defineManifest({ manifest }), eslint()],
+  plugins: [react(), crx({ manifest })],
   build: {
     outDir,
     sourcemap: true,

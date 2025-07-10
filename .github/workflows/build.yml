@@ -38,3 +38,14 @@ jobs:
         with:
           name: entardecer.xpi
           path: ./target/entardecer.xpi
+
+      - name: 🚀 Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: Entardecer (latest)
+          files: ./entardecer.xpi
+          generate_release_notes: true
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

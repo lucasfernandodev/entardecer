@@ -7,21 +7,22 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        node-version: [20]
     steps:
       - name: 📥 Checkout repo
         uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
 
       - name: 📦 Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # ou a versão que seu projeto usa
-          cache: 'pnpm'
-
-      - name: 📦 Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8 # ou o que seu projeto usa
+          node-version: "20" # ou a versão que seu projeto usa
+          cache: "pnpm"
 
       - name: 📦 Install dependencies
         run: pnpm install

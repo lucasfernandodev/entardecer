@@ -10,6 +10,7 @@ readm.MD
 
 node_modules
 dist
+target
 dist-ssr
 *.local
 

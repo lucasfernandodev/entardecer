@@ -1,48 +1,42 @@
-import { useEffect, useState } from "react";
-import { db } from "../../database/indexDB";
-import { requestMessage } from "../../types/requestMessage";
-import Layout from "../../Components/Atoms/Layout";
-import Painel from "../../Components/Template/Painel";
-import style from "../../styles/pages/Homepage/style.module.css";
-import { storage } from "../../utils/storage";
+import { useEffect, useState } from "react"
+import { HomepageTemplate } from "../../Components/Template/Homepage"
+import { BackgroundSetting } from "../../types/settings"
+import { useFetch } from "../../hooks/useFetch";
+import { SettingRepository } from "../../database/repository/setting-repository";
+import { Database } from "../../database/database";
 
-export default function Homepage() {
-  const state = storage.read<boolean>("painel-visibility");
-  const [bg, setBg] = useState<unknown | null>(null);
-  const [overlayerOpacity] = useState(
-    window.localStorage.getItem('overlayer-opacity') || '50'
-  )
+export const Homepage = () => {
+  const [bgSetting, setBgSetting] = useState({} as BackgroundSetting)
+
+  const fetch = async () => {
+    const repository = new SettingRepository(Database);
+    const backgroundSetting = await repository.getById<BackgroundSetting>('background')
+    return backgroundSetting
+  }
+
+
+  const { isLoading, data } = useFetch({
+    queryFn: fetch
+  })
 
   useEffect(() => {
-    async function getImageBackground() {
-      const { bg_homepage: database } = await db();
-      const isImagebackground = await database.getAll("image");
-      if (isImagebackground.length !== 0) {
-        setBg(isImagebackground[0].data);
-      }
+    if (!isLoading && data) {
+      setBgSetting({
+        color: data.color,
+        type: data.type,
+        isCrop: data.isCrop
+      })
     }
-
-    getImageBackground();
-
-    chrome.runtime.onMessage.addListener(({ from, to, subject }: requestMessage) => {
-      if (from === "configuration" && to === "homepage" && subject === "update") {
-        location.reload();
-      }
-      return true;
-    });
-  }, []);
+  }, [isLoading, data]);
 
   return (
-    <Layout large="full">
-      <div
-        className={style.container}
-        style={{
-          backgroundImage: bg ? `url(${bg})` : 'none',
-          ['--overlayer-opacity' as any]: `${overlayerOpacity}%`
-        }}
-      >
-        {!state && <Painel />}
-      </div>
-    </Layout>
-  );
+    <HomepageTemplate
+      background={bgSetting}
+      overlay={50}
+      painel={{
+        visibility: 'hidden',
+        position: "right"
+      }}
+    />
+  )
 }

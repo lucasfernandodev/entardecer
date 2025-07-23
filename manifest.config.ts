@@ -20,27 +20,30 @@ export default defineManifest(async (env) => ({
   action: {
     default_popup: 'pages/popup/index.html',
   },
-  description: 'Adicione atalhos ou personalize uma nova pagina inicial.',
+  description: 'Adicione atalhos ou personalize sua nova pagina inicial.',
   chrome_url_overrides: {
     newtab: 'pages/homepage/index.html',
   },
   options_page: 'pages/settings/index.html',
-  content_scripts: [
-    {
-      js: ['services/chrome/content-script.tsx'],
-      matches: ['*://*/*'],
-    },
-  ],
-  permissions: ['favicon', 'storage', 'contextMenus', 'tabs', 'activeTab', 'scripting'],
+  permissions: ['storage'],
   host_permissions: ['*://*/*'],
-  web_accessible_resources: [
-    {
-      resources: [
-        'images/error.svg',
-        '_favicon/*'
-      ],
-      matches: ['<all_urls>'],
-      "extension_ids": ["*"]
+  browser_specific_settings: {
+    gecko: {
+      id: 'lucasfernando.dev@gmail.com',
+      strict_min_version: '109.0',
     },
-  ],
+  },
+  "content_security_policy": {
+    // para Firefox MV3, o campo é csp_directive:
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+    // em Chrome MV3 seria:
+    // "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["*.wasm"],
+      "matches": ["<all_urls>"]
+    }
+
+  ]
 }));

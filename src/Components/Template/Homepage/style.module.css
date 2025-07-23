@@ -1,0 +1,20 @@
+.layout {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.overlay {
+  --overlay-opacity: 50%;
+  background: hsla(0, 0%, 7%, var(--overlay-opacity));
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 5;
+}

@@ -1,20 +1,22 @@
-import { useState } from "react";
-import Layout from "../../Atoms/Layout";
-import { SettingHeader } from "../../Organisms/Setting/SettingHeader";
-import style from "./style.module.css";
-import { SettingContent } from "../../Organisms/Setting/SettingContent";
+import { useSearchParams } from 'react-router-dom';
+import S from './style.module.css';
+import { SettingNavigation } from '../../Organisms/SettingNavigation';
+import { SettingBackground } from '../../Organisms/SettingBackground';
 
-const SettingTemplate = () => {
-  const [option, setOption] = useState("interface");
+export const SettingTemplate = () => {
+
+  const [searchParams] = useSearchParams();
+
+  const query = searchParams.get('setting') || 'background';
 
   return (
-    <Layout large="full">
-      <div className={style.container}>
-        <SettingHeader fn={setOption} optionCurrent={option} />
-        <SettingContent option={option} />
+    <div className={S.layout}>
+      <div className={S.container_navigation}>
+        <SettingNavigation />
       </div>
-    </Layout>
-  );
-};
-
-export { SettingTemplate };
+      <div className={S.container_options}>
+        {query === 'background' && <SettingBackground />}
+      </div>
+    </div>
+  )
+}

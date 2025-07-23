@@ -1,55 +1,37 @@
-import Hero from "../../Components/Template/popup/hero";
 import { useEffect, useState } from "react";
-import { setup } from "../../database/localstorage";
-import { message } from "../../services/chrome/message";
-import { storage } from "../../utils/storage";
-import FormPopupTemplate from "../../Components/Template/popup/FormPopup";
+import { PopupTemplate } from "../../Components/Template/Popup";
+import { Database } from "../../database/database";
+import { PopupSuccessTemplate } from "../../Components/Template/Popup/Success"; 
+import { useGetTabShortcut } from "../../hooks/useGetTabShortcut";
+import { ShortcutRepository } from "../../database/repository/shortcut-repository";
 
-interface data {
-  title: string;
-  url: string;
-  favicon: string;
-  brightness: boolean;
-}
 
-function Popup() {
-  const [dataShortcut, isDataShortcut] = useState(false);
-  const [data, setData] = useState<null | data>(null);
+export const PopupPage = () => {
+  const [isExistShortcut, setIsExistShortcut] = useState(false);
+  const { shortcut } = useGetTabShortcut()
+
 
   useEffect(() => {
-    if (!storage.read("theme")) {
-      setup();
+    if (shortcut.url) {
+      const check = async () => {
+        const repository = new ShortcutRepository(Database);
+        const isShortcut = await repository.getByUrl(shortcut.url);
+        if (isShortcut) {
+          setIsExistShortcut(true)
+        }
+
+      }
+      check().catch(console.error)
     }
-  }, []);
+  }, [shortcut?.url])
 
-  useEffect(() => {
-    if (data !== null) {
-      isDataShortcut(true);
-    }
-  }, [data]);
+  if (isExistShortcut) return <PopupSuccessTemplate />
 
-  async function getDomInformation() {
-    const meta = await message.send(
-      {
-        from: "popup",
-        to: "script-page",
-        subject: "getDomInformation",
-      },
-      true
-    );
-
-    meta.data && setData(meta.data);
-  }
-
-  function navigationBack() {
-    isDataShortcut(!dataShortcut);
-  }
-
-  if (data !== null && dataShortcut === true) {
-    return <FormPopupTemplate changeView={navigationBack} data={data} />;
-  }
-
-  return <Hero changeView={getDomInformation} />;
+  return (
+    <PopupTemplate
+      icon={shortcut.icon}
+      title={shortcut.title}
+      url={shortcut.url}
+    />
+  )
 }
-
-export default Popup;

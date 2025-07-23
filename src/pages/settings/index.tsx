@@ -1,5 +1,5 @@
-import { SettingTemplate } from "../../Components/Template/Setting";
+import { SettingTemplate } from "../../Components/Template/Setting"
 
-export default function settings() {
-  return <SettingTemplate />;
+export const SettingPage = () => {
+  return <SettingTemplate />
 }

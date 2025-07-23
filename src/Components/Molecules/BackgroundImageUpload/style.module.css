@@ -1,0 +1,129 @@
+.container {
+  position: relative;
+  width: fit-content;
+  height: 400px;
+  min-width: 400px;
+  overflow: hidden;
+  border-radius: 4px;
+
+  &[data-reposition=true] {
+    cursor: grab;
+
+    &.grab {
+      cursor: grabbing;
+    }
+  }
+}
+
+.upload_area {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 10;
+  background: hsla(0, 0%, 7%, 25%);
+  border-radius: 8px;
+  border: 1px dashed transparent;
+  overflow: hidden;
+
+  &.hover {
+    border: 1px dashed hsla(0, 0%, 100%, 75%);
+  }
+}
+
+
+.upload_area .group {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 340px;
+  text-align: center;
+
+  & label {
+    color: #fff;
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+  &[data-image=true] {
+    position: static;
+    transform: none;
+  }
+}
+
+.upload_area .group .actions {
+  position: absolute;
+  bottom: 4px;
+  right: 6px;
+  display: flex;
+  gap: 8px;
+
+  & :is(button, label) {
+    border: none;
+    height: 30px;
+    width: 130px;
+    cursor: pointer;
+    color: hsla(0, 0%, 100%, 75%);
+    background: hsla(0, 0%, 100%, 5%);
+    border-radius: 6px;
+    backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 250ms linear;
+    box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.2);
+
+    &:hover {
+      color: #fff;
+    }
+  }
+}
+
+
+.preview_container {
+  width: 100%;
+  height: 100%;
+  user-select: none;
+  pointer-events: none;
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  pointer-events: none;
+  z-index: 1;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+
+  &[data-crop="false"] img {
+    position: static;
+    transform: none;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+    opacity: 1;
+  }
+}
+
+.preview_container img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: grab;
+  transform: translate(var(--x, 0px), var(--y, 0px));
+  user-select: none;
+  max-width: none;
+  max-height: none;
+  opacity: 1;
+
+  &[data-loading="true"] {
+    opacity: 0;
+  }
+}

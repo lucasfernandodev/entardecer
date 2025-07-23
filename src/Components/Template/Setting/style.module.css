@@ -1,9 +1,34 @@
-.container {
+.layout {
+  background: #65392F;
+  background-image: url('/images/entardecer.svg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
   width: 100vw;
-  height: 100vh;
-  position: relative;
+  min-height: 100vh;
   overflow: hidden;
-  z-index: 1;
+  overflow-y: scroll;
+  color: hsla(0, 0%, 100%, 75%);
   display: flex;
-  background: hsla(252, 16%, 8%, 100%);
+
+  & .container_navigation {
+    width: 400px;
+    display: flex;
+    padding: 64px 0px;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    position: sticky;
+  }
+
+  & .container_options {
+    width: calc(100% - 400px);
+    border-left: 1px solid hsla(0, 0%, 100%, 25%);
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    max-height: 100vh;
+    overflow-y: auto;
+    padding: 32px 24px 64px 24px;
+  }
 }

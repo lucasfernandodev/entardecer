@@ -1,0 +1,70 @@
+.layout {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  &>.header {
+    height: 64px;
+    width: 100%;
+    border-bottom: 1px solid hsla(0, 0%, 100%, 25%);
+    display: flex;
+    align-items: center;
+    padding: 0px 15px;
+  }
+
+  &>.header>.title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+  }
+
+  &>section {
+    padding: 24px 16px;
+    display: flex;
+    width: 100%;
+    display: flex;
+  }
+
+  &>section>.header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &>section>.header>.title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+  }
+}
+
+
+.layout #section_version,
+.layout #section_contact {
+  justify-content: space-between;
+  align-items: center;
+
+  & .button {
+    height: 42px;
+    width: 130px;
+    background: hsla(0, 0%, 100%, 5%);
+    border-radius: 6px;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 2px 0px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 250ms linear;
+
+    &:hover,
+    &:focus,
+    &:active {
+      background: hsla(0, 0%, 100%, 10%);
+    }
+  }
+}

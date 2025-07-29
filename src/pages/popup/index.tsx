@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { PopupTemplate } from "../../Components/Template/Popup";
-import { Database } from "../../database/database";
-import { PopupSuccessTemplate } from "../../Components/Template/Popup/Success"; 
+import { PopupTemplate } from "../../components/Template/Popup";
+import { Database } from "../../infra/database/database";
+import { PopupSuccessTemplate } from "../../components/Template/Popup/Success";
 import { useGetTabShortcut } from "../../hooks/useGetTabShortcut";
-import { ShortcutRepository } from "../../database/repository/shortcut-repository";
+import { ShortcutRepository } from "../../infra/database/repository/shortcut-repository";
 
 
 export const PopupPage = () => {

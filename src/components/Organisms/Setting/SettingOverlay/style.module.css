@@ -1,0 +1,131 @@
+.layout {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  &>.header {
+    height: 64px;
+    width: 100%;
+    border-bottom: 1px solid hsla(0, 0%, 100%, 25%);
+    display: flex;
+    align-items: center;
+    padding: 0px 15px;
+  }
+
+  &>.header>.title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+  }
+
+  &>section {
+    padding: 24px 16px;
+    display: flex;
+    width: 100%;
+    display: flex;
+  }
+
+  &>section>.header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 400px;
+  }
+
+  &>section>.header>.title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+  }
+}
+
+
+.layout #section_opacity {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.group {
+  width: 300px;
+
+  & input[type="range"] {
+    /* removing default appearance */
+    -webkit-appearance: none;
+    appearance: none;
+    /* creating a custom design */
+    width: 100%;
+    cursor: pointer;
+    outline: none;
+    border-radius: 15px;
+    /*  overflow: hidden;  remove this line*/
+
+    /* New additions */
+    height: 6px;
+    background: hsla(0, 0%, 100%, 30%);
+  }
+
+  /* Thumb: webkit */
+  & input[type="range"]::-webkit-slider-thumb {
+    /* removing default appearance */
+    -webkit-appearance: none;
+    appearance: none;
+    /* creating a custom design */
+    height: 15px;
+    width: 15px;
+    background-color: #fff;
+    border-radius: 50%;
+    border: none;
+
+    /* box-shadow: -407px 0 0 400px #fff; emove this line */
+    transition: .2s ease-in-out;
+  }
+
+  /* Thumb: Firefox */
+  & input[type="range"]::-moz-range-thumb {
+    height: 15px;
+    width: 15px;
+    background-color: #fff;
+    border-radius: 50%;
+    border: none;
+
+    /* box-shadow: -407px 0 0 400px #fff; emove this line */
+    transition: .2s ease-in-out;
+  }
+
+  /* Hover, active & focus Thumb: Webkit */
+
+  & input[type="range"]::-webkit-slider-thumb:hover {
+    box-shadow: 0 0 0 10px rgba(255, 255, 255, .1)
+  }
+
+  & input[type="range"]:active::-webkit-slider-thumb {
+    box-shadow: 0 0 0 13px rgba(255, 255, 255, .2)
+  }
+
+  & input[type="range"]:focus::-webkit-slider-thumb {
+    box-shadow: 0 0 0 13px rgba(255, 255, 255, .2)
+  }
+
+  /* Hover, active & focus Thumb: Firfox */
+
+  & input[type="range"]::-moz-range-thumb:hover {
+    box-shadow: 0 0 0 10px rgba(255, 255, 255, .1)
+  }
+
+  & input[type="range"]:active::-moz-range-thumb {
+    box-shadow: 0 0 0 13px rgba(255, 255, 255, .2)
+  }
+
+  & input[type="range"]:focus::-moz-range-thumb {
+    box-shadow: 0 0 0 13px rgba(255, 255, 255, .2)
+  }
+}
+
+.group .result {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+}

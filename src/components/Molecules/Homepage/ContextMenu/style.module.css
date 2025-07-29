@@ -1,0 +1,48 @@
+.context_menu {
+  z-index: 200;
+  position: fixed;
+  background-color: hsla(0, 0%, 7%, 90%);
+  border-radius: 12px;
+  padding: 12px;
+  width: 186px;
+  backdrop-filter: blur(16px);
+  display: flex;
+  outline: none;
+  box-shadow: none;
+  left: 0px;
+  top: 0px;
+
+  & .menu {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    width: 100%;
+  }
+
+  & .menu .item {
+    height: 40px;
+    width: 100%;
+    list-style: none;
+  }
+
+  & .menu .item button {
+    width: 100%;
+    height: 40px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    color: #fff;
+    font-size: 16px;
+    padding: 0px 12px;
+
+    border-radius: 8px;
+
+    &:hover {
+      background-color: hsla(0, 0%, 20%, 25%);
+    }
+  }
+}

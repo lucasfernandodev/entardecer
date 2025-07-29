@@ -1,0 +1,39 @@
+.container {
+  display: flex;
+  gap: 16px;
+}
+
+& .input_wrapper {
+  position: relative;
+
+  & input {
+    appearance: none;
+    -ms-progress-appearance: none;
+
+    display: flex;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    border: 2px solid hsla(0, 0%, 100%, 25%);
+    background-color: var(--bg-color);
+    cursor: pointer;
+
+    &:checked {
+      border-color: hsla(0, 0%, 100%, 75%);
+    }
+  }
+
+  &:has(input:checked)::before {
+    content: "";
+    width: 30px;
+    height: 30px;
+    display: block;
+    background: hsla(0, 0%, 100%, 75%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    transition: 250ms linear;
+  }
+}

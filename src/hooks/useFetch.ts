@@ -37,7 +37,7 @@ export const useFetch = <TResponse>({
 
   const [state, dispatch] = useReducer(
     fetchReducer as React.Reducer<FetchState<TResponse>, FetchAction<TResponse>>,
-    { isLoading: false, data: null }
+    { isLoading: isEnabled ? true : false, data: null }
   )
 
   const fnRef = useRef(queryFn);

@@ -1,0 +1,43 @@
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 24px 0px;
+  --input-width: 80px;
+
+  & .group {
+    position: relative;
+    width: var(--input-width);
+    height: 40px;
+  }
+
+  & .group:before {
+    content: "";
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+    background-color: hsla(0, 0%, 100%, 25%);
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 0px;
+    transform: translateX(4px) translateY(-50%);
+    pointer-events: none;
+    transition: 350ms linear;
+  }
+
+  & .group:has(input:checked):before {
+    background-color: hsla(0, 0%, 100%, 100%);
+    transform: translateX(calc(var(--input-width) - 36px)) translateY(-50%);
+  }
+
+  & input {
+    appearance: none;
+    width: var(--input-width);
+    height: 40px;
+    border-radius: 32px;
+    background-color: hsla(0, 0%, 100%, 5%);
+    cursor: pointer;
+    box-shadow: 2px 0px 6px rgba(0, 0, 0, 0.1);
+  }
+}

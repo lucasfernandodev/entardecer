@@ -1,27 +1,13 @@
 import { useEffect, useState } from "react"
-import { PreviewRepository } from "../database/repository/preview-repository";
-import { Database } from "../database/database";
+import { PreviewRepository } from "../infra/database/repository/preview-repository";
+import { Database } from "../infra/database/database";
 import { useFetch } from "./useFetch";
 
-interface usePreviewStoreProps {
-  position: { x: number, y: number },
-  onPositionUpdate: (position: { x: number, y: number }) => void
-}
-
-export const usePreviewStore = ({
-  position,
-  onPositionUpdate
-}: usePreviewStoreProps) => {
-  const [preview, setPreview] = useState<string | null>(null);
+export const usePreviewStore = () => {
+  const [preview, setPreview] = useState<Blob | null>(null);
   const [isPreview, setIsPreview] = useState(false);
-
-  useEffect(() => {
-    if (preview?.trim()) {
-      setIsPreview(true)
-    } else {
-      setIsPreview(false);
-    }
-  }, [preview])
+  const [isPreviewDbFetchFinish, setIsPreviewDbFetchFinish] = useState(false);
+  const [initialPosition, setInitialPosition] = useState({ x: 0, y: 0 })
 
   const getPreviewImage = async () => {
     const repository = new PreviewRepository(Database);
@@ -33,21 +19,25 @@ export const usePreviewStore = ({
 
   useEffect(() => {
     if (!isLoading && data) {
-      console.log(data)
-      setPreview(URL.createObjectURL(data.image));
-      onPositionUpdate(data.position);
+      data.image && setPreview(data.image);
+      setInitialPosition(data.position);
+      setIsPreview(true);
+    }
+    if (!isLoading) {
+      setIsPreviewDbFetchFinish(true)
     }
   }, [data, isLoading])
 
-  const updatePreview = (image: string) => {
-    if (preview && preview.startsWith('blob:')) {
-      URL.revokeObjectURL(preview);
+  const updatePreview = (image: Blob) => {
+    if (!image) {
+      console.log('Update preview failed', image);
+      return;
     }
-
     setPreview(image)
+    setIsPreview(true)
   }
 
   return {
-    isLoading, isPreview, preview, position, setPreview: updatePreview
+    isPreviewDbFetchFinish, isPreview, preview, setPreview: updatePreview, initialPosition
   }
 }

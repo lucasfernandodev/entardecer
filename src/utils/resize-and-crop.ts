@@ -1,5 +1,5 @@
 interface Props {
-  file: File | HTMLImageElement,
+  file: File | Blob,
   position: { x: number, y: number },
   scale: number
 }
@@ -83,18 +83,10 @@ export const resizeAndCropImage = ({
       })
     }
 
-    if (file instanceof File) {
-      const imageElement = document.createElement('img');
-      imageElement.src = URL.createObjectURL(file);
-      imageElement.onload = () => {
-        processImage(imageElement)
-      }
-    } else {
-      processImage(file)
+    const imageElement = document.createElement('img');
+    imageElement.src = URL.createObjectURL(file);
+    imageElement.onload = () => {
+      processImage(imageElement)
     }
-
-
-
-
   })
 }

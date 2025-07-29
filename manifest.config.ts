@@ -44,6 +44,8 @@ export default defineManifest(async (env) => ({
       "resources": ["*.wasm"],
       "matches": ["<all_urls>"]
     }
-
-  ]
+  ],
+  background: {
+    scripts: ['infra/service-worker/on-install.ts'],
+  }
 }));

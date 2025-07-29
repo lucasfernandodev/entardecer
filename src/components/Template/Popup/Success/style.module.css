@@ -1,0 +1,17 @@
+.dialog {
+  width: 400px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  background: #03161f;
+  background: linear-gradient(to bottom right, rgba(3, 22, 31, 1) 0%, rgba(36, 70, 77, 1) 100%);
+}
+
+.dialog .title {
+  font-size: 24px;
+  font-weight: bold;
+  color: hsla(240, 25%, 97%, 90%);
+}

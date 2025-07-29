@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Database } from "../database/database";
-import { BackgroundImageRepository } from "../database/repository/background-image-repository";
-import { PreviewRepository } from "../database/repository/preview-repository";
+import { Database } from "../infra/database/database";
+import { BackgroundImageRepository } from "../infra/database/repository/background-image-repository";
+import { PreviewRepository } from "../infra/database/repository/preview-repository";
 import { useFetch } from "./useFetch";
 
 interface UseSetBackgroundImageProps {
@@ -29,7 +29,7 @@ export const useSetBackgroundImage = ({ isCrop, isEnabled }: UseSetBackgroundIma
   const shouldFetch = isEnabled && typeof isCrop !== 'undefined';
   const fn = isCrop ? fetchCroppedImage : fetchOriginalImage;
 
-  const { isLoading, data: response } = useFetch<any>({
+  const { isLoading, data: response } = useFetch({
     queryFn: fn,
     isEnabled: shouldFetch
   })
@@ -37,14 +37,12 @@ export const useSetBackgroundImage = ({ isCrop, isEnabled }: UseSetBackgroundIma
 
   useEffect(() => {
     if (!isEnabled || isLoading || !response) return;
-    if (isCrop) {
-      setBackground(response.image)
-    } else {
-      console.log(response.image.size)
-      setBackground(URL.createObjectURL(response.image))
+    const nBackground = URL.createObjectURL(response.image)
+    if (background !== nBackground) {
+      URL.revokeObjectURL(background)
     }
+    setBackground(nBackground)
   }, [isLoading, response, isEnabled])
 
-  console.log('background', background);
   return { background }
 }

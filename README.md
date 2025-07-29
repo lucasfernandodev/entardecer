@@ -1,4 +1,4 @@
-<img src="./docs/newtab.png" alt="screenshot newtab">
+<img src="./docs/newtab.png" alt="screenshot newtab" />
 
 # Entardecer
 
